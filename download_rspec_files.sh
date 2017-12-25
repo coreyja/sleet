@@ -21,7 +21,7 @@ fi
 
 latestArtifacts=`curl -s -u $(cat ~/.circleci.token): "https://circleci.com/api/v1.1/project/github/${username}/${project}/latest/artifacts?branch=${branch}"`
 
-rspecPersistanceArtificats=`echo $latestArtifacts | jq '.[] | {path: .path, url: .url} | select(.path|endswith(".rspec_failed_examples"))'`
+rspecPersistanceArtificats=`echo $latestArtifacts | jq '.[] | {path: .path, url: .url} | select(.path|endswith(".rspec_example_statuses"))'`
 
 urls=`echo $rspecPersistanceArtificats | jq -r '.url'`
 baseDir=$1
