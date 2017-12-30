@@ -1,5 +1,9 @@
 module CRSPFA
   class CurrentBranchGithub
+    def self.from_dir(dir)
+      new(repo: Rugged::Repository.new(dir))
+    end
+
     def initialize(repo:)
       @repo = repo
       raise 'NOT GITHUB' unless github_match

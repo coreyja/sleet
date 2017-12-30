@@ -8,21 +8,14 @@ class CRSPFA::Cli < Thor
 
   desc 'do It', 'do'
   def do
-    # puts CRSPFA::CircleCi.instance.token
-
-    repo = Rugged::Repository.new "#{Dir.home}/Projects/hash_attribute_assignment"
-
-    foo = CRSPFA::CurrentBranchGithub.new(repo: repo)
+    foo = CRSPFA::CurrentBranchGithub.from_dir("#{Dir.home}/Projects/hash_attribute_assignment")
 
     conn = Faraday.new do |faraday|
       faraday.basic_auth(CRSPFA::CircleCi.instance.token, '')
     end
 
-    project='hash-attribute-assignment'
-    remote_branch='circleci-2-builds'
     url="https://circleci.com/api/v1.1/project/github/#{foo.github_user}/#{foo.github_repo}/latest/artifacts?branch=#{foo.remote_branch}"
-    p url
-    resp = Faraday.get(url)
+    resp = conn.get(url)
     decoded_resp = JSON.parse(resp.body)
 
     rspec_pers_artificats = decoded_resp.select { |x| x['path'].end_with?('.rspec_example_statuses') }
