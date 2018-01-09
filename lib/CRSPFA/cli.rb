@@ -14,15 +14,7 @@ class CRSPFA::Cli < Thor
     resp = CRSPFA::CircleCi.get(url)
     decoded_resp = JSON.parse(resp.body)
 
-    rspec_pers_artificats = decoded_resp.select { |x| x['path'].end_with?('.rspec_example_statuses') }
-    urls_to_download = rspec_pers_artificats.map { |x| x['url'] }
-
-    files = urls_to_download.map do |url|
-      CRSPFA::CircleCi.get(url)
-    end.map do |resp|
-      resp.body
-    end
-
+    files = CRSPFA::ArtifactDownloader.new(decoded_resp).files
 
     p CRSPFA::RspecFileMerger.new(files).output
   end

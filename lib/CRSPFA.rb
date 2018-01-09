@@ -4,6 +4,7 @@ require 'rugged'
 require 'faraday'
 require 'rspec'; RSpec::Core::ExampleStatusPersister
 
+require "CRSPFA/artifact_downloader"
 require "CRSPFA/circle_ci"
 require "CRSPFA/current_branch_github"
 require "CRSPFA/rspec_file_merger"
