@@ -1,11 +1,4 @@
-require 'pry'
-
 class CRSPFA::Cli < Thor
-  desc "hello NAME", "say hello to NAME"
-  def hello(name)
-    puts "Hello #{name}"
-  end
-
   desc 'do It', 'do'
   def do
     foo = CRSPFA::CurrentBranchGithub.from_dir("#{Dir.home}/Projects/hash_attribute_assignment")
