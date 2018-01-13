@@ -1,7 +1,11 @@
+require 'yaml'
+
 class CRSPFA::Cli < Thor
   desc 'do It', 'do'
+  option :source, type: :string, aliases: [:s]
   def do
-    foo = CRSPFA::CurrentBranchGithub.from_dir("#{Dir.home}/Projects/hash_attribute_assignment")
+    source_dir = options.fetch(:source, Dir.pwd)
+    foo = CRSPFA::CurrentBranchGithub.from_dir(source_dir)
 
     url="https://circleci.com/api/v1.1/project/github/#{foo.github_user}/#{foo.github_repo}/tree/#{foo.remote_branch}"
     builds = JSON.parse(CRSPFA::CircleCi.get(url).body)
@@ -14,5 +18,13 @@ class CRSPFA::Cli < Thor
     files = CRSPFA::ArtifactDownloader.new(artifacts).files
 
     p CRSPFA::RspecFileMerger.new(files).output
+  end
+
+  private
+
+  def options
+    original_options = super
+    defaults = OptionDefaults.new(Dir.pwd).defaults
+    Thor::CoreExt::HashWithIndifferentAccess.new(defaults.merge(original_options))
   end
 end
