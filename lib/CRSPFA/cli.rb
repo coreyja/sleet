@@ -1,9 +1,11 @@
 require 'yaml'
 
 class CRSPFA::Cli < Thor
-  desc 'do It', 'do'
+  default_task :fetch
+
+  desc 'do It', 'fetch'
   option :source, type: :string, aliases: [:s]
-  def do
+  def fetch
     source_dir = options.fetch(:source, Dir.pwd)
     foo = CRSPFA::CurrentBranchGithub.from_dir(source_dir)
 
@@ -17,14 +19,14 @@ class CRSPFA::Cli < Thor
 
     files = CRSPFA::ArtifactDownloader.new(artifacts).files
 
-    p CRSPFA::RspecFileMerger.new(files).output
+    puts CRSPFA::RspecFileMerger.new(files).output
   end
 
   private
 
   def options
     original_options = super
-    defaults = OptionDefaults.new(Dir.pwd).defaults
+    defaults = CRSPFA::OptionDefaults.new(Dir.pwd).defaults
     Thor::CoreExt::HashWithIndifferentAccess.new(defaults.merge(original_options))
   end
 end
