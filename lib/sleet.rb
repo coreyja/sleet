@@ -2,7 +2,10 @@ require 'thor'
 require 'json'
 require 'rugged'
 require 'faraday'
-require 'rspec'; RSpec::Core::ExampleStatusPersister
+require 'rspec'
+begin
+  RSpec::Core::ExampleStatusPersister
+end
 
 require 'sleet/artifact_downloader'
 require 'sleet/circle_ci'
