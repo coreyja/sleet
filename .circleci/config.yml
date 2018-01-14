@@ -12,12 +12,13 @@ jobs:
       # Restore Cache
       - restore_cache:
           keys:
-            - gem-cache-{{ checksum "sleet.gemspec" }}
+            - gem-cache-{{ checksum "sleet.gemspec" }}-
+            - gem-cache-
       # Install
       - run: bundle check || sudo apt-get install cmake && bundle install --path vendor/bundle
       # Store Cache
       - save_cache:
-          key: gem-cache-{{ checksum "sleet.gemspec" }}
+          key: gem-cache-{{ checksum "sleet.gemspec" }}-{{ date +%U-%Y }}
           paths:
             - vendor/bundle
 
