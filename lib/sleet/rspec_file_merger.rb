@@ -1,4 +1,4 @@
-class CRSPFA::RspecFileMerger
+class Sleet::RspecFileMerger
   def initialize(files)
     @files = files
   end

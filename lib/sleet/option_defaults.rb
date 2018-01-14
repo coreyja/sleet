@@ -1,5 +1,5 @@
-class CRSPFA::OptionDefaults
-  OPTION_FILENAME = '.CRSPFA'.freeze
+class Sleet::OptionDefaults
+  OPTION_FILENAME = '.sleet.yml'.freeze
 
   def initialize(dir)
     @dir = dir

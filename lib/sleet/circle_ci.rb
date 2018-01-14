@@ -1,6 +1,6 @@
 require 'singleton'
 
-class CRSPFA::CircleCi
+class Sleet::CircleCi
   include Singleton
 
   def token

@@ -1,11 +1,11 @@
-class CRSPFA::ArtifactDownloader
+class Sleet::ArtifactDownloader
   def initialize(artifacts)
     @artifacts = artifacts
   end
 
   def files
     @_files ||= urls.map do |url|
-      CRSPFA::CircleCi.get(url)
+      Sleet::CircleCi.get(url)
     end.map(&:body)
   end
 

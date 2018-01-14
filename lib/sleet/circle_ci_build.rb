@@ -1,4 +1,4 @@
-class CRSPFA::CircleCiBuild
+class Sleet::CircleCiBuild
   def initialize(github_user:, github_repo:, build_num:)
     @github_user = github_user
     @github_repo = github_repo
@@ -6,7 +6,7 @@ class CRSPFA::CircleCiBuild
   end
 
   def artifacts
-    @_artifacts ||= JSON.parse(CRSPFA::CircleCi.get(url).body)
+    @_artifacts ||= JSON.parse(Sleet::CircleCi.get(url).body)
   end
 
   private

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'CRSPFA'
+require 'sleet'
 
-CRSPFA::Cli.start(ARGV)
+Sleet::Cli.start(ARGV)

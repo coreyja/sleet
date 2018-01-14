@@ -1,3 +1,3 @@
-module CRSPFA
+module Sleet
   VERSION = '0.2.0'.freeze
 end

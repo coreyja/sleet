@@ -1,4 +1,4 @@
-class CRSPFA::CircleCiBranch
+class Sleet::CircleCiBranch
   def initialize(github_user:, github_repo:, branch:)
     @github_user = github_user
     @github_repo = github_repo
@@ -6,7 +6,7 @@ class CRSPFA::CircleCiBranch
   end
 
   def builds
-    @_builds ||= JSON.parse(CRSPFA::CircleCi.get(url).body)
+    @_builds ||= JSON.parse(Sleet::CircleCi.get(url).body)
   end
 
   def builds_with_artificats

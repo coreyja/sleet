@@ -1,4 +1,4 @@
-module CRSPFA
+module Sleet
   class Foo
     def self.for(dir)
       new Rugged::Repository.new(dir)

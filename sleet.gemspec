@@ -1,11 +1,11 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'CRSPFA/version'
+require 'sleet/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'CRSPFA'
-  spec.version       = CRSPFA::VERSION
+  spec.name          = 'Sleet'
+  spec.version       = Sleet::VERSION
   spec.authors       = ['Corey Alexander']
   spec.email         = ['coreyja@gmail.com']
 

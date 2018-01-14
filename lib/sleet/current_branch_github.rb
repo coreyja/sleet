@@ -1,4 +1,4 @@
-module CRSPFA
+module Sleet
   class CurrentBranchGithub
     def self.from_dir(dir)
       new(repo: Rugged::Repository.new(dir))
