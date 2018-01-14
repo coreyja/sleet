@@ -6,8 +6,13 @@ module Sleet
 
     desc 'Fetch Rspec Status File from CircleCI', 'fetch'
     option :source, type: :string, aliases: [:s]
+    option :input_file, type: :string, aliases: [:i]
+    option :output_file, type: :string, aliases: [:o]
     def fetch
       source_dir = options.fetch(:source, Dir.pwd)
+      file_name = options.fetch(:input_file, '.rspec_example_statuses')
+      output_file = options.fetch(:output_file, '.rspec_example_statuses')
+
       current_branch = Sleet::CurrentBranchGithub.from_dir(source_dir)
 
       branch = Sleet::CircleCiBranch.new(
@@ -24,8 +29,8 @@ module Sleet
         build_num: build['build_num']
       )
 
-      files = Sleet::ArtifactDownloader.new(build.artifacts).files
-      puts Sleet::RspecFileMerger.new(files).output
+      files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
+      File.write(output_file, Sleet::RspecFileMerger.new(files).output)
     end
 
     private

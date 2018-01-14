@@ -1,7 +1,8 @@
 module Sleet
   class ArtifactDownloader
-    def initialize(artifacts)
+    def initialize(artifacts:, file_name:)
       @artifacts = artifacts
+      @file_name = file_name
     end
 
     def files
@@ -12,14 +13,14 @@ module Sleet
 
     private
 
-    attr_reader :artifacts
+    attr_reader :artifacts, :file_name
 
     def urls
       rspec_artifacts.map { |x| x['url'] }
     end
 
     def rspec_artifacts
-      artifacts.select { |x| x['path'].end_with?('.rspec_example_statuses') }
+      artifacts.select { |x| x['path'].end_with?(file_name) }
     end
   end
 end
