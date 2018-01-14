@@ -1,5 +1,9 @@
 inherit_from: .rubocop_todo.yml
 
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+
 Metrics/LineLength:
   Max: 120
   Exclude:
