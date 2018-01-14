@@ -7,3 +7,6 @@
 /pkg/
 /spec/reports/
 /tmp/
+
+# Ignore Rspec Example Status File
+spec/.rspec_example_statuses
