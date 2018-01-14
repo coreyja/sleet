@@ -15,6 +15,10 @@ module Sleet
 
       current_branch = Sleet::CurrentBranchGithub.from_dir(source_dir)
 
+      error "Not on a branch" unless current_branch.on_branch?
+      error "No upstream branch set for the current branch of #{current_branch.current_branch_name}" unless current_branch.has_remote?
+      error "Upstream remote is not GitHub" unless current_branch.is_github?
+
       branch = Sleet::CircleCiBranch.new(
         github_user: current_branch.github_user,
         github_repo: current_branch.github_repo,
@@ -22,6 +26,8 @@ module Sleet
       )
 
       build = branch.builds_with_artificats.first
+
+      error 'No builds with artifcats found' if build.nil?
 
       build = Sleet::CircleCiBuild.new(
         github_user: current_branch.github_user,
@@ -36,6 +42,11 @@ module Sleet
     end
 
     private
+
+    def error(message)
+      puts "ERROR: #{message}"
+      exit 1
+    end
 
     def default_dir
       Rugged::Repository.discover(Dir.pwd).path + '..'
