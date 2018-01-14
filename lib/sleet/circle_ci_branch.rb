@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Sleet
   class CircleCiBranch
     def initialize(github_user:, github_repo:, branch:)
