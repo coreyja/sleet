@@ -5,11 +5,11 @@ module Sleet
     default_task :fetch
 
     desc 'Fetch Rspec Status File from CircleCI', 'fetch'
-    option :source, type: :string, aliases: [:s]
+    option :source_dir, type: :string, aliases: [:s]
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
     def fetch
-      source_dir = options.fetch(:source, Dir.pwd)
+      source_dir = options.fetch(:source_dir, default_dir)
       file_name = options.fetch(:input_file, '.rspec_example_statuses')
       output_file = options.fetch(:output_file, '.rspec_example_statuses')
 
@@ -30,10 +30,16 @@ module Sleet
       )
 
       files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
-      File.write(output_file, Sleet::RspecFileMerger.new(files).output)
+      Dir.chdir(source_dir) do
+        File.write(output_file, Sleet::RspecFileMerger.new(files).output)
+      end
     end
 
     private
+
+    def default_dir
+      Rugged::Repository.discover(Dir.pwd).path + '..'
+    end
 
     def options
       original_options = super
