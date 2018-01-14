@@ -14,7 +14,7 @@ jobs:
           keys:
             - gem-cache-{{ checksum "sleet.gemspec" }}
       # Install
-      - run: bundle check || bundle install --path vendor/bundle
+      - run: bundle check || sudo apt-get install cmake && bundle install --path vendor/bundle
       # Store Cache
       - save_cache:
           key: gem-cache-{{ checksum "sleet.gemspec" }}
