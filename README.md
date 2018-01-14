@@ -49,7 +49,7 @@ To do this we need to create a step which [saves](https://circleci.com/docs/2.0/
 ### 3. Run this tool in the root of your project
 
 ```
-/path/to/install/do.sh
+sleet
 ```
 
 This will look up the latest completed build in CircleCI for this branch, and download all the relevant `.rspec_example_statuses` files. It then combines and sorts them and saves the result to the `.rspec_example_statuses` file locally.

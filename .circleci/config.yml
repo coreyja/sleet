@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  build:
+    parallelism: 1
+    docker:
+      - image: circleci/ruby:latest
+
+    steps:
+      - checkout
+
+      - run: date +%U-%Y > 'date-cache-key.txt'
+      - run: ruby -v > 'ruby-version.txt'
+
+      ## Bundler
+      # Restore Cache
+      - restore_cache:
+          keys:
+            - gem-cache-{{ checksum "ruby-version.txt" }}-{{ checksum "sleet.gemspec" }}-
+            - gem-cache-{{ checksum "ruby-version.txt" }}-
+            - gem-cache-
+      # Install
+      - run: bundle check || sudo apt-get install cmake && bundle install --path vendor/bundle
+      # Store Cache
+      - save_cache:
+          key: gem-cache-{{ checksum "ruby-version.txt" }}-{{ checksum "sleet.gemspec" }}-{{ checksum "date-cache-key.txt" }}
+          paths:
+            - vendor/bundle
+
+      - type: shell
+        command: |
+          bundle exec rubocop \
+            --config .rubocop.yml \
+            -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
+            --format RuboCop::Formatter::JUnitFormatter \
+            --out /tmp/test-results/rubocop.xml \
+            --format progress \
+            --force-exclusion \
+            $(bundle exec rubocop --list-target-files | circleci tests split --split-by=filesize --show-counts)
+
+      # Run rspec in parallel
+      - type: shell
+        command: |
+          bundle exec rspec --profile 10 \
+                            --format RspecJunitFormatter \
+                            --out /tmp/test-results/rspec.xml \
+                            --format progress \
+                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --show-counts)
+
+      # Save artifacts
+      - type: store_test_results
+        path: /tmp/test-results
+
+      - store_artifacts:
+          path: spec/.rspec_example_statuses
+
