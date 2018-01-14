@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module Sleet
   class OptionDefaults
-    OPTION_FILENAME = '.sleet.yml'.freeze
+    OPTION_FILENAME = '.sleet.yml'
 
     def initialize(dir)
       @dir = dir

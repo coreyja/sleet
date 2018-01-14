@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sleet
   class CircleCiBuild
     def initialize(github_user:, github_repo:, build_num:)
