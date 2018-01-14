@@ -8,6 +8,8 @@ jobs:
     steps:
       - checkout
 
+      - run: date +%U-%Y > 'date.txt'
+
       ## Bundler
       # Restore Cache
       - restore_cache:
@@ -18,7 +20,7 @@ jobs:
       - run: bundle check || sudo apt-get install cmake && bundle install --path vendor/bundle
       # Store Cache
       - save_cache:
-          key: gem-cache-{{ checksum "sleet.gemspec" }}-{{ date +%U-%Y }}
+          key: gem-cache-{{ checksum "sleet.gemspec" }}-{{ checksum "date.txt" }}
           paths:
             - vendor/bundle
 
