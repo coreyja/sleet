@@ -3,7 +3,7 @@ jobs:
   build:
     parallelism: 1
     docker:
-      - image: circleci/ruby:2.3.4
+      - image: circleci/ruby:latest
 
     steps:
       - checkout
