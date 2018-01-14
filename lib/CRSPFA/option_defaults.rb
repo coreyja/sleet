@@ -14,7 +14,7 @@ class CRSPFA::OptionDefaults
   attr_reader :dir
 
   def defaults_hashes
-    files.map { |f| ::YAML::load_file(f) || {} }
+    files.map { |f| ::YAML.load_file(f) || {} }
   end
 
   def files

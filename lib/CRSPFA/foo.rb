@@ -25,7 +25,7 @@ module CRSPFA
     end
 
     def current_branch_name
-repo.head.name.sub(/^refs\/heads\//, '')
+      repo.head.name.sub(/^refs\/heads\//, '')
     end
   end
 end

@@ -10,6 +10,7 @@ class CRSPFA::CircleCi
   def get(url)
     Faraday.get(url, circleci_token: token)
   end
+
   def self.get(url)
     instance.get(url)
   end

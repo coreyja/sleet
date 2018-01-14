@@ -20,5 +20,4 @@ class CRSPFA::ArtifactDownloader
   def rspec_artifacts
     artifacts.select { |x| x['path'].end_with?('.rspec_example_statuses') }
   end
-
 end
