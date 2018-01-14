@@ -1,5 +1,3 @@
-require 'yaml'
-
 module Sleet
   class Cli < Thor
     default_task :fetch

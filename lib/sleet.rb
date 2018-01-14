@@ -3,6 +3,7 @@ require 'json'
 require 'rugged'
 require 'faraday'
 require 'rspec'
+require 'yaml'
 begin
   RSpec::Core::ExampleStatusPersister
 end
