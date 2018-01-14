@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sleet
   class CurrentBranchGithub
     REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sleet
   class ArtifactDownloader
     def initialize(artifacts:, file_name:)

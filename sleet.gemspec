@@ -1,4 +1,6 @@
 
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'sleet/version'
@@ -11,8 +13,8 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'CircleCI RSpec Status Persistance File Aggregator'
   spec.description   = <<~DOC
-                        Sleet provides an easy way to grab the most recent Rspec persistance files from CircleCI.
-                        It also aggregates the artificats from CircleCI, since you will have 1 per build container.
+    Sleet provides an easy way to grab the most recent Rspec persistance files from CircleCI.
+    It also aggregates the artificats from CircleCI, since you will have 1 per build container.
                         DOC
   spec.homepage      = 'https://github.com/coreyja/sleet'
   spec.license       = 'MIT'
