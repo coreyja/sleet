@@ -1,11 +1,15 @@
 # Change Log
 
-## [Unreleased](https://github.com/coreyja/sleet/tree/HEAD)
+## [v0.3.0](https://github.com/coreyja/sleet/tree/v0.3.0) (2018-01-15)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.2.0...v0.3.0)
 
-[Full Changelog](https://github.com/coreyja/sleet/compare/v0.2.0...HEAD)
+**Closed issues:**
+
+- Places `.rspec\_failed\_examples` relative to where the script is called from [\#1](https://github.com/coreyja/sleet/issues/1)
 
 **Merged pull requests:**
 
+- Workflows\(/Monorepos\) [\#4](https://github.com/coreyja/sleet/pull/4) ([coreyja](https://github.com/coreyja))
 - Error Messages [\#3](https://github.com/coreyja/sleet/pull/3) ([coreyja](https://github.com/coreyja))
 
 ## [v0.2.0](https://github.com/coreyja/sleet/tree/v0.2.0) (2018-01-14)
