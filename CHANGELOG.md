@@ -1,5 +1,13 @@
 # Change Log
 
+## [Unreleased](https://github.com/coreyja/sleet/tree/HEAD)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.2.0...HEAD)
+
+**Merged pull requests:**
+
+- Error Messages [\#3](https://github.com/coreyja/sleet/pull/3) ([coreyja](https://github.com/coreyja))
+
 ## [v0.2.0](https://github.com/coreyja/sleet/tree/v0.2.0) (2018-01-14)
 **Merged pull requests:**
 
