@@ -2,11 +2,13 @@
 
 module Sleet
   class Fetcher
-    def initialize(source_dir:, input_filename:, output_filename:, error_proc:)
+    class Error < ::Sleet::Error; end
+
+    def initialize(source_dir:, input_filename:, output_filename:, job_name: nil)
       @source_dir = source_dir
       @input_filename = input_filename
       @output_filename = output_filename
-      @error_proc = error_proc
+      @job_name = job_name
     end
 
     def do!
@@ -32,10 +34,10 @@ module Sleet
 
     private
 
-    attr_reader :source_dir, :input_filename, :output_filename, :error_proc
+    attr_reader :source_dir, :input_filename, :output_filename, :job_name
 
     def error(msg)
-      error_proc.call(msg)
+      raise Error, msg
     end
 
     def combined_file
@@ -62,7 +64,11 @@ module Sleet
     end
 
     def chosen_build_json
-      circle_ci_branch.builds_with_artificats.first
+      if job_name
+        circle_ci_branch.builds_with_artificats.find { |b| b.fetch('workflows', {})&.fetch('job_name', {}) == job_name }
+      else
+        circle_ci_branch.builds_with_artificats.first
+      end
     end
 
     def circle_ci_branch
@@ -90,7 +96,7 @@ module Sleet
 
     def must_find_a_build_with_artifacts!
       !chosen_build_json.nil? ||
-        error('No builds with artifcats found')
+        error("No builds with artifcats found #{"for job name [#{job_name}]" if job_name}")
     end
 
     def chosen_build_must_have_input_file!
