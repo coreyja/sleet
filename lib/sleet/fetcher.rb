@@ -2,11 +2,12 @@
 
 module Sleet
   class Fetcher
-    def initialize(source_dir:, input_filename:, output_filename:, error_proc:, job_name: nil)
+    class Error < ::StandardError; end
+
+    def initialize(source_dir:, input_filename:, output_filename:, job_name: nil)
       @source_dir = source_dir
       @input_filename = input_filename
       @output_filename = output_filename
-      @error_proc = error_proc
       @job_name = job_name
     end
 
@@ -33,10 +34,10 @@ module Sleet
 
     private
 
-    attr_reader :source_dir, :input_filename, :output_filename, :error_proc, :job_name
+    attr_reader :source_dir, :input_filename, :output_filename, :job_name
 
     def error(msg)
-      error_proc.call(msg)
+      raise Error, msg
     end
 
     def combined_file

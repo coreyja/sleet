@@ -22,7 +22,6 @@ require 'sleet/option_defaults'
 require 'sleet/repo'
 require 'sleet/rspec_file_merger'
 require 'sleet/version'
-require 'sleet/workflow_error'
 
 require 'sleet/cli'
 
