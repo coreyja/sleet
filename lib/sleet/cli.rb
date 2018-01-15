@@ -8,7 +8,7 @@ module Sleet
     option :source_dir, type: :string, aliases: [:s]
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
-    def fetch # rubocop:disable Metrics/MethodLength
+    def fetch
       source_dir = options.fetch(:source_dir, default_dir)
       file_name = options.fetch(:input_file, '.rspec_example_statuses')
       output_file = options.fetch(:output_file, '.rspec_example_statuses')
