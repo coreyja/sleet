@@ -36,7 +36,10 @@ module Sleet
     end
 
     def build_persistance_artifacts
-      @_build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(file_name: input_filename, artifacts: circle_ci_build.artifacts).files
+      @_build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
+        file_name: input_filename,
+        artifacts: circle_ci_build.artifacts
+      ).files
     end
 
     def circle_ci_build
@@ -60,27 +63,28 @@ module Sleet
     end
 
     def must_be_on_branch!
-      error 'Not on a branch' unless repo.on_branch?
+      repo.on_branch? ||
+        error('Not on a branch')
     end
 
     def must_have_an_upstream_branch!
-      unless repo.remote?
-        error "No upstream branch set for the current branch of #{repo.current_branch_name}"
-      end
+      repo.remote? ||
+        error("No upstream branch set for the current branch of #{repo.current_branch_name}")
     end
 
     def upstream_remote_must_be_github!
-      error 'Upstream remote is not GitHub' unless repo.github?
+      repo.github? ||
+        error('Upstream remote is not GitHub')
     end
 
     def must_find_a_build_with_artifacts!
-      error 'No builds with artifcats found' if circle_ci_branch.builds_with_artificats.first.nil?
+      circle_ci_branch.builds_with_artificats.any? ||
+        error('No builds with artifcats found')
     end
 
     def chosen_build_must_have_input_file
-      unless circle_ci_build.artifacts.any?
-        error "No Rspec example file found in the latest build (##{build.build_num}) with artifacts"
-      end
+      circle_ci_build.artifacts.any? ||
+        error("No Rspec example file found in the latest build (##{build.build_num}) with artifacts")
     end
   end
 end

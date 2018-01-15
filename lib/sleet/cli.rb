@@ -8,18 +8,16 @@ module Sleet
     option :source_dir, type: :string, aliases: [:s]
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
-    def fetch
+    def fetch # rubocop:disable Metrics/MethodLength
       source_dir = options.fetch(:source_dir, default_dir)
       file_name = options.fetch(:input_file, '.rspec_example_statuses')
       output_file = options.fetch(:output_file, '.rspec_example_statuses')
-
-      repo = Sleet::Repo.from_dir(source_dir)
 
       fetcher = Sleet::Fetcher.new(
         source_dir: source_dir,
         input_filename: file_name,
         output_filename: output_file,
-        error_proc: lambda { |x| error(x) }
+        error_proc: ->(x) { error(x) }
       )
       fetcher.validate!
       fetcher.create_output_file!
