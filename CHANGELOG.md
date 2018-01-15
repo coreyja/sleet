@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.3.1](https://github.com/coreyja/sleet/tree/v0.3.1) (2018-01-15)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.0...v0.3.1)
+
+**Merged pull requests:**
+
+- Add Dependency Versions [\#5](https://github.com/coreyja/sleet/pull/5) ([coreyja](https://github.com/coreyja))
+
 ## [v0.3.0](https://github.com/coreyja/sleet/tree/v0.3.0) (2018-01-15)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.2.0...v0.3.0)
 
