@@ -10,7 +10,7 @@ module Sleet
     option :output_file, type: :string, aliases: [:o]
     option :workflows, type: :hash, aliases: [:w]
     def fetch
-      if options[:worflows]
+      if options[:workflows]
         workflow_fetch
       else
         single_fetch
@@ -21,13 +21,13 @@ module Sleet
 
     def single_fetch
       Sleet::Fetcher.new(
-        source_dir: options.fetch(:source_dir, default_dir),
-        input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
-        output_filename: options.fetch(:output_file, '.rspec_example_statuses'),
-        error_proc: ->(x) { error!(x) }
+        base_fetcher_params.merge(
+          output_filename: options.fetch(:output_file, '.rspec_example_statuses')
+        )
       ).do!
     rescue Sleet::Error => e
-      error!(e.message)
+      error(e.message)
+      exit 1
     end
 
     def workflow_fetch
@@ -35,10 +35,10 @@ module Sleet
       options[:workflows].each do |job_name, output_filename|
         begin
           Sleet::Fetcher.new(
-            source_dir: options.fetch(:source_dir, default_dir),
-            input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
-            output_filename: output_filename,
-            job_name: job_name
+            base_fetcher_params.merge(
+              output_filename: output_filename,
+              job_name: job_name
+            )
           ).do!
         rescue Sleet::Error => e
           failed = true
@@ -48,13 +48,15 @@ module Sleet
       exit 1 if failed
     end
 
-    def error(message)
-      puts "ERROR: #{message}".red
+    def base_fetcher_params
+      {
+        source_dir: options.fetch(:source_dir, default_dir),
+        input_filename: options.fetch(:input_file, '.rspec_example_statuses')
+      }
     end
 
-    def error!(message)
-      error(message)
-      exit 1
+    def error(message)
+      puts "ERROR: #{message}".red
     end
 
     def default_dir
