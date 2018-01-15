@@ -64,7 +64,7 @@ module Sleet
 
     def chosen_build_json
       if job_name
-        circle_ci_branch.builds_with_artificats.find { |b| b.fetch('workflows')&.fetch('job_name') == job_name }
+        circle_ci_branch.builds_with_artificats.find { |b| b.fetch('workflows',{})&.fetch('job_name', {}) == job_name }
       else
         circle_ci_branch.builds_with_artificats.first
       end
@@ -95,7 +95,7 @@ module Sleet
 
     def must_find_a_build_with_artifacts!
       !chosen_build_json.nil? ||
-        error('No builds with artifcats found')
+        error("No builds with artifcats found #{ "for job name [#{job_name}]" if job_name }")
     end
 
     def chosen_build_must_have_input_file!

@@ -13,7 +13,7 @@ module Sleet
         source_dir: options.fetch(:source_dir, default_dir),
         input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
         output_filename: options.fetch(:output_file, '.rspec_example_statuses'),
-        error_proc: ->(x) { error(x) }
+        error_proc: ->(x) { error!(x) }
       ).do!
     end
 
@@ -23,13 +23,16 @@ module Sleet
     option :workflows, type: :hash, aliases: [:w], required: true
     def monorepo
       options[:workflows].each do |job_name, output_filename|
-        Sleet::Fetcher.new(
-          source_dir: options.fetch(:source_dir, default_dir),
-          input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
-          output_filename: output_filename,
-          job_name: job_name,
-          error_proc: ->(x) { error(x) }
-        ).do!
+        begin
+          Sleet::Fetcher.new(
+            source_dir: options.fetch(:source_dir, default_dir),
+            input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
+            output_filename: output_filename,
+            job_name: job_name,
+            error_proc: ->(x) { error(x) && raise }
+          ).do!
+        rescue
+        end
       end
     end
 
@@ -37,6 +40,10 @@ module Sleet
 
     def error(message)
       puts "ERROR: #{message}".red
+    end
+
+    def error!(message)
+      error(message)
       exit 1
     end
 
