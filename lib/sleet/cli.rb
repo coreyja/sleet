@@ -16,8 +16,8 @@ module Sleet
       current_branch = Sleet::Repo.from_dir(source_dir)
 
       error 'Not on a branch' unless current_branch.on_branch?
-      error "No upstream branch set for the current branch of #{current_branch.current_branch_name}" unless current_branch.has_remote?
-      error 'Upstream remote is not GitHub' unless current_branch.is_github?
+      error "No upstream branch set for the current branch of #{current_branch.current_branch_name}" unless current_branch.remote?
+      error 'Upstream remote is not GitHub' unless current_branch.github?
 
       branch = Sleet::CircleCiBranch.new(
         github_user: current_branch.github_user,

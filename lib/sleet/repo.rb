@@ -14,11 +14,11 @@ module Sleet
       @repo = repo
     end
 
-    def has_remote?
+    def remote?
       !current_branch.remote.nil?
     end
 
-    def is_github?
+    def github?
       !github_match.nil?
     end
 
