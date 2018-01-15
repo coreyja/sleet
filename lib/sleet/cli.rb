@@ -13,18 +13,18 @@ module Sleet
       file_name = options.fetch(:input_file, '.rspec_example_statuses')
       output_file = options.fetch(:output_file, '.rspec_example_statuses')
 
-      current_branch = Sleet::Repo.from_dir(source_dir)
+      repo = Sleet::Repo.from_dir(source_dir)
 
-      error 'Not on a branch' unless current_branch.on_branch?
-      unless current_branch.remote?
-        error "No upstream branch set for the current branch of #{current_branch.current_branch_name}"
+      error 'Not on a branch' unless repo.on_branch?
+      unless repo.remote?
+        error "No upstream branch set for the current branch of #{repo.repo_name}"
       end
-      error 'Upstream remote is not GitHub' unless current_branch.github?
+      error 'Upstream remote is not GitHub' unless repo.github?
 
       branch = Sleet::CircleCiBranch.new(
-        github_user: current_branch.github_user,
-        github_repo: current_branch.github_repo,
-        branch: current_branch.remote_branch
+        github_user: repo.github_user,
+        github_repo: repo.github_repo,
+        branch: repo.remote_branch
       )
 
       build = branch.builds_with_artificats.first
@@ -32,8 +32,8 @@ module Sleet
       error 'No builds with artifcats found' if build.nil?
 
       build = Sleet::CircleCiBuild.new(
-        github_user: current_branch.github_user,
-        github_repo: current_branch.github_repo,
+        github_user: repo.github_user,
+        github_repo: repo.github_repo,
         build_num: build['build_num']
       )
 
