@@ -9,24 +9,15 @@ module Sleet
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
     def fetch
-      fetcher.validate!
-      fetcher.create_output_file!
-    end
-
-    private
-
-    def fetcher
-      @_fetcher ||= Sleet::Fetcher.new(fetcher_params)
-    end
-
-    def fetcher_params
-      {
+      Sleet::Fetcher.new(
         source_dir: options.fetch(:source_dir, default_dir),
         input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
         output_filename: options.fetch(:output_file, '.rspec_example_statuses'),
         error_proc: ->(x) { error(x) }
-      }
+      ).do!
     end
+
+    private
 
     def error(message)
       puts "ERROR: #{message}".red

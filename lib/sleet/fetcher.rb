@@ -9,6 +9,11 @@ module Sleet
       @error_proc = error_proc
     end
 
+    def do!
+      validate!
+      create_output_file!
+    end
+
     def validate!
       must_be_on_branch!
       must_have_an_upstream_branch!
