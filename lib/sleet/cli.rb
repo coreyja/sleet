@@ -8,7 +8,18 @@ module Sleet
     option :source_dir, type: :string, aliases: [:s]
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
+    option :workflows, type: :hash, aliases: [:w]
     def fetch
+      if options[:worflows]
+        workflow_fetch
+      else
+        single_fetch
+      end
+    end
+
+    private
+
+    def single_fetch
       Sleet::Fetcher.new(
         source_dir: options.fetch(:source_dir, default_dir),
         input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
@@ -19,11 +30,7 @@ module Sleet
       error!(e.message)
     end
 
-    desc 'Monorepo: Using workflows in CircleCI fetch for multiple seperate subdirs', 'monorepo'
-    option :source_dir, type: :string, aliases: [:s]
-    option :input_file, type: :string, aliases: [:i]
-    option :workflows, type: :hash, aliases: [:w], required: true
-    def monorepo
+    def workflow_fetch
       failed = false
       options[:workflows].each do |job_name, output_filename|
         begin
@@ -40,8 +47,6 @@ module Sleet
       end
       exit 1 if failed
     end
-
-    private
 
     def error(message)
       puts "ERROR: #{message}".red
