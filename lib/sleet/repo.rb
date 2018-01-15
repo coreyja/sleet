@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class CurrentBranchGithub
+  class Repo
     REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}
     CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}
     GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}

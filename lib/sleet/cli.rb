@@ -13,7 +13,7 @@ module Sleet
       file_name = options.fetch(:input_file, '.rspec_example_statuses')
       output_file = options.fetch(:output_file, '.rspec_example_statuses')
 
-      current_branch = Sleet::CurrentBranchGithub.from_dir(source_dir)
+      current_branch = Sleet::Repo.from_dir(source_dir)
 
       error 'Not on a branch' unless current_branch.on_branch?
       error "No upstream branch set for the current branch of #{current_branch.current_branch_name}" unless current_branch.has_remote?
@@ -34,6 +34,8 @@ module Sleet
         github_repo: current_branch.github_repo,
         build_num: build['build_num']
       )
+
+      error "No Rspec example file found in the latest build (##{build.build_num}) with artifacts" unless build.artifacts.any?
 
       files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
       Dir.chdir(source_dir) do
