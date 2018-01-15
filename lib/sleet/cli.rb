@@ -15,36 +15,14 @@ module Sleet
 
       repo = Sleet::Repo.from_dir(source_dir)
 
-      error 'Not on a branch' unless repo.on_branch?
-      unless repo.remote?
-        error "No upstream branch set for the current branch of #{repo.repo_name}"
-      end
-      error 'Upstream remote is not GitHub' unless repo.github?
-
-      branch = Sleet::CircleCiBranch.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
-        branch: repo.remote_branch
+      fetcher = Sleet::Fetcher.new(
+        source_dir: source_dir,
+        input_filename: file_name,
+        output_filename: output_file,
+        error_proc: lambda { |x| error(x) }
       )
-
-      build = branch.builds_with_artificats.first
-
-      error 'No builds with artifcats found' if build.nil?
-
-      build = Sleet::CircleCiBuild.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
-        build_num: build['build_num']
-      )
-
-      unless build.artifacts.any?
-        error "No Rspec example file found in the latest build (##{build.build_num}) with artifacts"
-      end
-
-      files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
-      Dir.chdir(source_dir) do
-        File.write(output_file, Sleet::RspecFileMerger.new(files).output)
-      end
+      fetcher.validate!
+      fetcher.create_output_file!
     end
 
     private
