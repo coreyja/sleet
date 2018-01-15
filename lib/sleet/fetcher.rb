@@ -14,6 +14,7 @@ module Sleet
       must_have_an_upstream_branch!
       upstream_remote_must_be_github!
       must_find_a_build_with_artifacts!
+      chosen_build_must_have_input_file!
       true
     end
 
@@ -21,6 +22,7 @@ module Sleet
       Dir.chdir(source_dir) do
         File.write(output_filename, combined_file)
       end
+      puts "Created file (#{output_filename}) from build (##{circle_ci_build.build_num})".green
     end
 
     private
@@ -46,12 +48,16 @@ module Sleet
       @_circle_ci_build ||= Sleet::CircleCiBuild.new(
         github_user: repo.github_user,
         github_repo: repo.github_repo,
-        build_num: circle_ci_branch.builds_with_artificats.first['build_num']
+        build_num: chosen_build_json['build_num']
       )
     end
 
     def repo
       @_repo ||= Sleet::Repo.from_dir(source_dir)
+    end
+
+    def chosen_build_json
+      circle_ci_branch.builds_with_artificats.first
     end
 
     def circle_ci_branch
@@ -78,13 +84,13 @@ module Sleet
     end
 
     def must_find_a_build_with_artifacts!
-      circle_ci_branch.builds_with_artificats.any? ||
+      !chosen_build_json.nil? ||
         error('No builds with artifcats found')
     end
 
-    def chosen_build_must_have_input_file
+    def chosen_build_must_have_input_file!
       circle_ci_build.artifacts.any? ||
-        error("No Rspec example file found in the latest build (##{build.build_num}) with artifacts")
+        error("No Rspec example file found in the latest build (##{circle_ci_build.build_num}) with artifacts")
     end
   end
 end
