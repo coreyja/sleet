@@ -2,7 +2,7 @@
 
 module Sleet
   class Fetcher
-    class Error < ::StandardError; end
+    class Error < ::Sleet::Error; end
 
     def initialize(source_dir:, input_filename:, output_filename:, job_name: nil)
       @source_dir = source_dir

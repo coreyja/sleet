@@ -15,7 +15,7 @@ module Sleet
         output_filename: options.fetch(:output_file, '.rspec_example_statuses'),
         error_proc: ->(x) { error!(x) }
       ).do!
-    rescue Sleet::Fetcher::Error => e
+    rescue Sleet::Error => e
       error!(e.message)
     end
 
@@ -33,7 +33,7 @@ module Sleet
             output_filename: output_filename,
             job_name: job_name
           ).do!
-        rescue Sleet::Fetcher::Error => e
+        rescue Sleet::Error => e
           failed = true
           error(e.message)
         end
