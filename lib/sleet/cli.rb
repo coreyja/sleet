@@ -31,7 +31,7 @@ module Sleet
             job_name: job_name,
             error_proc: ->(x) { error(x) && raise }
           ).do!
-        rescue
+        rescue StandardError
         end
       end
     end
