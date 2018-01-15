@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Sleet
   class Fetcher
     def initialize(source_dir:, input_filename:, output_filename:)
