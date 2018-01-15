@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
-require 'thor'
-require 'json'
-require 'rugged'
+require 'colorize'
 require 'faraday'
+require 'json'
 require 'rspec'
+require 'rugged'
+require 'thor'
 require 'yaml'
+
+# This is to load the classes that are defined in the same file as this one
 begin
   RSpec::Core::ExampleStatusPersister
 end

@@ -17,6 +17,7 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - '*.gemspec'
 
 Documentation:
   Enabled: false

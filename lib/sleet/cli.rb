@@ -16,7 +16,9 @@ module Sleet
       current_branch = Sleet::Repo.from_dir(source_dir)
 
       error 'Not on a branch' unless current_branch.on_branch?
-      error "No upstream branch set for the current branch of #{current_branch.current_branch_name}" unless current_branch.remote?
+      unless current_branch.remote?
+        error "No upstream branch set for the current branch of #{current_branch.current_branch_name}"
+      end
       error 'Upstream remote is not GitHub' unless current_branch.github?
 
       branch = Sleet::CircleCiBranch.new(
@@ -35,7 +37,9 @@ module Sleet
         build_num: build['build_num']
       )
 
-      error "No Rspec example file found in the latest build (##{build.build_num}) with artifacts" unless build.artifacts.any?
+      unless build.artifacts.any?
+        error "No Rspec example file found in the latest build (##{build.build_num}) with artifacts"
+      end
 
       files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
       Dir.chdir(source_dir) do
@@ -46,7 +50,7 @@ module Sleet
     private
 
     def error(message)
-      puts "ERROR: #{message}"
+      puts "ERROR: #{message}".red
       exit 1
     end
 
