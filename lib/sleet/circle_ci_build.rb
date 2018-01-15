@@ -2,6 +2,8 @@
 
 module Sleet
   class CircleCiBuild
+    attr_reader :build_num
+
     def initialize(github_user:, github_repo:, build_num:)
       @github_user = github_user
       @github_repo = github_repo
@@ -14,10 +16,10 @@ module Sleet
 
     private
 
-    attr_reader :github_user, :github_repo, :build_num
+    attr_reader :github_user, :github_repo
 
     def url
-      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/#{build_num}/artifacts"
+      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/#{build_num}/artifacts?filter=completed" # rubocop:disable Metrics/LineLength
     end
   end
 end

@@ -9,33 +9,20 @@ module Sleet
     option :input_file, type: :string, aliases: [:i]
     option :output_file, type: :string, aliases: [:o]
     def fetch
-      source_dir = options.fetch(:source_dir, default_dir)
-      file_name = options.fetch(:input_file, '.rspec_example_statuses')
-      output_file = options.fetch(:output_file, '.rspec_example_statuses')
-
-      current_branch = Sleet::CurrentBranchGithub.from_dir(source_dir)
-
-      branch = Sleet::CircleCiBranch.new(
-        github_user: current_branch.github_user,
-        github_repo: current_branch.github_repo,
-        branch: current_branch.remote_branch
-      )
-
-      build = branch.builds_with_artificats.first
-
-      build = Sleet::CircleCiBuild.new(
-        github_user: current_branch.github_user,
-        github_repo: current_branch.github_repo,
-        build_num: build['build_num']
-      )
-
-      files = Sleet::ArtifactDownloader.new(file_name: file_name, artifacts: build.artifacts).files
-      Dir.chdir(source_dir) do
-        File.write(output_file, Sleet::RspecFileMerger.new(files).output)
-      end
+      Sleet::Fetcher.new(
+        source_dir: options.fetch(:source_dir, default_dir),
+        input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
+        output_filename: options.fetch(:output_file, '.rspec_example_statuses'),
+        error_proc: ->(x) { error(x) }
+      ).do!
     end
 
     private
+
+    def error(message)
+      puts "ERROR: #{message}".red
+      exit 1
+    end
 
     def default_dir
       Rugged::Repository.discover(Dir.pwd).path + '..'

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class CurrentBranchGithub
+  class Repo
     REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}
     CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}
     GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}
@@ -12,7 +12,18 @@ module Sleet
 
     def initialize(repo:)
       @repo = repo
-      raise 'NOT GITHUB' unless github_match
+    end
+
+    def remote?
+      !current_branch.remote.nil?
+    end
+
+    def github?
+      !github_match.nil?
+    end
+
+    def on_branch?
+      !current_branch.nil?
     end
 
     def remote_branch
@@ -27,16 +38,16 @@ module Sleet
       github_match[2]
     end
 
+    def current_branch_name
+      repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
+    end
+
     private
 
     attr_reader :repo
 
     def current_branch
       repo.branches[current_branch_name]
-    end
-
-    def current_branch_name
-      repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
     end
 
     def github_match
