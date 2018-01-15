@@ -29,9 +29,9 @@ module Sleet
             input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
             output_filename: output_filename,
             job_name: job_name,
-            error_proc: ->(x) { error(x) && raise }
+            error_proc: ->(x) { error(x) && raise(Sleet::WorkflowError) }
           ).do!
-        rescue StandardError
+        rescue Sleet::WorkflowError
         end
       end
     end
