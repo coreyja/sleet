@@ -31,6 +31,11 @@ module Sleet
       end
     end
 
+    desc 'version', 'Display the version'
+    def version
+      puts "Sleet v#{Sleet::VERSION}"
+    end
+
     private
 
     def single_fetch
