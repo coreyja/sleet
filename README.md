@@ -1,5 +1,7 @@
 # Sleet
 
+[![Gem Version](https://badge.fury.io/rb/sleet.svg)](https://badge.fury.io/rb/sleet)
+
 ## Background and Problem
 
 RSpec has a [feature](https://relishapp.com/rspec/rspec-core/v/3-7/docs/command-line/only-failures) that I find very useful which is the `--only-failures` option. This will re-run only that examples that failed the previous run.
