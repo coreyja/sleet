@@ -1,4 +1,4 @@
-# Sleet
+# Sleet ☁️ ❄️
 
 [![Gem Version](https://badge.fury.io/rb/sleet.svg)](https://badge.fury.io/rb/sleet)
 
