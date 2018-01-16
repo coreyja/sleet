@@ -1,6 +1,9 @@
 # Sleet ☁️ ❄️
 
 [![Gem Version](https://badge.fury.io/rb/sleet.svg)](https://badge.fury.io/rb/sleet)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7f346b368d72b53ef630/maintainability)](https://codeclimate.com/github/coreyja/sleet/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/7f346b368d72b53ef630/test_coverage)](https://codeclimate.com/github/coreyja/sleet/test_coverage)
+[![CircleCI](https://circleci.com/gh/coreyja/sleet.svg?style=svg)](https://circleci.com/gh/coreyja/sleet)
 
 ## Background and Problem
 
