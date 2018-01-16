@@ -1,5 +1,12 @@
 # Change Log
 
+## [v0.3.2](https://github.com/coreyja/sleet/tree/v0.3.2) (2018-01-15)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.1...v0.3.2)
+
+**Merged pull requests:**
+
+- Update Readme and Add Descriptions to Help Menus [\#8](https://github.com/coreyja/sleet/pull/8) ([coreyja](https://github.com/coreyja))
+
 ## [v0.3.1](https://github.com/coreyja/sleet/tree/v0.3.1) (2018-01-15)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.0...v0.3.1)
 
