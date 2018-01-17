@@ -1,6 +1,14 @@
 # Change Log
 
-## [v0.3.3](https://github.com/coreyja/sleet/tree/v0.3.3) (2018-01-15)
+## [v0.3.4](https://github.com/coreyja/sleet/tree/v0.3.4) (2018-01-16)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.3...v0.3.4)
+
+**Merged pull requests:**
+
+- Only Fetch Branch Once [\#12](https://github.com/coreyja/sleet/pull/12) ([coreyja](https://github.com/coreyja))
+- Fix Auth [\#11](https://github.com/coreyja/sleet/pull/11) ([coreyja](https://github.com/coreyja))
+
+## [v0.3.3](https://github.com/coreyja/sleet/tree/v0.3.3) (2018-01-16)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.2...v0.3.3)
 
 **Merged pull requests:**
