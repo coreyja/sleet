@@ -13,6 +13,7 @@ module Sleet
     def get(*args, &block)
       connection.get(*args, &block)
     end
+
     def self.get(url)
       instance.get(url)
     end
