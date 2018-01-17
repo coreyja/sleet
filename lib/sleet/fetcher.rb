@@ -4,7 +4,7 @@ module Sleet
   class Fetcher
     class Error < ::Sleet::Error; end
 
-    def initialize(source_dir:, circle_ci_branch:, input_filename:, output_filename:, github_user:, github_repo:, job_name: nil)
+    def initialize(source_dir:, circle_ci_branch:, input_filename:, output_filename:, github_user:, github_repo:, job_name: nil) # rubocop:disable Metrics/LineLength
       @source_dir = source_dir
       @circle_ci_branch = circle_ci_branch
       @input_filename = input_filename
