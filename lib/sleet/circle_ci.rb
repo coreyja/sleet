@@ -14,8 +14,8 @@ module Sleet
       connection.get(*args, &block)
     end
 
-    def self.get(url)
-      instance.get(url)
+    def self.get(*args, &block)
+      instance.get(*args, &block)
     end
 
     private
