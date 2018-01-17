@@ -4,11 +4,14 @@ module Sleet
   class Fetcher
     class Error < ::Sleet::Error; end
 
-    def initialize(source_dir:, input_filename:, output_filename:, job_name: nil)
+    def initialize(source_dir:, circle_ci_branch:, input_filename:, output_filename:, github_user:, github_repo:, job_name: nil) # rubocop:disable Metrics/LineLength
       @source_dir = source_dir
+      @circle_ci_branch = circle_ci_branch
       @input_filename = input_filename
       @output_filename = output_filename
       @job_name = job_name
+      @github_user = github_user
+      @github_repo = github_repo
     end
 
     def do!
@@ -17,9 +20,6 @@ module Sleet
     end
 
     def validate!
-      must_be_on_branch!
-      must_have_an_upstream_branch!
-      upstream_remote_must_be_github!
       must_find_a_build_with_artifacts!
       chosen_build_must_have_input_file!
       true
@@ -34,7 +34,7 @@ module Sleet
 
     private
 
-    attr_reader :source_dir, :input_filename, :output_filename, :job_name
+    attr_reader :input_filename, :output_filename, :job_name, :circle_ci_branch, :github_user, :github_repo, :source_dir
 
     def error(msg)
       raise Error, msg
@@ -53,14 +53,10 @@ module Sleet
 
     def circle_ci_build
       @_circle_ci_build ||= Sleet::CircleCiBuild.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
+        github_user: github_user,
+        github_repo: github_repo,
         build_num: chosen_build_json['build_num']
       )
-    end
-
-    def repo
-      @_repo ||= Sleet::Repo.from_dir(source_dir)
     end
 
     def chosen_build_json
@@ -71,28 +67,6 @@ module Sleet
       end
     end
 
-    def circle_ci_branch
-      @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
-        branch: repo.remote_branch
-      )
-    end
-
-    def must_be_on_branch!
-      repo.on_branch? ||
-        error('Not on a branch')
-    end
-
-    def must_have_an_upstream_branch!
-      repo.remote? ||
-        error("No upstream branch set for the current branch of #{repo.current_branch_name}")
-    end
-
-    def upstream_remote_must_be_github!
-      repo.github? ||
-        error('Upstream remote is not GitHub')
-    end
 
     def must_find_a_build_with_artifacts!
       !chosen_build_json.nil? ||
