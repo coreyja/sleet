@@ -1,5 +1,15 @@
 # Change Log
 
+## [v0.3.6](https://github.com/coreyja/sleet/tree/v0.3.6) (2018-01-17)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.5...v0.3.6)
+
+**Merged pull requests:**
+
+- Fix Auth By Going Back to Query Params [\#13](https://github.com/coreyja/sleet/pull/13) ([coreyja](https://github.com/coreyja))
+
+## [v0.3.5](https://github.com/coreyja/sleet/tree/v0.3.5) (2018-01-17)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.4...v0.3.5)
+
 ## [v0.3.4](https://github.com/coreyja/sleet/tree/v0.3.4) (2018-01-17)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.3...v0.3.4)
 
