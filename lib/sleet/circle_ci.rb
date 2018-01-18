@@ -10,18 +10,12 @@ module Sleet
       @_token ||= File.read("#{Dir.home}/.circleci.token").strip
     end
 
-    def get(*args, &block)
-      connection.get(*args, &block)
+    def get(url)
+      Faraday.get(url, circleci_token: token)
     end
 
-    def self.get(*args, &block)
-      instance.get(*args, &block)
-    end
-
-    private
-
-    def connection
-      @_connection ||= Faraday.new.tap { |c| c.basic_auth(token, '') }
+    def self.get(url)
+      instance.get(url)
     end
   end
 end
