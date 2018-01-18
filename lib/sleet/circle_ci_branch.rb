@@ -9,7 +9,7 @@ module Sleet
     end
 
     def builds
-      @_builds ||= JSON.parse(Sleet::CircleCi.get(url, filter: :completed).body)
+      @_builds ||= JSON.parse(Sleet::CircleCi.get(url).body)
     end
 
     def builds_with_artificats
@@ -21,7 +21,7 @@ module Sleet
     attr_reader :github_user, :github_repo, :branch
 
     def url
-      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}"
+      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}?filter=completed"
     end
   end
 end
