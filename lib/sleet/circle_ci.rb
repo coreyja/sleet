@@ -11,7 +11,7 @@ module Sleet
     end
 
     def get(url)
-      Faraday.get(url, circleci_token: token)
+      Faraday.get(url, 'circle-token' => token)
     end
 
     def self.get(url)
