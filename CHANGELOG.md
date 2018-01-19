@@ -1,6 +1,13 @@
 # Change Log
 
-## [v0.3.6](https://github.com/coreyja/sleet/tree/v0.3.6) (2018-01-17)
+## [v0.3.7](https://github.com/coreyja/sleet/tree/v0.3.7) (2018-01-18)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.6...v0.3.7)
+
+**Merged pull requests:**
+
+- Fix token auth and finally add a spec for it so I don't break it again [\#14](https://github.com/coreyja/sleet/pull/14) ([coreyja](https://github.com/coreyja))
+
+## [v0.3.6](https://github.com/coreyja/sleet/tree/v0.3.6) (2018-01-18)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.5...v0.3.6)
 
 **Merged pull requests:**
