@@ -10,11 +10,17 @@ describe Sleet::CircleCi do
 
     before do
       allow(File).to receive(:read).and_return('FAKE_TOKEN')
+      allow(Dir).to receive(:home).and_return('~/HOME')
+    end
+
+    after do
+      expect(Dir).to have_received(:home).once
+      expect(File).to have_received(:read).with('~/HOME/.circleci.token').once
     end
 
     it 'adds the token as a query param' do
-      described_class.get url
-      expect(stubbed_request).to have_been_requested
+      2.times { described_class.get url }
+      expect(stubbed_request).to have_been_requested.times(2)
     end
   end
 end
