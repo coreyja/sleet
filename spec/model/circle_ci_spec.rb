@@ -3,19 +3,19 @@
 
 require 'spec_helper'
 
-describe Sleet::CircleCi do
+describe Sleet::CircleCi, type: :model do
   describe '.get' do
     let(:url) { 'http://circleci.com' }
     let!(:stubbed_request) { stub_request(:get, url).with(query: { 'circle-token' => 'FAKE_TOKEN' }) }
 
     before do
       allow(File).to receive(:read).and_return('FAKE_TOKEN')
-      allow(Dir).to receive(:home).and_return('~/HOME')
+      allow(Dir).to receive(:home).and_return('/HOME')
     end
 
     after do
       expect(Dir).to have_received(:home).once
-      expect(File).to have_received(:read).with('~/HOME/.circleci.token').once
+      expect(File).to have_received(:read).with('/HOME/.circleci.token').once
     end
 
     it 'adds the token as a query param' do
