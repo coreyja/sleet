@@ -8,7 +8,7 @@ describe 'The CLI App', type: :aruba do
   it 'has a test' do
     Rugged::Repository.init_at('.')
 
-    raise `#{sleet_command_path}`
+    `#{sleet_command_path}`
     expect($CHILD_STATUS.exitstatus).to eq 0
   end
 end
