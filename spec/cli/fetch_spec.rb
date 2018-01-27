@@ -3,7 +3,7 @@
 
 require 'spec_helper'
 
-describe 'sleet fetch', type: :aruba do
+describe 'sleet fetch', type: :cli do
   # let(:sleet_command_path) { '../../exe/sleet' }
 
   # it 'runs successfully' do

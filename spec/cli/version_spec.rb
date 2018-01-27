@@ -3,11 +3,9 @@
 
 require 'spec_helper'
 
-describe 'sleet version', type: :aruba do
-  let(:sleet_command_path) { 'exe/sleet' }
-
+describe 'sleet version', type: :cli do
   it 'has the correct prefix' do
-    expect(`#{sleet_command_path} version`).to match(/^Sleet v/)
+    expect(`#{cli_executable_path} version`).to match(/^Sleet v/)
     expect($CHILD_STATUS.exitstatus).to eq 0
   end
 end
