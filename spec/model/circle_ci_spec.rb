@@ -13,14 +13,11 @@ describe Sleet::CircleCi, type: :model do
       allow(Dir).to receive(:home).and_return('/HOME')
     end
 
-    after do
-      expect(Dir).to have_received(:home).once
-      expect(File).to have_received(:read).with('/HOME/.circleci.token').once
-    end
-
-    it 'adds the token as a query param' do
+    it 'adds the token as a query param and only reads the token from disk once' do
       2.times { described_class.get url }
       expect(stubbed_request).to have_been_requested.times(2)
+      expect(Dir).to have_received(:home).once
+      expect(File).to have_received(:read).with('/HOME/.circleci.token').once
     end
   end
 end
