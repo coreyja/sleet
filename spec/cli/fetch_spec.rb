@@ -4,10 +4,9 @@
 require 'spec_helper'
 
 describe 'sleet fetch', type: :cli do
-  it 'runs successfully' do
-    output, error, status = Open3.capture3("#{cli_executable_path} fetch")
-    expect(status.success?).to eq true
-    expect(output).to match(/^Sleet v/)
-    expect(error).to eq ''
+  context 'when NOT in a git repo' do
+    it 'fails' do
+      expect_command('fetch').to run.unsuccesfully
+    end
   end
 end
