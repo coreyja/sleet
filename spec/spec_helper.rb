@@ -31,4 +31,8 @@ RSpec.configure do |c|
       end
     end
   end
+
+  c.after :each do
+    Sleet::CircleCi.instance.reset!
+  end
 end

@@ -14,6 +14,10 @@ module Sleet
       Faraday.get(url, 'circle-token' => token)
     end
 
+    def reset!
+      @_token = nil
+    end
+
     def self.get(url)
       instance.get(url)
     end
