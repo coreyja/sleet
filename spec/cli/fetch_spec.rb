@@ -23,23 +23,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     context 'with a commit' do
-      before do
-        content = "This is a random blob. #{SecureRandom.uuid}"
-        filename = 'README.md'
-        File.write(filename, content)
-        oid = repo.write(content, :blob)
-        index = repo.index
-        index.add(path: filename, oid: oid, mode: 0o100644)
-        author = { email: 'tanoku@gmail.com', time: Time.now, name: 'Vicent Mart' }
-
-        Rugged::Commit.create(repo,
-                              author: author,
-                              message: 'Hello world',
-                              committer: author,
-                              parents: [],
-                              tree: index.write_tree(repo),
-                              update_ref: 'HEAD')
-      end
+      let!(:commit) { create_commit(repo) }
 
       it 'fails with the correct error message' do
         expect_command('fetch').to error_with 'ERROR: No upstream branch set for the current branch of master'
@@ -47,12 +31,7 @@ describe 'sleet fetch', type: :cli do
 
       context 'when there is a NON github upstream' do
         let!(:remote) { repo.remotes.create('origin', 'git://gitlab.com/someuser/somerepo.git') }
-        before do
-          dirname = File.dirname('.git/refs/remotes/origin/master')
-          File.directory?(dirname) || FileUtils.mkdir_p(dirname)
-          File.write('.git/refs/remotes/origin/master', repo.head.target.tree_id)
-          repo.branches['master'].upstream = repo.branches['origin/master']
-        end
+        before { assign_upstream 'master', 'origin/master' }
 
         it 'runs and outputs the correct error message' do
           expect_command('fetch').to error_with 'ERROR: Upstream remote is not GitHub'
@@ -61,12 +40,7 @@ describe 'sleet fetch', type: :cli do
 
       context 'when there is a github upstream' do
         let!(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
-        before do
-          dirname = File.dirname('.git/refs/remotes/origin/master')
-          File.directory?(dirname) || FileUtils.mkdir_p(dirname)
-          File.write('.git/refs/remotes/origin/master', repo.head.target.tree_id)
-          repo.branches['master'].upstream = repo.branches['origin/master']
-        end
+        before { assign_upstream 'master', 'origin/master' }
 
         let!(:stubbed_branch_request) { stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master').with(query: hash_including('filter' => 'completed')).to_return(body: stubbed_branch_response.to_json) }
 

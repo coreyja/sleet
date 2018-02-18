@@ -22,6 +22,7 @@ RSpec.configure do |c|
 
   c.before :each, type: :cli do
     extend CliHelper
+    extend GitHelper
   end
 
   c.around :each, type: :cli do |example|
