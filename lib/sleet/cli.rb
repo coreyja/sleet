@@ -54,7 +54,7 @@ module Sleet
     end
 
     def workflow_fetch
-      failed = false
+      error_messages = []
       options[:workflows].each do |job_name, output_filename|
         begin
           Sleet::Fetcher.new(
@@ -64,11 +64,10 @@ module Sleet
             )
           ).do!
         rescue Sleet::Error => e
-          failed = true
-          error_message(e.message)
+          error_messages << e.message
         end
       end
-      exit 1 if failed
+      error error_messages.join("\n") unless error_messages.empty?
     end
 
     def circle_ci_branch
@@ -109,12 +108,7 @@ module Sleet
     end
 
     def error(message)
-      error_message(message)
-      exit 1
-    end
-
-    def error_message(message)
-      puts "ERROR: #{message}".red
+      raise Thor::Error, "ERROR: #{message}".red
     end
 
     def default_dir

@@ -70,7 +70,7 @@ module Sleet
 
     def must_find_a_build_with_artifacts!
       !chosen_build_json.nil? ||
-        error("No builds with artifcats found #{"for job name [#{job_name}]" if job_name}")
+        error("No builds with artifcats found #{"for job name [#{job_name}]" if job_name} #{circle_ci_branch.builds}")
     end
 
     def chosen_build_must_have_input_file!

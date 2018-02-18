@@ -10,6 +10,8 @@ require 'tmpdir'
 require 'webmock/rspec'
 require 'pry'
 
+WebMock.disable_net_connect!
+
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |c|
