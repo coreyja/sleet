@@ -17,15 +17,22 @@ module CliHelper
     match do |actual|
       return false unless actual.is_a? Proc
       begin
-        stdout, stderr, status = actual.call
-        status_matches?(status) && stdout_matches?(stdout) && stderr_matches?(stderr)
+        @actual_stdout, @actual_stderr, @actual_status = actual.call
+        status_matches?(@actual_status) && stdout_matches?(@actual_stdout) && stderr_matches?(@actual_stderr)
       rescue Errno::ENOENT
         false
       end
     end
 
-    failure_message do |actual|
-      actual.call.last
+    failure_message do
+      super() + "\n" + <<~MSG
+        STD Out:
+        #{@actual_stdout}
+        STD Errror:
+        #{@actual_stderr}
+        Status:
+        #{@actual_status}
+			MSG
     end
 
     chain :with_status do |status|
@@ -65,10 +72,11 @@ module CliHelper
     end
 
     def regexp_match?(exp, actual)
+      actual = actual.uncolorize
       if exp.is_a? Regexp
         actual.match?(exp)
       else
-        exp == actual
+        exp == actual.strip
       end
     end
   end

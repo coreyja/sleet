@@ -34,7 +34,6 @@ module Sleet
       end
     rescue Sleet::Error => e
       error(e.message)
-      exit 1
     end
 
     desc 'version', 'Display the version'
@@ -52,7 +51,6 @@ module Sleet
       ).do!
     rescue Sleet::Error => e
       error(e.message)
-      exit 1
     end
 
     def workflow_fetch
@@ -67,7 +65,7 @@ module Sleet
           ).do!
         rescue Sleet::Error => e
           failed = true
-          error(e.message)
+          error_message(e.message)
         end
       end
       exit 1 if failed
@@ -111,6 +109,11 @@ module Sleet
     end
 
     def error(message)
+      error_message(message)
+      exit 1
+    end
+
+    def error_message(message)
       puts "ERROR: #{message}".red
     end
 

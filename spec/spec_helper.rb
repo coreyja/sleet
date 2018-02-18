@@ -4,6 +4,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'sleet'
 
 require 'English'
+require 'fileutils'
 require 'tmpdir'
 
 require 'webmock/rspec'
