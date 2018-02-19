@@ -5,6 +5,7 @@ require 'sleet'
 
 require 'English'
 require 'fileutils'
+require 'securerandom'
 require 'tmpdir'
 
 require 'webmock/rspec'
@@ -26,7 +27,6 @@ RSpec.configure do |c|
   c.before :each, type: :cli do
     extend CliHelper
     extend GitHelper
-    extend HappyStubHelper
   end
 
   c.around :each, type: :cli do |example|

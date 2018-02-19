@@ -33,12 +33,6 @@ Style/StringLiterals:
   - single_quotes
   - double_quotes
 
-RSpec/LetSetup:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Enabled: false
-
 RSpec/MultipleExpectations:
   Enabled: false
 
