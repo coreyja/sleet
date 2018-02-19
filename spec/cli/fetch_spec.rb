@@ -62,6 +62,11 @@ describe 'sleet fetch', type: :cli do
     end
   end
 
+  it 'downloads and saves the persistance file locally' do
+    expect_command('fetch').to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+    expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
+  end
+
   context 'when NOT in a git repo' do
     let(:create_repo?) { false }
 
