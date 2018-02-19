@@ -20,9 +20,13 @@ RSpec.configure do |c|
   end
   c.example_status_persistence_file_path = 'spec/.rspec_example_statuses'
 
+  c.filter_run focus: true
+  c.run_all_when_everything_filtered = true
+
   c.before :each, type: :cli do
     extend CliHelper
     extend GitHelper
+    extend HappyStubHelper
   end
 
   c.around :each, type: :cli do |example|
@@ -33,7 +37,7 @@ RSpec.configure do |c|
     end
   end
 
-  c.after :each do
+  c.after do
     Sleet::CircleCi.instance.reset!
   end
 end

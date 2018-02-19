@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
@@ -30,3 +32,16 @@ Style/StringLiterals:
   SupportedStyles:
   - single_quotes
   - double_quotes
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/cli/**/*.rb'

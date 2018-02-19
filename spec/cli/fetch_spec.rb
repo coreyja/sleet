@@ -31,7 +31,8 @@ describe 'sleet fetch', type: :cli do
 
       context 'when there is a NON github upstream' do
         let!(:remote) { repo.remotes.create('origin', 'git://gitlab.com/someuser/somerepo.git') }
-        before { assign_upstream 'master', 'origin/master' }
+
+        before { assign_upstream repo, 'master', 'origin/master' }
 
         it 'runs and outputs the correct error message' do
           expect_command('fetch').to error_with 'ERROR: Upstream remote is not GitHub'
@@ -39,10 +40,10 @@ describe 'sleet fetch', type: :cli do
       end
 
       context 'when there is a github upstream' do
-        let!(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
-        before { assign_upstream 'master', 'origin/master' }
-
         let!(:stubbed_branch_request) { stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master').with(query: hash_including('filter' => 'completed')).to_return(body: stubbed_branch_response.to_json) }
+        let!(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
+
+        before { assign_upstream repo, 'master', 'origin/master' }
 
         context 'when there are no completed builds found for the branch' do
           let(:stubbed_branch_response) do
@@ -101,7 +102,7 @@ describe 'sleet fetch', type: :cli do
               [
                 {
                   path: 'random_file.txt',
-                  url: 'BLAH'
+                  url: 'fake_url.com/fake_path'
                 },
                 {
                   path: '.rspec_example_statuses',
@@ -202,6 +203,15 @@ describe 'sleet fetch', type: :cli do
           end
         end
       end
+    end
+  end
+
+  context 'with CLI options' do
+    before { setup_happy_path! }
+
+    it 'downloads and combines the artifacts and saves the persistance file locally' do
+      expect_command('fetch').to output(/Created file/).to_stdout
+      expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     end
   end
 end
