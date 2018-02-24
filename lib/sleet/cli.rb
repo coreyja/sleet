@@ -94,17 +94,25 @@ module Sleet
     end
 
     def repo
-      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir, default_dir))
+      @_repo ||= Sleet::Repo.from_dir(directory)
     end
 
     def base_fetcher_params
       {
-        source_dir: options.fetch(:source_dir, default_dir),
+        source_dir: directory,
         circle_ci_branch: circle_ci_branch,
         input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
         github_user: repo.github_user,
         github_repo: repo.github_repo
       }
+    end
+
+    def directory
+      if options[:source_dir]
+        options.fetch(:source_dir)
+      else
+        default_dir
+      end
     end
 
     def error(message)

@@ -15,5 +15,9 @@ module CliHelper
     output(message.red + "\n").to_stderr
   end
 
+  def without_error
+    output('').to_stderr
+  end
+
   RSpec::Matchers.define_negated_matcher(:output_nothing, :output)
 end

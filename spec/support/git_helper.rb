@@ -14,7 +14,7 @@ module GitHelper
   end
 
   def assign_upstream(repo, local_branch, remote_branch)
-    path = ".git/refs/remotes/#{remote_branch}"
+    path = "#{repo.path}/refs/remotes/#{remote_branch}"
     dirname = File.dirname(path)
     File.directory?(dirname) || FileUtils.mkdir_p(dirname)
     File.write(path, repo.head.target.tree_id)

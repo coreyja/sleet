@@ -50,7 +50,8 @@ describe 'sleet fetch', type: :cli do
   end
 
   let(:create_repo?) { true }
-  let(:repo) { Rugged::Repository.init_at('.') }
+  let(:repo_directory) { Dir.pwd }
+  let(:repo) { Rugged::Repository.init_at(repo_directory) }
   let(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
 
   before do
@@ -59,13 +60,11 @@ describe 'sleet fetch', type: :cli do
     stubbed_build_request
     stubbed_artifact_request
 
-    if create_repo?
-      repo
-      create_commit(repo)
+    repo
+    create_commit(repo)
 
-      remote
-      assign_upstream repo, 'master', 'origin/master'
-    end
+    remote
+    assign_upstream repo, 'master', 'origin/master'
   end
 
   it 'downloads and saves the persistance file locally' do
@@ -74,10 +73,16 @@ describe 'sleet fetch', type: :cli do
   end
 
   context 'when NOT in a git repo' do
-    let(:create_repo?) { false }
+    let(:repo_directory) { Dir.mktmpdir }
 
-    it 'fails' do
+    it 'fails when a source is not provided' do
       expect_command('fetch').to raise_error Rugged::RepositoryError
+    end
+
+    it 'succeeds when given the source path as an option' do
+      expect_command("fetch --source-dir #{repo_directory}")
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
     end
   end
 
@@ -116,12 +121,12 @@ describe 'sleet fetch', type: :cli do
     end
   end
 
-  context 'when none of the artifacts end with the correct path' do
+  context 'when none of the artifacts end with the default path' do
     let(:build_response) do
       [
         {
           path: 'random_file.txt',
-          url: 'BLAH'
+          url: 'https://fake_circle_ci_artfiacts.com/some-artifact'
         }
       ]
     end
@@ -130,6 +135,17 @@ describe 'sleet fetch', type: :cli do
       expect_command('fetch')
         .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read('.rspec_example_statuses').strip).to eq ''
+    end
+
+    it 'creates the correct file when given the correct short hand input file option' do
+      expect_command('fetch -i random_file.txt')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
+    end
+    it 'creates the correct file when given the correct input file option' do
+      expect_command('fetch --input-file random_file.txt')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     end
   end
 
@@ -215,5 +231,16 @@ describe 'sleet fetch', type: :cli do
         .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     end
+  end
+
+  it 'respects the output file CLI option' do
+    expect_command('fetch --output-file some_cool_file.txt')
+      .to output('Created file (some_cool_file.txt) from build (#23)'.green + "\n").to_stdout.and without_error
+    expect(File.read('some_cool_file.txt')).to eq happy_path_final_file
+  end
+  it 'respects the shortened output file CLI option' do
+    expect_command('fetch -o some_cool_file.txt')
+      .to output('Created file (some_cool_file.txt) from build (#23)'.green + "\n").to_stdout.and without_error
+    expect(File.read('some_cool_file.txt')).to eq happy_path_final_file
   end
 end
