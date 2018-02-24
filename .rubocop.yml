@@ -9,8 +9,6 @@ AllCops:
 
 Metrics/LineLength:
   Max: 120
-  Exclude:
-    - 'spec/**/*'
 
 Metrics/ClassLength:
   Exclude:

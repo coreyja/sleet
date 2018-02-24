@@ -34,13 +34,19 @@ describe 'sleet fetch', type: :cli do
   end
   let(:happy_path_final_file)  { artifact_response }
   let(:stubbed_branch_request) do
-    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/tree/.+}).with(query: hash_including).to_return(body: branch_response.to_json)
+    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/tree/.+})
+      .with(query: hash_including)
+      .to_return(body: branch_response.to_json)
   end
   let(:stubbed_build_request) do
-    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/\d+/artifacts}).with(query: hash_including).to_return(body: build_response.to_json)
+    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/\d+/artifacts})
+      .with(query: hash_including)
+      .to_return(body: build_response.to_json)
   end
   let(:stubbed_artifact_request) do
-    stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact').with(query: hash_including).to_return(body: artifact_response)
+    stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact')
+      .with(query: hash_including)
+      .to_return(body: artifact_response)
   end
 
   let(:create_repo?) { true }
@@ -121,7 +127,8 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'runs and creates an empty file for the persistance status file' do
-      expect_command('fetch').to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect_command('fetch')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read('.rspec_example_statuses').strip).to eq ''
     end
   end
@@ -141,7 +148,8 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'runs and save the persistance file locally' do
-      expect_command('fetch').to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect_command('fetch')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     end
   end
@@ -163,7 +171,11 @@ describe 'sleet fetch', type: :cli do
         }
       ]
     end
-    let(:stubbed_single_artifact_1_request) { stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact').with(query: hash_including).to_return(body: stubbed_single_artifact_1_response) }
+    let(:stubbed_single_artifact_1_request) do
+      stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact')
+        .with(query: hash_including)
+        .to_return(body: stubbed_single_artifact_1_response)
+    end
     let(:stubbed_single_artifact_1_response) do
       <<~ARTIFACT
         example_id                              | status | run_time        |
@@ -176,7 +188,11 @@ describe 'sleet fetch', type: :cli do
         ./spec/cli/fetch_spec.rb[1:2:2:3:3:1:1] | passed | 0.03863 seconds |
       ARTIFACT
     end
-    let(:stubbed_single_artifact_2_request) { stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact-2').with(query: hash_including).to_return(body: stubbed_single_artifact_2_response) }
+    let(:stubbed_single_artifact_2_request) do
+      stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact-2')
+        .with(query: hash_including)
+        .to_return(body: stubbed_single_artifact_2_response)
+    end
     let(:stubbed_single_artifact_2_response) do
       <<~ARTIFACT
         example_id                        | status | run_time        |
@@ -195,7 +211,8 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'downloads and combines the artifacts and saves the persistance file locally' do
-      expect_command('fetch').to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect_command('fetch')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     end
   end
