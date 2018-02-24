@@ -174,7 +174,7 @@ describe 'sleet fetch', type: :cli do
         ./spec/cli/fetch_spec.rb[1:2:2:3:1:1]   | passed | 0.03077 seconds |
         ./spec/cli/fetch_spec.rb[1:2:2:3:2:1]   | passed | 0.02891 seconds |
         ./spec/cli/fetch_spec.rb[1:2:2:3:3:1:1] | passed | 0.03863 seconds |
-              ARTIFACT
+      ARTIFACT
     end
     let(:stubbed_single_artifact_2_request) { stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact-2').with(query: hash_including).to_return(body: stubbed_single_artifact_2_response) }
     let(:stubbed_single_artifact_2_response) do
@@ -186,7 +186,7 @@ describe 'sleet fetch', type: :cli do
         ./spec/cli/fetch_spec.rb[1:2:2:1] | passed | 0.01431 seconds |
         ./spec/model/sleet_spec.rb[1:1]   | passed | 0.00073 seconds |
         ./spec/cli/version_spec.rb[1:1]   | passed | 0.00165 seconds |
-              ARTIFACT
+      ARTIFACT
     end
 
     before do
