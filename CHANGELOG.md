@@ -1,6 +1,13 @@
 # Change Log
 
-## [v0.3.7](https://github.com/coreyja/sleet/tree/v0.3.7) (2018-01-18)
+## [v0.3.8](https://github.com/coreyja/sleet/tree/v0.3.8) (2018-02-25)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.7...v0.3.8)
+
+**Merged pull requests:**
+
+- More Specs [\#15](https://github.com/coreyja/sleet/pull/15) ([coreyja](https://github.com/coreyja))
+
+## [v0.3.7](https://github.com/coreyja/sleet/tree/v0.3.7) (2018-01-19)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.6...v0.3.7)
 
 **Merged pull requests:**
