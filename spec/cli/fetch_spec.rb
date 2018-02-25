@@ -243,4 +243,106 @@ describe 'sleet fetch', type: :cli do
       .to output('Created file (some_cool_file.txt) from build (#23)'.green + "\n").to_stdout.and without_error
     expect(File.read('some_cool_file.txt')).to eq happy_path_final_file
   end
+
+  context 'when the repo uses workflows' do
+    let(:branch_response) do
+      [
+        { has_artifacts: true, build_num: 14, workflows: { job_name: 'prep-job' } },
+        { has_artifacts: true, build_num: 23, workflows: { job_name: 'rspec-job' } },
+        { has_artifacts: true, build_num: 509, workflows: { job_name: 'other-random-job' } }
+      ]
+    end
+
+    it 'works when given the rspec job and a single output' do
+      expect_command('fetch --workflows rspec-job:.rspec_example_file')
+        .to output('Created file (.rspec_example_file) from build (#23)'.green + "\n").to_stdout
+      expect(File.read('.rspec_example_file')).to eq happy_path_final_file
+    end
+
+    context 'when used in a mono-repo' do
+      let(:branch_response) do
+        [
+          { has_artifacts: true, build_num: 14, workflows: { job_name: 'some-app-rspec' } },
+          { has_artifacts: true, build_num: 23, workflows: { job_name: 'app-rspec' } },
+          { has_artifacts: true, build_num: 509, workflows: { job_name: 'third-app-rspec' } }
+        ]
+      end
+      let(:build_response_thrid_app) do
+        [
+          {
+            path: '.rspec_example_statuses',
+            url: 'https://fake_circle_ci_artfiacts.com/third-app-artifact'
+          }
+        ]
+      end
+      let(:build_response_some_app) do
+        [
+          {
+            path: '.rspec_example_statuses',
+            url: 'https://fake_circle_ci_artfiacts.com/some-app-artifact'
+          }
+        ]
+      end
+      let(:third_artifact_response) do
+        <<~ARTIFACT
+          example_id                             | status | run_time        |
+          -------------------------------------- | ------ | --------------- |
+          ./spec/model/taco_spec.rb[1:3]         | passed | 0.00111 seconds |
+        ARTIFACT
+      end
+      let(:some_artifact_response) do
+        <<~ARTIFACT
+          example_id                               | status | run_time        |
+          ---------------------------------------- | ------ | --------------- |
+          ./spec/model/random_spec.rb[1:1]         | passed | 0.00073 seconds |
+        ARTIFACT
+      end
+      let(:stubbed_build_14_request) do
+        stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/14/artifacts})
+          .with(query: hash_including)
+          .to_return(body: build_response.to_json)
+      end
+      let(:stubbed_artifact_14_request) do
+        stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-app-artifact')
+          .with(query: hash_including)
+          .to_return(body: artifact_response)
+      end
+      let(:stubbed_build_509_request) do
+        stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/509/artifacts})
+          .with(query: hash_including)
+          .to_return(body: build_response.to_json)
+      end
+      let(:stubbed_artifact_509_request) do
+        stub_request(:get, 'https://fake_circle_ci_artfiacts.com/third-app-artifact')
+          .with(query: hash_including)
+          .to_return(body: artifact_response)
+      end
+      let(:expected_output) do
+        'Created file (app/.rspec_example_file) from build (#23)'.green + "\n" +
+          'Created file (some_app/.rspec_example_status) from build (#14)'.green + "\n" +
+          'Created file (third_app/rspec.txt) from build (#509)'.green + "\n"
+      end
+
+      before do
+        stubbed_build_14_request
+        stubbed_artifact_14_request
+        stubbed_build_509_request
+        stubbed_artifact_509_request
+
+        Dir.mkdir('app')
+        Dir.mkdir('some_app')
+        Dir.mkdir('third_app')
+      end
+
+      it 'works when given the rspec job and a single output' do
+        expect_command('fetch --workflows app-rspec:app/.rspec_example_file
+                       some-app-rspec:some_app/.rspec_example_status
+                       third-app-rspec:third_app/rspec.txt')
+          .to output(expected_output).to_stdout
+        expect(File.read('app/.rspec_example_file')).to eq happy_path_final_file
+        expect(File.read('some_app/.rspec_example_status')).to eq happy_path_final_file
+        expect(File.read('third_app/rspec.txt')).to eq happy_path_final_file
+      end
+    end
+  end
 end

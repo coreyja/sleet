@@ -37,3 +37,6 @@ RSpec/MultipleExpectations:
 RSpec/DescribeClass:
   Exclude:
     - 'spec/cli/**/*.rb'
+
+RSpec/ExampleLength:
+  Max: 10
