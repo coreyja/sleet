@@ -343,6 +343,29 @@ describe 'sleet fetch', type: :cli do
         expect(File.read('some_app/.rspec_example_status')).to eq happy_path_final_file
         expect(File.read('third_app/rspec.txt')).to eq happy_path_final_file
       end
+
+      context 'when using a config file for the options' do
+        let(:config_file) do
+          <<~CONFIG
+            workflows:
+              app-rspec: 'app/.rspec_example_file'
+              some-app-rspec: 'some_app/.rspec_example_status'
+              third-app-rspec: 'third_app/rspec.txt'
+          CONFIG
+        end
+
+        before do
+          File.write('.sleet.yml', config_file)
+        end
+
+        it 'works when given the rspec job and a single output' do
+          expect_command('fetch')
+            .to output(expected_output).to_stdout
+          expect(File.read('app/.rspec_example_file')).to eq happy_path_final_file
+          expect(File.read('some_app/.rspec_example_status')).to eq happy_path_final_file
+          expect(File.read('third_app/rspec.txt')).to eq happy_path_final_file
+        end
+      end
     end
   end
 end
