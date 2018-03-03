@@ -19,7 +19,7 @@ jobs:
             - gem-cache-{{ checksum "ruby-version.txt" }}-
             - gem-cache-
       # Install
-      - run: bundle check || sudo apt-get install cmake && bundle install --path vendor/bundle
+      - run: bundle check --path vendor/bundle || sudo apt-get install cmake && bundle install --path vendor/bundle
       # Store Cache
       - save_cache:
           key: gem-cache-{{ checksum "ruby-version.txt" }}-{{ checksum "sleet.gemspec" }}-{{ checksum "date-cache-key.txt" }}
