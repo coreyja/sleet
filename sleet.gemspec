@@ -27,14 +27,15 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'colorize', '~> 0.8.1'
-  spec.add_dependency 'faraday', '~> 0.13.1'
+  spec.add_dependency 'faraday', '>= 0.13.1', '< 0.15.0'
   spec.add_dependency 'rspec', '~> 3.0'
   spec.add_dependency 'rugged', '~> 0.26.0'
   spec.add_dependency 'thor', '~> 0.20.0'
 
   spec.add_development_dependency 'bundler', '~> 1.13'
   spec.add_development_dependency 'pry', '~> 0.10'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rubocop', '~> 0.52.1'
+  spec.add_development_dependency 'rubocop-rspec', '~> 1.22'
   spec.add_development_dependency 'webmock', '~> 3.3.0'
 end

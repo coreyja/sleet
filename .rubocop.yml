@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 inherit_from: .rubocop_todo.yml
 
 AllCops:
@@ -7,8 +9,6 @@ AllCops:
 
 Metrics/LineLength:
   Max: 120
-  Exclude:
-    - 'spec/**/*'
 
 Metrics/ClassLength:
   Exclude:
@@ -30,3 +30,13 @@ Style/StringLiterals:
   SupportedStyles:
   - single_quotes
   - double_quotes
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/cli/**/*.rb'
+
+RSpec/ExampleLength:
+  Max: 10

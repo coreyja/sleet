@@ -34,7 +34,6 @@ module Sleet
       end
     rescue Sleet::Error => e
       error(e.message)
-      exit 1
     end
 
     desc 'version', 'Display the version'
@@ -52,11 +51,10 @@ module Sleet
       ).do!
     rescue Sleet::Error => e
       error(e.message)
-      exit 1
     end
 
     def workflow_fetch
-      failed = false
+      error_messages = []
       options[:workflows].each do |job_name, output_filename|
         begin
           Sleet::Fetcher.new(
@@ -66,11 +64,10 @@ module Sleet
             )
           ).do!
         rescue Sleet::Error => e
-          failed = true
-          error(e.message)
+          error_messages << e.message
         end
       end
-      exit 1 if failed
+      error error_messages.join("\n") unless error_messages.empty?
     end
 
     def circle_ci_branch
@@ -97,12 +94,12 @@ module Sleet
     end
 
     def repo
-      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir, default_dir))
+      @_repo ||= Sleet::Repo.from_dir(directory)
     end
 
     def base_fetcher_params
       {
-        source_dir: options.fetch(:source_dir, default_dir),
+        source_dir: directory,
         circle_ci_branch: circle_ci_branch,
         input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
         github_user: repo.github_user,
@@ -110,8 +107,16 @@ module Sleet
       }
     end
 
+    def directory
+      if options[:source_dir]
+        options.fetch(:source_dir)
+      else
+        default_dir
+      end
+    end
+
     def error(message)
-      puts "ERROR: #{message}".red
+      raise Thor::Error, "ERROR: #{message}".red
     end
 
     def default_dir
