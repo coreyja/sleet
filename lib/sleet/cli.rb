@@ -24,16 +24,11 @@ module Sleet
       To use Sleet with CircleCI Workflows you need to tell Sleet which build(s) to look in, and where each output should be saved. The input is a hash, where the key is the build name and the value is the output_file for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
     DESC
     def fetch
-      must_be_on_branch!
-      must_have_an_upstream_branch!
-      upstream_remote_must_be_github!
       if options[:workflows]
         workflow_fetch
       else
         single_fetch
       end
-    # rescue Sleet::Error => e
-    #   error(e.message)
     end
 
     desc 'version', 'Display the version'
@@ -76,23 +71,8 @@ module Sleet
       )
     end
 
-    def must_be_on_branch!
-      repo.on_branch? ||
-        error('Not on a branch')
-    end
-
-    def must_have_an_upstream_branch!
-      repo.remote? ||
-        error("No upstream branch set for the current branch of #{repo.current_branch_name}")
-    end
-
-    def upstream_remote_must_be_github!
-      repo.github? ||
-        error('Upstream remote is not GitHub')
-    end
-
     def repo
-      @_repo ||= Sleet::Repo.from_dir(directory)
+      @_repo ||= Sleet::Repo.from_dir(directory).tap(&:validate!)
     end
 
     def base_fetcher_params
