@@ -37,7 +37,7 @@ module Sleet
     attr_reader :input_filename, :output_filename, :job_name, :circle_ci_branch, :github_user, :github_repo, :source_dir
 
     def error(msg)
-      raise Error, msg
+      raise Error, "ERROR: #{msg}".red
     end
 
     def combined_file

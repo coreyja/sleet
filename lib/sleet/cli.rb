@@ -32,8 +32,8 @@ module Sleet
       else
         single_fetch
       end
-    rescue Sleet::Error => e
-      error(e.message)
+    # rescue Sleet::Error => e
+    #   error(e.message)
     end
 
     desc 'version', 'Display the version'
@@ -49,8 +49,6 @@ module Sleet
           output_filename: options.fetch(:output_file, '.rspec_example_statuses')
         )
       ).do!
-    rescue Sleet::Error => e
-      error(e.message)
     end
 
     def workflow_fetch
@@ -67,7 +65,7 @@ module Sleet
           error_messages << e.message
         end
       end
-      error error_messages.join("\n") unless error_messages.empty?
+      raise Sleet::Error, error_messages.join("\n") unless error_messages.empty?
     end
 
     def circle_ci_branch
@@ -116,7 +114,7 @@ module Sleet
     end
 
     def error(message)
-      raise Thor::Error, "ERROR: #{message}".red
+      raise Sleet::Error, "ERROR: #{message}".red
     end
 
     def default_dir
