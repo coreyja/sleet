@@ -14,17 +14,31 @@ module Sleet
       @repo = repo
     end
 
-    def remote?
-      !current_branch.remote.nil?
+    def validate!
+      must_be_on_branch!
+      must_have_an_upstream_branch!
+      upstream_remote_must_be_github!
     end
 
-    def github?
-      !github_match.nil?
+    def branch
+      @_branch ||= Sleet::Branch.new(
+        github_user: github_user,
+        github_repo: github_repo,
+        branch: remote_branch
+      )
     end
 
-    def on_branch?
-      !current_branch.nil?
+    def build_for(build_num)
+      Sleet::Build.new(
+        github_user: github_user,
+        github_repo: github_repo,
+        build_num: build_num
+      )
     end
+
+    private
+
+    attr_reader :repo
 
     def remote_branch
       current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
@@ -42,16 +56,27 @@ module Sleet
       repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
     end
 
-    private
-
-    attr_reader :repo
-
     def current_branch
       repo.branches[current_branch_name]
     end
 
     def github_match
       @_github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
+    end
+
+    def must_be_on_branch!
+      !current_branch.nil? ||
+        raise(Error, 'Not on a branch')
+    end
+
+    def must_have_an_upstream_branch!
+      !current_branch.remote.nil? ||
+        raise(Error, "No upstream branch set for the current branch of #{repo.current_branch_name}")
+    end
+
+    def upstream_remote_must_be_github!
+      !github_match.nil? ||
+        raise(Error, 'Upstream remote is not GitHub')
     end
   end
 end

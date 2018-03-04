@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class CircleCiBuild
+  class Build
     attr_reader :build_num
 
     def initialize(github_user:, github_repo:, build_num:)

@@ -23,17 +23,14 @@ module Sleet
     option :workflows, type: :hash, aliases: [:w], desc: <<~DESC
       To use Sleet with CircleCI Workflows you need to tell Sleet which build(s) to look in, and where each output should be saved. The input is a hash, where the key is the build name and the value is the output_file for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
     DESC
+    option :print_config, type: :boolean, default: false
     def fetch
-      must_be_on_branch!
-      must_have_an_upstream_branch!
-      upstream_remote_must_be_github!
-      if options[:workflows]
-        workflow_fetch
-      else
-        single_fetch
+      sleet_config = Sleet::Config.new(cli_hash: options, dir: Dir.pwd)
+      if options[:print_config]
+        sleet_config.print!
+        exit
       end
-    rescue Sleet::Error => e
-      error(e.message)
+      Sleet::FetchCommand.new(sleet_config).do!
     end
 
     desc 'version', 'Display the version'
@@ -41,92 +38,9 @@ module Sleet
       puts "Sleet v#{Sleet::VERSION}"
     end
 
-    private
-
-    def single_fetch
-      Sleet::Fetcher.new(
-        base_fetcher_params.merge(
-          output_filename: options.fetch(:output_file, '.rspec_example_statuses')
-        )
-      ).do!
-    rescue Sleet::Error => e
-      error(e.message)
-    end
-
-    def workflow_fetch
-      error_messages = []
-      options[:workflows].each do |job_name, output_filename|
-        begin
-          Sleet::Fetcher.new(
-            base_fetcher_params.merge(
-              output_filename: output_filename,
-              job_name: job_name
-            )
-          ).do!
-        rescue Sleet::Error => e
-          error_messages << e.message
-        end
-      end
-      error error_messages.join("\n") unless error_messages.empty?
-    end
-
-    def circle_ci_branch
-      @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
-        branch: repo.remote_branch
-      )
-    end
-
-    def must_be_on_branch!
-      repo.on_branch? ||
-        error('Not on a branch')
-    end
-
-    def must_have_an_upstream_branch!
-      repo.remote? ||
-        error("No upstream branch set for the current branch of #{repo.current_branch_name}")
-    end
-
-    def upstream_remote_must_be_github!
-      repo.github? ||
-        error('Upstream remote is not GitHub')
-    end
-
-    def repo
-      @_repo ||= Sleet::Repo.from_dir(directory)
-    end
-
-    def base_fetcher_params
-      {
-        source_dir: directory,
-        circle_ci_branch: circle_ci_branch,
-        input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
-        github_user: repo.github_user,
-        github_repo: repo.github_repo
-      }
-    end
-
-    def directory
-      if options[:source_dir]
-        options.fetch(:source_dir)
-      else
-        default_dir
-      end
-    end
-
-    def error(message)
-      raise Thor::Error, "ERROR: #{message}".red
-    end
-
-    def default_dir
-      Rugged::Repository.discover(Dir.pwd).path + '..'
-    end
-
-    def options
-      original_options = super
-      defaults = Sleet::OptionDefaults.new(Dir.pwd).defaults
-      Thor::CoreExt::HashWithIndifferentAccess.new(defaults.merge(original_options))
+    desc 'config', 'Print the config'
+    def config
+      Sleet::Config.new(cli_hash: options, dir: Dir.pwd).print!
     end
   end
 end

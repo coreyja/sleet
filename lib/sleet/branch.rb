@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class CircleCiBranch
+  class Branch
     def initialize(github_user:, github_repo:, branch:)
       @github_user = github_user
       @github_repo = github_repo
