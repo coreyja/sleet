@@ -10,12 +10,20 @@ module Sleet
       @cli_hash = cli_hash
     end
 
-    def options_hash
-      Thor::CoreExt::HashWithIndifferentAccess.new(options.map { |k, o| [k, o.value] }.to_h)
+    def source_dir
+      options_hash[:source_dir]
     end
 
-    def options
-      @_options ||= default_options.merge(file_options).merge(cli_options)
+    def input_file
+      options_hash[:input_file]
+    end
+
+    def output_file
+      options_hash[:output_file]
+    end
+
+    def workflows
+      options_hash[:workflows]
     end
 
     def print!
@@ -25,6 +33,14 @@ module Sleet
     private
 
     attr_reader :cli_hash, :dir
+
+    def options
+      @_options ||= default_options.merge(file_options).merge(cli_options)
+    end
+
+    def options_hash
+      @_options_hash ||= Thor::CoreExt::HashWithIndifferentAccess.new(options.map { |k, o| [k, o.value] }.to_h)
+    end
 
     def table_rows
       options.map do |key, option|

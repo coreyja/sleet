@@ -30,12 +30,13 @@ module Sleet
         exit
       end
       error_messages = []
+      repo = Sleet::Repo.from_dir(sleet_config.source_dir)
       repo.validate!
       job_name_to_output_files.each do |job_name, output_filename|
         begin
           Sleet::JobFetcher.new(
-            source_dir: options.fetch(:source_dir),
-            input_filename: options.fetch(:input_file),
+            source_dir: sleet_config.source_dir,
+            input_filename: sleet_config.input_file,
             output_filename: output_filename,
             repo: repo,
             job_name: job_name
@@ -54,26 +55,17 @@ module Sleet
 
     desc 'config', 'Print the config'
     def config
-      _config.print!
+      sleet_config.print!
     end
 
     private
 
     def job_name_to_output_files
-      options[:workflows] || { nil => options.fetch(:output_file) }
+      sleet_config.workflows || { nil => sleet_config.output_file }
     end
 
-    no_commands { alias_method :thor_options, :options }
-    def options
-      _config.options_hash
-    end
-
-    def repo
-      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir))
-    end
-
-    def _config
-      @_config ||= Sleet::Config.new(cli_hash: thor_options, dir: Dir.pwd)
+    def sleet_config
+      @_config ||= Sleet::Config.new(cli_hash: options, dir: Dir.pwd)
     end
   end
 end
