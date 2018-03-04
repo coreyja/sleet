@@ -70,9 +70,16 @@ module Sleet
 
     def default_hash
       {
+        'source_dir' => File.expand_path(default_dir),
         'input_file' => '.rspec_example_statuses',
         'output_file' => '.rspec_example_statuses'
       }
+    end
+
+    def default_dir
+      Rugged::Repository.discover(Dir.pwd).path + '..'
+    rescue Rugged::RepositoryError
+      '.'
     end
 
     def build_option_hash(source, options)

@@ -29,11 +29,23 @@ module Sleet
         _config.print!
         exit
       end
-      if options[:workflows]
-        workflow_fetch
-      else
-        single_fetch
+      error_messages = []
+      job_name_to_output_files.each do |job_name, output_filename|
+        begin
+          Sleet::Fetcher.new(
+            source_dir: options.fetch(:source_dir),
+            circle_ci_branch: circle_ci_branch,
+            input_filename: options.fetch(:input_file),
+            github_user: repo.github_user,
+            github_repo: repo.github_repo,
+            output_filename: output_filename,
+            job_name: job_name
+          ).do!
+        rescue Sleet::Error => e
+          error_messages << e.message
+        end
       end
+      raise Sleet::Error, error_messages.join("\n") unless error_messages.empty?
     end
 
     desc 'version', 'Display the version'
@@ -48,29 +60,8 @@ module Sleet
 
     private
 
-    def single_fetch
-      Sleet::Fetcher.new(
-        base_fetcher_params.merge(
-          output_filename: options.fetch(:output_file)
-        )
-      ).do!
-    end
-
-    def workflow_fetch
-      error_messages = []
-      options[:workflows].each do |job_name, output_filename|
-        begin
-          Sleet::Fetcher.new(
-            base_fetcher_params.merge(
-              output_filename: output_filename,
-              job_name: job_name
-            )
-          ).do!
-        rescue Sleet::Error => e
-          error_messages << e.message
-        end
-      end
-      raise Sleet::Error, error_messages.join("\n") unless error_messages.empty?
+    def job_name_to_output_files
+      options[:workflows] || { nil => options.fetch(:output_file) }
     end
 
     def circle_ci_branch
@@ -82,33 +73,7 @@ module Sleet
     end
 
     def repo
-      @_repo ||= Sleet::Repo.from_dir(directory).tap(&:validate!)
-    end
-
-    def base_fetcher_params
-      {
-        source_dir: directory,
-        circle_ci_branch: circle_ci_branch,
-        input_filename: options.fetch(:input_file),
-        github_user: repo.github_user,
-        github_repo: repo.github_repo
-      }
-    end
-
-    def directory
-      if options[:source_dir]
-        options.fetch(:source_dir)
-      else
-        default_dir
-      end
-    end
-
-    def error(message)
-      raise Sleet::Error, "ERROR: #{message}".red
-    end
-
-    def default_dir
-      Rugged::Repository.discover(Dir.pwd).path + '..'
+      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir)).tap(&:validate!)
     end
 
     no_commands { alias_method :thor_options, :options }
