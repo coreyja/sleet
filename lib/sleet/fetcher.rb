@@ -61,7 +61,9 @@ module Sleet
 
     def chosen_build_json
       if job_name
-        circle_ci_branch.builds_with_artificats.find { |b| b.fetch('workflows', {})&.fetch('job_name', {}) == job_name }
+        circle_ci_branch.builds_with_artificats.find do |b|
+          b.fetch('workflows', nil)&.fetch('job_name', nil) == job_name
+        end
       else
         circle_ci_branch.builds_with_artificats.first
       end
