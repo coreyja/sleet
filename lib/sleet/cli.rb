@@ -45,7 +45,7 @@ module Sleet
           error_messages << e.message
         end
       end
-      raise Sleet::Error, error_messages.join("\n") unless error_messages.empty?
+      raise Thor::Error, error_messages.join("\n") unless error_messages.empty?
     end
 
     desc 'version', 'Display the version'

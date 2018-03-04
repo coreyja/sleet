@@ -50,21 +50,17 @@ module Sleet
 
     def must_be_on_branch!
       !current_branch.nil? ||
-        error('Not on a branch')
+        raise(Error, 'Not on a branch')
     end
 
     def must_have_an_upstream_branch!
       !current_branch.remote.nil? ||
-        error("No upstream branch set for the current branch of #{repo.current_branch_name}")
+        raise(Error, "No upstream branch set for the current branch of #{repo.current_branch_name}")
     end
 
     def upstream_remote_must_be_github!
       !github_match.nil? ||
-        error('Upstream remote is not GitHub')
-    end
-
-    def error(message)
-      raise Sleet::Error, "ERROR: #{message}".red
+        raise(Error, 'Upstream remote is not GitHub')
     end
   end
 end
