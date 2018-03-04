@@ -8,7 +8,7 @@ module Sleet
     end
 
     def build
-      @_build ||= repo.circle_ci_build_for(chosen_build_num)
+      @_build ||= repo.build_for(chosen_build_num)
     end
 
     def validate!
@@ -20,8 +20,8 @@ module Sleet
 
     attr_reader :repo, :job_name
 
-    def circle_ci_branch
-      repo.circle_ci_branch
+    def branch
+      repo.branch
     end
 
     def chosen_build_num
@@ -29,7 +29,7 @@ module Sleet
     end
 
     def chosen_build_json
-      circle_ci_branch.builds_with_artificats.find do |b|
+      branch.builds_with_artificats.find do |b|
         b.fetch('workflows', nil)&.fetch('job_name', nil) == job_name
       end
     end

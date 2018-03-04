@@ -20,16 +20,16 @@ module Sleet
       upstream_remote_must_be_github!
     end
 
-    def circle_ci_branch
-      @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
+    def branch
+      @_branch ||= Sleet::Branch.new(
         github_user: github_user,
         github_repo: github_repo,
         branch: remote_branch
       )
     end
 
-    def circle_ci_build_for(build_num)
-      Sleet::CircleCiBuild.new(
+    def build_for(build_num)
+      Sleet::Build.new(
         github_user: github_user,
         github_repo: github_repo,
         build_num: build_num

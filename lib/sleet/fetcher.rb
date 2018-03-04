@@ -25,25 +25,25 @@ module Sleet
 
     def create_output_file!
       File.write(File.join(source_dir, output_filename), combined_file)
-      puts "Created file (#{output_filename}) from build (##{circle_ci_build.build_num})".green
+      puts "Created file (#{output_filename}) from build (##{build.build_num})".green
     end
 
     def combined_file
-      @_combined_file ||= Sleet::RspecFileMerger.new(build_persistance_artifacts).output
+      Sleet::RspecFileMerger.new(build_persistance_artifacts).output
     end
 
     def build_persistance_artifacts
       @_build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
         file_name: input_filename,
-        artifacts: circle_ci_build.artifacts
+        artifacts: build.artifacts
       ).files
     end
 
-    def circle_ci_branch
-      repo.circle_ci_branch
+    def branch
+      repo.branch
     end
 
-    def circle_ci_build
+    def build
       build_selector.build
     end
 
