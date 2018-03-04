@@ -18,7 +18,6 @@ module Sleet
     end
 
     def validate!
-      repo.validate!
       must_find_a_build_with_artifacts!
       chosen_build_must_have_input_file!
       true

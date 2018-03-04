@@ -96,6 +96,10 @@ describe 'sleet fetch', type: :cli do
     it 'runs and outputs the correct error message' do
       expect_command('fetch').to error_with 'ERROR: Upstream remote is not GitHub'
     end
+
+    it 'runs with multiple workflows and only outputs the error once' do
+      expect_command('fetch --workflows a:a b:b').to error_with 'ERROR: Upstream remote is not GitHub'
+    end
   end
 
   context 'when there are no completed builds found for the branch' do

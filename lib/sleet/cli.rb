@@ -30,6 +30,7 @@ module Sleet
         exit
       end
       error_messages = []
+      repo.validate!
       job_name_to_output_files.each do |job_name, output_filename|
         begin
           Sleet::Fetcher.new(
