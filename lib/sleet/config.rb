@@ -15,7 +15,7 @@ module Sleet
     end
 
     def options
-      default_options.merge(file_options).merge(cli_options)
+      @_options ||= default_options.merge(file_options).merge(cli_options)
     end
 
     def print!
