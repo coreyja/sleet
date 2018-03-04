@@ -36,6 +36,7 @@ module Sleet
             source_dir: options.fetch(:source_dir),
             input_filename: options.fetch(:input_file),
             output_filename: output_filename,
+            repo: repo,
             job_name: job_name
           ).do!
         rescue Sleet::Error => e
@@ -64,6 +65,10 @@ module Sleet
     no_commands { alias_method :thor_options, :options }
     def options
       _config.options_hash
+    end
+
+    def repo
+      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir))
     end
 
     def _config

@@ -4,11 +4,12 @@ module Sleet
   class Fetcher
     extend Forwardable
 
-    def initialize(source_dir:, input_filename:, output_filename:, job_name:)
+    def initialize(source_dir:, input_filename:, output_filename:, job_name:, repo:)
       @source_dir = source_dir
       @input_filename = input_filename
       @output_filename = output_filename
       @job_name = job_name
+      @repo = repo
     end
 
     def do!
@@ -32,12 +33,8 @@ module Sleet
 
     private
 
-    attr_reader :input_filename, :output_filename, :job_name, :source_dir
+    attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo
     def_delegators :repo, :github_user, :github_repo, :circle_ci_branch
-
-    def repo
-      @_repo ||= Sleet::Repo.from_dir(source_dir)
-    end
 
     def combined_file
       @_combined_file ||= Sleet::RspecFileMerger.new(build_persistance_artifacts).output
