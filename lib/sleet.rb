@@ -17,6 +17,7 @@ begin
 end
 
 require 'sleet/artifact_downloader'
+require 'sleet/build_selector'
 require 'sleet/circle_ci'
 require 'sleet/circle_ci_branch'
 require 'sleet/circle_ci_build'

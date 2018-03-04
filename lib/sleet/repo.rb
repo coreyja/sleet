@@ -20,22 +20,6 @@ module Sleet
       upstream_remote_must_be_github!
     end
 
-    def remote_branch
-      current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
-    end
-
-    def github_user
-      github_match[1]
-    end
-
-    def github_repo
-      github_match[2]
-    end
-
-    def current_branch_name
-      repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
-    end
-
     def circle_ci_branch
       @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
         github_user: github_user,
@@ -55,6 +39,22 @@ module Sleet
     private
 
     attr_reader :repo
+
+    def remote_branch
+      current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
+    end
+
+    def github_user
+      github_match[1]
+    end
+
+    def github_repo
+      github_match[2]
+    end
+
+    def current_branch_name
+      repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
+    end
 
     def current_branch
       repo.branches[current_branch_name]

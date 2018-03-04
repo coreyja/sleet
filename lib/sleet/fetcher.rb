@@ -2,8 +2,6 @@
 
 module Sleet
   class Fetcher
-    extend Forwardable
-
     def initialize(source_dir:, input_filename:, output_filename:, job_name:, repo:)
       @source_dir = source_dir
       @input_filename = input_filename
@@ -17,21 +15,18 @@ module Sleet
       create_output_file!
     end
 
+    private
+
+    attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo
+
     def validate!
-      must_find_a_build_with_artifacts!
-      chosen_build_must_have_input_file!
-      true
+      build_selector.validate!
     end
 
     def create_output_file!
       File.write(File.join(source_dir, output_filename), combined_file)
       puts "Created file (#{output_filename}) from build (##{circle_ci_build.build_num})".green
     end
-
-    private
-
-    attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo
-    def_delegators :repo, :circle_ci_branch
 
     def combined_file
       @_combined_file ||= Sleet::RspecFileMerger.new(build_persistance_artifacts).output
@@ -44,24 +39,16 @@ module Sleet
       ).files
     end
 
+    def circle_ci_branch
+      repo.circle_ci_branch
+    end
+
     def circle_ci_build
-      @_circle_ci_build ||= repo.circle_ci_build_for(chosen_build_json['build_num'])
+      build_selector.build
     end
 
-    def chosen_build_json
-      circle_ci_branch.builds_with_artificats.find do |b|
-        b.fetch('workflows', nil)&.fetch('job_name', nil) == job_name
-      end
-    end
-
-    def must_find_a_build_with_artifacts!
-      !chosen_build_json.nil? ||
-        raise(Error, "No builds with artifcats found#{" for job name [#{job_name}]" if job_name}")
-    end
-
-    def chosen_build_must_have_input_file!
-      circle_ci_build.artifacts.any? ||
-        raise(Error, "No Rspec example file found in the latest build (##{circle_ci_build.build_num}) with artifacts")
+    def build_selector
+      @_build_selector ||= Sleet::BuildSelector.new(job_name: job_name, repo: repo)
     end
   end
 end
