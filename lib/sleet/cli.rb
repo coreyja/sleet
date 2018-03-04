@@ -34,10 +34,7 @@ module Sleet
         begin
           Sleet::Fetcher.new(
             source_dir: options.fetch(:source_dir),
-            circle_ci_branch: circle_ci_branch,
             input_filename: options.fetch(:input_file),
-            github_user: repo.github_user,
-            github_repo: repo.github_repo,
             output_filename: output_filename,
             job_name: job_name
           ).do!
@@ -62,18 +59,6 @@ module Sleet
 
     def job_name_to_output_files
       options[:workflows] || { nil => options.fetch(:output_file) }
-    end
-
-    def circle_ci_branch
-      @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
-        github_user: repo.github_user,
-        github_repo: repo.github_repo,
-        branch: repo.remote_branch
-      )
-    end
-
-    def repo
-      @_repo ||= Sleet::Repo.from_dir(options.fetch(:source_dir)).tap(&:validate!)
     end
 
     no_commands { alias_method :thor_options, :options }

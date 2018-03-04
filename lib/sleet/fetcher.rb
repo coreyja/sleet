@@ -2,14 +2,13 @@
 
 module Sleet
   class Fetcher
-    def initialize(source_dir:, circle_ci_branch:, input_filename:, output_filename:, github_user:, github_repo:, job_name:) # rubocop:disable Metrics/LineLength
+    extend Forwardable
+
+    def initialize(source_dir:, input_filename:, output_filename:, job_name:)
       @source_dir = source_dir
-      @circle_ci_branch = circle_ci_branch
       @input_filename = input_filename
       @output_filename = output_filename
       @job_name = job_name
-      @github_user = github_user
-      @github_repo = github_repo
     end
 
     def do!
@@ -18,6 +17,7 @@ module Sleet
     end
 
     def validate!
+      repo.validate!
       must_find_a_build_with_artifacts!
       chosen_build_must_have_input_file!
       true
@@ -32,7 +32,12 @@ module Sleet
 
     private
 
-    attr_reader :input_filename, :output_filename, :job_name, :circle_ci_branch, :github_user, :github_repo, :source_dir
+    attr_reader :input_filename, :output_filename, :job_name, :source_dir
+    def_delegators :repo, :github_user, :github_repo, :circle_ci_branch
+
+    def repo
+      @_repo ||= Sleet::Repo.from_dir(source_dir)
+    end
 
     def combined_file
       @_combined_file ||= Sleet::RspecFileMerger.new(build_persistance_artifacts).output

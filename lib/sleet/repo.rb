@@ -36,6 +36,14 @@ module Sleet
       repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
     end
 
+    def circle_ci_branch
+      @_circle_ci_branch ||= Sleet::CircleCiBranch.new(
+        github_user: github_user,
+        github_repo: github_repo,
+        branch: remote_branch
+      )
+    end
+
     private
 
     attr_reader :repo
