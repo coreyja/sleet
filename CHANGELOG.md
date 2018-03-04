@@ -1,5 +1,18 @@
 # Change Log
 
+## [v0.3.9](https://github.com/coreyja/sleet/tree/v0.3.9) (2018-03-04)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.8...v0.3.9)
+
+**Closed issues:**
+
+- There are No Specs [\#6](https://github.com/coreyja/sleet/issues/6)
+
+**Merged pull requests:**
+
+- Refactor [\#18](https://github.com/coreyja/sleet/pull/18) ([coreyja](https://github.com/coreyja))
+- Update rake requirement to ~\> 12.3 [\#17](https://github.com/coreyja/sleet/pull/17) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update faraday requirement to \>= 0.13.1, \< 0.15.0 [\#16](https://github.com/coreyja/sleet/pull/16) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v0.3.8](https://github.com/coreyja/sleet/tree/v0.3.8) (2018-02-25)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.7...v0.3.8)
 
