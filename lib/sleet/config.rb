@@ -28,7 +28,11 @@ module Sleet
 
     def table_rows
       options.map do |key, option|
-        [key, option.value, option.source]
+        if key.to_sym == :workflows
+          [key, Terminal::Table.new(headings: ['Job Name', 'Output File'], rows: option.value.to_a), option.source]
+        else
+          [key, option.value, option.source]
+        end
       end
     end
 
