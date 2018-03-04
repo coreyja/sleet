@@ -25,27 +25,12 @@ module Sleet
     DESC
     option :print_config, type: :boolean, default: false
     def fetch
+      sleet_config = Sleet::Config.new(cli_hash: options, dir: Dir.pwd)
       if options[:print_config]
-        _config.print!
+        sleet_config.print!
         exit
       end
-      error_messages = []
-      repo = Sleet::Repo.from_dir(sleet_config.source_dir)
-      repo.validate!
-      job_name_to_output_files.each do |job_name, output_filename|
-        begin
-          Sleet::JobFetcher.new(
-            source_dir: sleet_config.source_dir,
-            input_filename: sleet_config.input_file,
-            output_filename: output_filename,
-            repo: repo,
-            job_name: job_name
-          ).do!
-        rescue Sleet::Error => e
-          error_messages << e.message
-        end
-      end
-      raise Thor::Error, error_messages.join("\n") unless error_messages.empty?
+      Sleet::FetchCommand.new(sleet_config).do!
     end
 
     desc 'version', 'Display the version'
@@ -55,17 +40,7 @@ module Sleet
 
     desc 'config', 'Print the config'
     def config
-      sleet_config.print!
-    end
-
-    private
-
-    def job_name_to_output_files
-      sleet_config.workflows || { nil => sleet_config.output_file }
-    end
-
-    def sleet_config
-      @_config ||= Sleet::Config.new(cli_hash: options, dir: Dir.pwd)
+      Sleet::Config.new(cli_hash: options, dir: Dir.pwd).print!
     end
   end
 end
