@@ -33,7 +33,7 @@ module Sleet
       repo.validate!
       job_name_to_output_files.each do |job_name, output_filename|
         begin
-          Sleet::Fetcher.new(
+          Sleet::JobFetcher.new(
             source_dir: options.fetch(:source_dir),
             input_filename: options.fetch(:input_file),
             output_filename: output_filename,

@@ -17,13 +17,13 @@ begin
 end
 
 require 'sleet/artifact_downloader'
-require 'sleet/build_selector'
-require 'sleet/circle_ci'
 require 'sleet/branch'
 require 'sleet/build'
+require 'sleet/build_selector'
+require 'sleet/circle_ci'
 require 'sleet/config'
 require 'sleet/error'
-require 'sleet/fetcher'
+require 'sleet/job_fetcher'
 require 'sleet/repo'
 require 'sleet/rspec_file_merger'
 require 'sleet/version'

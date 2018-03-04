@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class Fetcher
+  class JobFetcher
     def initialize(source_dir:, input_filename:, output_filename:, job_name:, repo:)
       @source_dir = source_dir
       @input_filename = input_filename
