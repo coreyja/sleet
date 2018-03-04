@@ -44,6 +44,14 @@ module Sleet
       )
     end
 
+    def circle_ci_build_for(build_num)
+      Sleet::CircleCiBuild.new(
+        github_user: github_user,
+        github_repo: github_repo,
+        build_num: build_num
+      )
+    end
+
     private
 
     attr_reader :repo

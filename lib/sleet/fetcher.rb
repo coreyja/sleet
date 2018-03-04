@@ -31,7 +31,7 @@ module Sleet
     private
 
     attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo
-    def_delegators :repo, :github_user, :github_repo, :circle_ci_branch
+    def_delegators :repo, :circle_ci_branch
 
     def combined_file
       @_combined_file ||= Sleet::RspecFileMerger.new(build_persistance_artifacts).output
@@ -45,11 +45,7 @@ module Sleet
     end
 
     def circle_ci_build
-      @_circle_ci_build ||= Sleet::CircleCiBuild.new(
-        github_user: github_user,
-        github_repo: github_repo,
-        build_num: chosen_build_json['build_num']
-      )
+      @_circle_ci_build ||= repo.circle_ci_build_for(chosen_build_json['build_num'])
     end
 
     def chosen_build_json
