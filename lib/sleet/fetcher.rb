@@ -25,9 +25,7 @@ module Sleet
     end
 
     def create_output_file!
-      Dir.chdir(source_dir) do
-        File.write(output_filename, combined_file)
-      end
+      File.write(File.join(source_dir, output_filename), combined_file)
       puts "Created file (#{output_filename}) from build (##{circle_ci_build.build_num})".green
     end
 
