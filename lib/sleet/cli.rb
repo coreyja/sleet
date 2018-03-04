@@ -23,7 +23,12 @@ module Sleet
     option :workflows, type: :hash, aliases: [:w], desc: <<~DESC
       To use Sleet with CircleCI Workflows you need to tell Sleet which build(s) to look in, and where each output should be saved. The input is a hash, where the key is the build name and the value is the output_file for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
     DESC
+    option :print_config, type: :boolean, default: false
     def fetch
+      if options[:print_config]
+        _config.print!
+        exit
+      end
       if options[:workflows]
         workflow_fetch
       else
@@ -36,12 +41,17 @@ module Sleet
       puts "Sleet v#{Sleet::VERSION}"
     end
 
+    desc 'config', 'Print the config'
+    def config
+      _config.print!
+    end
+
     private
 
     def single_fetch
       Sleet::Fetcher.new(
         base_fetcher_params.merge(
-          output_filename: options.fetch(:output_file, '.rspec_example_statuses')
+          output_filename: options.fetch(:output_file)
         )
       ).do!
     end
@@ -79,7 +89,7 @@ module Sleet
       {
         source_dir: directory,
         circle_ci_branch: circle_ci_branch,
-        input_filename: options.fetch(:input_file, '.rspec_example_statuses'),
+        input_filename: options.fetch(:input_file),
         github_user: repo.github_user,
         github_repo: repo.github_repo
       }
@@ -101,10 +111,13 @@ module Sleet
       Rugged::Repository.discover(Dir.pwd).path + '..'
     end
 
+    no_commands { alias_method :thor_options, :options }
     def options
-      original_options = super
-      defaults = Sleet::OptionDefaults.new(Dir.pwd).defaults
-      Thor::CoreExt::HashWithIndifferentAccess.new(defaults.merge(original_options))
+      _config.options_hash
+    end
+
+    def _config
+      @_config ||= Sleet::Config.new(cli_hash: thor_options, dir: Dir.pwd)
     end
   end
 end
