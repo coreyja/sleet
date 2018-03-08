@@ -3,6 +3,6 @@ set -e
 
 gem bump -v $1
 github_changelog_generator -u coreyja -p sleet --future-release v$(bundle exec exe/sleet version --bare)
-g add -A
-g commit --amend --no-edit
+git add -A
+git commit --amend --no-edit
 gem release -tp
