@@ -1,6 +1,17 @@
 # Change Log
 
-## [v0.3.10](https://github.com/coreyja/sleet/tree/v0.3.10) (2018-03-07)
+## [v0.4.0](https://github.com/coreyja/sleet/tree/v0.4.0) (2018-03-08)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.10...v0.4.0)
+
+**Closed issues:**
+
+- Allow Specifying Token from Config Files [\#9](https://github.com/coreyja/sleet/issues/9)
+
+**Merged pull requests:**
+
+- Get Token From Config File [\#21](https://github.com/coreyja/sleet/pull/21) ([coreyja](https://github.com/coreyja))
+
+## [v0.3.10](https://github.com/coreyja/sleet/tree/v0.3.10) (2018-03-08)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.9...v0.3.10)
 
 **Merged pull requests:**
