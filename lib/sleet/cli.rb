@@ -23,7 +23,7 @@ module Sleet
     option :workflows, type: :hash, aliases: [:w], desc: <<~DESC
       To use Sleet with CircleCI Workflows you need to tell Sleet which build(s) to look in, and where each output should be saved. The input is a hash, where the key is the build name and the value is the output_file for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
     DESC
-    option :print_config, type: :boolean, default: false
+    option :print_config, type: :boolean
     def fetch
       sleet_config = Sleet::Config.new(cli_hash: options, dir: Dir.pwd)
       if options[:print_config]
@@ -45,7 +45,7 @@ module Sleet
     end
 
     desc 'config', 'Print the config'
-    option :show_sensitive, type: :boolean, default: false
+    option :show_sensitive, type: :boolean
     def config
       Sleet::Config.new(cli_hash: options, dir: Dir.pwd).print!
     end

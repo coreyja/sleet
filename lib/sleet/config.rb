@@ -3,6 +3,7 @@
 module Sleet
   class Config
     OPTION_FILENAME = '.sleet.yml'
+    HIDDEN_UNLESS_IN_CLI_OPTIONS = %w[show_sensitive print_config].freeze
     ConfigOption = Struct.new(:value, :source)
 
     def initialize(dir:, cli_hash: {})
@@ -47,7 +48,7 @@ module Sleet
     end
 
     def table_rows
-      options.map do |key, option|
+      table_options.map do |key, option|
         if key.to_sym == :workflows
           [key, Terminal::Table.new(headings: ['Job Name', 'Output File'], rows: option.value.to_a), option.source]
         elsif key.to_sym == :circle_ci_token && !options['show_sensitive'].value
@@ -55,6 +56,12 @@ module Sleet
         else
           [key, option.value, option.source]
         end
+      end
+    end
+
+    def table_options
+      options.reject do |key, _option|
+        HIDDEN_UNLESS_IN_CLI_OPTIONS.include?(key) && !cli_hash.key?(key)
       end
     end
 
@@ -94,7 +101,9 @@ module Sleet
       {
         'source_dir' => File.expand_path(default_dir),
         'input_file' => '.rspec_example_statuses',
-        'output_file' => '.rspec_example_statuses'
+        'output_file' => '.rspec_example_statuses',
+        'show_sensitive' => false,
+        'print_config' => true
       }
     end
 
