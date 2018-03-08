@@ -9,7 +9,7 @@ module Sleet
     end
 
     def builds
-      @_builds ||= JSON.parse(Sleet::CircleCi.get(url).body)
+      @builds ||= JSON.parse(Sleet::CircleCi.get(url).body)
     end
 
     def builds_with_artificats

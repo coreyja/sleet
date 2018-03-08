@@ -11,7 +11,7 @@ module Sleet
     end
 
     def artifacts
-      @_artifacts ||= JSON.parse(Sleet::CircleCi.get(url).body)
+      @artifacts ||= JSON.parse(Sleet::CircleCi.get(url).body)
     end
 
     private

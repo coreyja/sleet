@@ -7,7 +7,7 @@ module Sleet
     include Singleton
 
     def token
-      @_token ||= File.read("#{Dir.home}/.circleci.token").strip
+      @token ||= File.read("#{Dir.home}/.circleci.token").strip
     end
 
     def get(url)
@@ -15,7 +15,7 @@ module Sleet
     end
 
     def reset!
-      @_token = nil
+      @token = nil
     end
 
     def self.get(url)

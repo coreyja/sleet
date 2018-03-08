@@ -8,7 +8,7 @@ module Sleet
     end
 
     def build
-      @_build ||= repo.build_for(chosen_build_num)
+      @build ||= repo.build_for(chosen_build_num)
     end
 
     def validate!

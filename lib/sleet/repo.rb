@@ -21,7 +21,7 @@ module Sleet
     end
 
     def branch
-      @_branch ||= Sleet::Branch.new(
+      @branch ||= Sleet::Branch.new(
         github_user: github_user,
         github_repo: github_repo,
         branch: remote_branch
@@ -61,7 +61,7 @@ module Sleet
     end
 
     def github_match
-      @_github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
+      @github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
     end
 
     def must_be_on_branch!

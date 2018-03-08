@@ -8,7 +8,7 @@ module Sleet
     end
 
     def files
-      @_files ||= urls.map do |url|
+      @files ||= urls.map do |url|
         Sleet::CircleCi.get(url)
       end.map(&:body)
     end
