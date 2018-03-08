@@ -52,11 +52,16 @@ To do this we need to create a step which [saves](https://circleci.com/docs/2.0/
 
 ### 3. Save a CircleCI Token locally (to access private builds)
 
-In order to see private builds/repos in CircleCI you will need to get a CircleCI token and save it to the `~/.circleci.token` file.
+In order to see private builds/repos in CircleCI you will need to get a CircleCI token and save it locally to a Sleet Configuration file.
+The recommended approach is to create a yml file in your home directory which contains your the key `circle_ci_token`
+
+```
+circle_ci_token: PLACE_TOKEN_HERE
+```
 
 An API token can be generated here: [https://circleci.com/account/api](https://circleci.com/account/api)
 
-### 4. Run this tool in the root of your project
+### 4. Run this tool from your project
 
 ```
 sleet
@@ -82,6 +87,8 @@ Sleet currently supports two ways to input configurations:
     - `Sleet` will search 'up' from where the command was run and look for `.sleet.yml` files. It will combine all the files it finds, such that 'deeper' files take presedence. This allows you to have a user-level config at `~/.sleet.yml` and have project specific files which take presendence over the user level config (ex: `~/Projects/foo/.sleet.yml`)
 2. Through the CLI
     - These always take presendece the options provided in the YML files
+
+To view your current configuration use the `sleet config` command which will give you a table of the current configuration. You can also use the `--print-config` flag with the `fetch` command to print out the config, including any other CLI options. This can be useful for bebugging as the output also tells you where each option came from.
 
 ### Options
 
