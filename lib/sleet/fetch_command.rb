@@ -40,7 +40,7 @@ module Sleet
     end
 
     def repo
-      @_repo ||= Sleet::Repo.from_dir(config.source_dir)
+      @repo ||= Sleet::Repo.from_dir(config.source_dir)
     end
   end
 end

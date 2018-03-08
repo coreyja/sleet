@@ -35,11 +35,11 @@ module Sleet
     attr_reader :cli_hash, :dir
 
     def options
-      @_options ||= default_options.merge(file_options).merge(cli_options)
+      @options ||= default_options.merge(file_options).merge(cli_options)
     end
 
     def options_hash
-      @_options_hash ||= Thor::CoreExt::HashWithIndifferentAccess.new(options.map { |k, o| [k, o.value] }.to_h)
+      @options_hash ||= Thor::CoreExt::HashWithIndifferentAccess.new(options.map { |k, o| [k, o.value] }.to_h)
     end
 
     def table_rows
@@ -77,7 +77,7 @@ module Sleet
     end
 
     def directories
-      @_directories ||= dir.split('/')
+      @directories ||= dir.split('/')
     end
 
     def default_options

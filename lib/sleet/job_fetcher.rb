@@ -33,7 +33,7 @@ module Sleet
     end
 
     def build_persistance_artifacts
-      @_build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
+      @build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
         file_name: input_filename,
         artifacts: build.artifacts
       ).files
@@ -48,7 +48,7 @@ module Sleet
     end
 
     def build_selector
-      @_build_selector ||= Sleet::BuildSelector.new(job_name: job_name, repo: repo)
+      @build_selector ||= Sleet::BuildSelector.new(job_name: job_name, repo: repo)
     end
   end
 end
