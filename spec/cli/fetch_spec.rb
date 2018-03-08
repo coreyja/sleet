@@ -35,17 +35,17 @@ describe 'sleet fetch', type: :cli do
   let(:happy_path_final_file)  { artifact_response }
   let(:stubbed_branch_request) do
     stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/tree/.+})
-      .with(query: hash_including)
+      .with(query: { 'circle-token' => 'FAKE_TOKEN', 'filter' => 'completed' })
       .to_return(body: branch_response.to_json)
   end
   let(:stubbed_build_request) do
     stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/\d+/artifacts})
-      .with(query: hash_including)
+      .with(query: { 'circle-token' => 'FAKE_TOKEN' })
       .to_return(body: build_response.to_json)
   end
   let(:stubbed_artifact_request) do
     stub_request(:get, 'https://fake_circle_ci_artfiacts.com/some-artifact')
-      .with(query: hash_including)
+      .with(query: { 'circle-token' => 'FAKE_TOKEN' })
       .to_return(body: artifact_response)
   end
 
@@ -54,8 +54,10 @@ describe 'sleet fetch', type: :cli do
   let(:repo) { Rugged::Repository.init_at(repo_directory) }
   let(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
 
+  let(:yaml_options) { { circle_ci_token: 'FAKE_TOKEN' } }
+
   before do
-    allow(Sleet::CircleCi.instance).to receive(:token).and_return('FAKE_TOKEN')
+    File.write('.sleet.yml', yaml_options.to_yaml)
     stubbed_branch_request
     stubbed_build_request
     stubbed_artifact_request
@@ -72,6 +74,16 @@ describe 'sleet fetch', type: :cli do
     expect(File.read('.rspec_example_statuses')).to eq happy_path_final_file
     expect(stubbed_branch_request).to have_been_made.once
     expect(stubbed_build_request).to have_been_made.once
+  end
+
+  context 'when the circleci token is missing from the yml file' do
+    let(:yaml_options) { {} }
+
+    it 'errors about the missing token' do
+      expect_command('fetch')
+        .to error_with('ERROR: circle_ci_token required and not provided')
+        .and output_nothing.to_stdout
+    end
   end
 
   context 'when NOT in a git repo' do
@@ -352,17 +364,15 @@ describe 'sleet fetch', type: :cli do
       end
 
       context 'when using a config file for the options' do
-        let(:config_file) do
-          <<~CONFIG
-            workflows:
-              app-rspec: 'app/.rspec_example_file'
-              some-app-rspec: 'some_app/.rspec_example_status'
-              third-app-rspec: 'third_app/rspec.txt'
-          CONFIG
-        end
-
-        before do
-          File.write('.sleet.yml', config_file)
+        let(:yaml_options) do
+          {
+            circle_ci_token: 'FAKE_TOKEN',
+            workflows: {
+              'app-rspec' => 'app/.rspec_example_file',
+              'some-app-rspec' => 'some_app/.rspec_example_status',
+              'third-app-rspec' => 'third_app/rspec.txt'
+            }
+          }
         end
 
         it 'works when given the rspec job and a single output' do

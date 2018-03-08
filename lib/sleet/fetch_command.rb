@@ -26,8 +26,7 @@ module Sleet
     def fetchers
       job_name_to_output_files.map do |job_name, output_filename|
         Sleet::JobFetcher.new(
-          source_dir: config.source_dir,
-          input_filename: config.input_file,
+          config: config,
           output_filename: output_filename,
           repo: repo,
           job_name: job_name
@@ -40,7 +39,7 @@ module Sleet
     end
 
     def repo
-      @repo ||= Sleet::Repo.from_dir(config.source_dir)
+      @repo ||= Sleet::Repo.from_config(config)
     end
   end
 end
