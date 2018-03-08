@@ -50,6 +50,8 @@ module Sleet
       options.map do |key, option|
         if key.to_sym == :workflows
           [key, Terminal::Table.new(headings: ['Job Name', 'Output File'], rows: option.value.to_a), option.source]
+        elsif key.to_sym == :circle_ci_token && !options['show_sensitive'].value
+          [key, '**REDACTED**', option.source]
         else
           [key, option.value, option.source]
         end

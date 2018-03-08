@@ -45,6 +45,7 @@ module Sleet
     end
 
     desc 'config', 'Print the config'
+    option :show_sensitive, type: :boolean, default: false
     def config
       Sleet::Config.new(cli_hash: options, dir: Dir.pwd).print!
     end
