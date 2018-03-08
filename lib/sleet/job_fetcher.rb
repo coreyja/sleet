@@ -2,10 +2,10 @@
 
 module Sleet
   class JobFetcher
-    def initialize(circle_ci_token:, source_dir:, input_filename:, output_filename:, job_name:, repo:)
-      @circle_ci_token = circle_ci_token
-      @source_dir = source_dir
-      @input_filename = input_filename
+    def initialize(config:, output_filename:, job_name:, repo:)
+      @circle_ci_token = config.circle_ci_token
+      @source_dir = config.source_dir
+      @input_filename = config.input_file
       @output_filename = output_filename
       @job_name = job_name
       @repo = repo
