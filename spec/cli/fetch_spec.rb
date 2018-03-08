@@ -57,7 +57,7 @@ describe 'sleet fetch', type: :cli do
   let(:yaml_options) { { circle_ci_token: 'FAKE_TOKEN' } }
 
   before do
-    File.write('.sleet.yml', yaml_options.to_yaml) if yaml_options
+    File.write('.sleet.yml', yaml_options.to_yaml)
     stubbed_branch_request
     stubbed_build_request
     stubbed_artifact_request
@@ -77,7 +77,7 @@ describe 'sleet fetch', type: :cli do
   end
 
   context 'when the circleci token is missing from the yml file' do
-    let(:yaml_options) { nil }
+    let(:yaml_options) { {} }
 
     it 'errors about the missing token' do
       expect_command('fetch')
