@@ -2,7 +2,8 @@
 
 module Sleet
   class JobFetcher
-    def initialize(source_dir:, input_filename:, output_filename:, job_name:, repo:)
+    def initialize(circle_ci_token:, source_dir:, input_filename:, output_filename:, job_name:, repo:)
+      @circle_ci_token = circle_ci_token
       @source_dir = source_dir
       @input_filename = input_filename
       @output_filename = output_filename
@@ -17,7 +18,7 @@ module Sleet
 
     private
 
-    attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo
+    attr_reader :input_filename, :output_filename, :job_name, :source_dir, :repo, :circle_ci_token
 
     def validate!
       build_selector.validate!
@@ -36,7 +37,7 @@ module Sleet
       @build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
         file_name: input_filename,
         artifacts: build.artifacts,
-        circle_ci_token: repo.circle_ci_token
+        circle_ci_token: circle_ci_token
       ).files
     end
 
