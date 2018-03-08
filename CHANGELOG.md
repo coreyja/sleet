@@ -1,5 +1,13 @@
 # Change Log
 
+## [v0.3.10](https://github.com/coreyja/sleet/tree/v0.3.10) (2018-03-07)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.9...v0.3.10)
+
+**Merged pull requests:**
+
+- Base Version Option [\#20](https://github.com/coreyja/sleet/pull/20) ([coreyja](https://github.com/coreyja))
+- Update rubocop requirement to ~\> 0.53.0 [\#19](https://github.com/coreyja/sleet/pull/19) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v0.3.9](https://github.com/coreyja/sleet/tree/v0.3.9) (2018-03-04)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.8...v0.3.9)
 
