@@ -26,6 +26,10 @@ module Sleet
       options_hash[:workflows]
     end
 
+    def circle_ci_token
+      options_hash[:circle_ci_token]
+    end
+
     def print!
       puts Terminal::Table.new headings: %w[Option Value Source], rows: table_rows
     end

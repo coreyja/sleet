@@ -40,7 +40,7 @@ module Sleet
     end
 
     def repo
-      @repo ||= Sleet::Repo.from_dir(config.source_dir)
+      @repo ||= Sleet::Repo.from_dir(config.source_dir, circle_ci_token: config.circle_ci_token)
     end
   end
 end

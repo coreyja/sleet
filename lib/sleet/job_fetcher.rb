@@ -35,7 +35,8 @@ module Sleet
     def build_persistance_artifacts
       @build_persistance_artifacts ||= Sleet::ArtifactDownloader.new(
         file_name: input_filename,
-        artifacts: build.artifacts
+        artifacts: build.artifacts,
+        circle_ci_token: repo.circle_ci_token
       ).files
     end
 

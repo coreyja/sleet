@@ -6,12 +6,18 @@ module Sleet
     CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}
     GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}
 
-    def self.from_dir(dir)
-      new(repo: Rugged::Repository.new(dir))
+    attr_reader :circle_ci_token
+
+    def self.from_dir(dir, circle_ci_token:)
+      new(
+        repo: Rugged::Repository.new(dir),
+        circle_ci_token: circle_ci_token
+      )
     end
 
-    def initialize(repo:)
+    def initialize(repo:, circle_ci_token:)
       @repo = repo
+      @circle_ci_token = circle_ci_token
     end
 
     def validate!
@@ -22,6 +28,7 @@ module Sleet
 
     def branch
       @branch ||= Sleet::Branch.new(
+        circle_ci_token: circle_ci_token,
         github_user: github_user,
         github_repo: github_repo,
         branch: remote_branch
@@ -30,6 +37,7 @@ module Sleet
 
     def build_for(build_num)
       Sleet::Build.new(
+        circle_ci_token: circle_ci_token,
         github_user: github_user,
         github_repo: github_repo,
         build_num: build_num
