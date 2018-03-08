@@ -34,8 +34,13 @@ module Sleet
     end
 
     desc 'version', 'Display the version'
+    option :bare, type: :boolean, default: false
     def version
-      puts "Sleet v#{Sleet::VERSION}"
+      if options[:bare]
+        puts Sleet::VERSION
+      else
+        puts "Sleet v#{Sleet::VERSION}"
+      end
     end
 
     desc 'config', 'Print the config'
