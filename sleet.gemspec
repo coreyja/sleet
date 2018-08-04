@@ -27,18 +27,18 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'colorize', '~> 0.8.1'
-  spec.add_dependency 'faraday', '>= 0.13.1', '< 0.15.0'
+  spec.add_dependency 'faraday', '>= 0.13.1', '< 0.16.0'
   spec.add_dependency 'rspec', '~> 3.0'
-  spec.add_dependency 'rugged', '~> 0.26.0'
+  spec.add_dependency 'rugged', '>= 0.26', '< 0.28'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '~> 0.20.0'
 
   spec.add_development_dependency 'bundler', '~> 1.13'
-  spec.add_development_dependency 'gem-release', '2.0.0.dev.5'
+  spec.add_development_dependency 'gem-release', '= 2.0.1'
   spec.add_development_dependency 'github_changelog_generator', '~> 1.14'
   spec.add_development_dependency 'pry', '~> 0.10'
   spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'rubocop', '~> 0.53.0'
+  spec.add_development_dependency 'rubocop', '~> 0.55.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.22'
-  spec.add_development_dependency 'webmock', '~> 3.3.0'
+  spec.add_development_dependency 'webmock', '~> 3.4.0'
 end
