@@ -1,22 +1,11 @@
 inherit_gem:
   rubocop-coreyja:
-    - config/coreyja.yml
+    - config/default.yml
 
 inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.4
-  Exclude:
-    - 'vendor/**/*'
-
-Metrics/ClassLength:
-  Exclude:
-    - 'spec/**/*'
-
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
-    - '*.gemspec'
 
 RSpec/MultipleExpectations:
   Enabled: false
