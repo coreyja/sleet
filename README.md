@@ -127,7 +127,7 @@ Build-Test-Deploy Demo:
 
 For this example you have three jobs in your CircleCI Workflow, `build`, `test` and `deploy`, but only 1 (the `test` build) generate an Rspec persistance file
 
-This command will pick the `test` build and saw it's artificats to the `.rspec_example_statuses` file
+This command will pick the `test` build and save it's artificats to the `.rspec_example_statuses` file
 
 ```
 sleet fetch --workflows test:.rspec_example_statuses
