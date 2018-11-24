@@ -1,35 +1,11 @@
-require: rubocop-rspec
+inherit_gem:
+  rubocop-coreyja:
+    - config/default.yml
 
 inherit_from: .rubocop_todo.yml
 
 AllCops:
   TargetRubyVersion: 2.4
-  Exclude:
-    - 'vendor/**/*'
-
-Metrics/LineLength:
-  Max: 120
-
-Metrics/ClassLength:
-  Exclude:
-    - 'spec/**/*'
-
-Metrics/BlockLength:
-  Exclude:
-    - 'spec/**/*'
-    - '*.gemspec'
-
-Documentation:
-  Enabled: false
-
-Style/StringLiterals:
-  Description: Checks if uses of quotes match the configured preference.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#consistent-string-literals
-  Enabled: true
-  EnforcedStyle: single_quotes
-  SupportedStyles:
-  - single_quotes
-  - double_quotes
 
 RSpec/MultipleExpectations:
   Enabled: false

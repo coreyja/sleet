@@ -1,7 +1,7 @@
 version: 2
 jobs:
-  build:
-    parallelism: 2
+  test:
+    parallelism: 1
     docker:
       - image: circleci/ruby:latest
 
@@ -53,3 +53,8 @@ jobs:
       - store_artifacts:
           path: spec/.rspec_example_statuses
 
+workflows:
+  version: 2
+  test-workflow:
+    jobs:
+      - test

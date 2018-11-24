@@ -31,6 +31,7 @@ module Sleet
         exit
       end
       raise Sleet::Error, 'circle_ci_token required and not provided' unless sleet_config.circle_ci_token
+
       Sleet::FetchCommand.new(sleet_config).do!
     end
 
