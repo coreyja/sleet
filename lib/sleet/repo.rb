@@ -2,9 +2,9 @@
 
 module Sleet
   class Repo
-    REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}
-    CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}
-    GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}
+    REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}.freeze
+    CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}.freeze
+    GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}.freeze
 
     def self.from_config(config)
       new(
