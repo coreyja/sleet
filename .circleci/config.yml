@@ -29,12 +29,13 @@ jobs:
       - type: shell
         command: |
           bundle exec rubocop \
+            --config .rubocop.yml \
             -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
             --format RuboCop::Formatter::JUnitFormatter \
             --out /tmp/test-results/rubocop.xml \
             --format progress \
-            --force-exclusion
-            # $(bundle exec rubocop --list-target-files | circleci tests split --split-by=filesize --show-counts)
+            --force-exclusion \
+            $(bundle exec rubocop --list-target-files | circleci tests split --split-by=filesize --show-counts)
 
       # Run rspec in parallel
       - type: shell
