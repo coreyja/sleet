@@ -29,7 +29,6 @@ jobs:
       - type: shell
         command: |
           bundle exec rubocop \
-            --config .rubocop.yml \
             -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
             --format RuboCop::Formatter::JUnitFormatter \
             --out /tmp/test-results/rubocop.xml \
