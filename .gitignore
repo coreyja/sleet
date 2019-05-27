@@ -12,3 +12,5 @@
 
 # Ignore Rspec Example Status File
 spec/.rspec_example_statuses
+
+.envrc
