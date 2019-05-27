@@ -8,8 +8,23 @@ jobs:
     steps:
       - checkout
 
+      - run: date +%U-%Y > 'date-cache-key.txt'
+      - run: ruby -v > 'ruby-version.txt'
+
+      ## Bundler
+      # Restore Cache
+      - restore_cache:
+          keys:
+            - gem-cache-{{ checksum "ruby-version.txt" }}-{{ checksum "sleet.gemspec" }}-
+            - gem-cache-{{ checksum "ruby-version.txt" }}-
+            - gem-cache-
       # Install
       - run: bundle check --path vendor/bundle || sudo apt-get install cmake && bundle install --path vendor/bundle
+      # Store Cache
+      - save_cache:
+          key: gem-cache-{{ checksum "ruby-version.txt" }}-{{ checksum "sleet.gemspec" }}-{{ checksum "date-cache-key.txt" }}
+          paths:
+            - vendor/bundle
 
       - type: shell
         command: |
