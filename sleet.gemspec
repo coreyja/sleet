@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'colorize', '~> 0.8.1'
   spec.add_dependency 'faraday', '>= 0.13.1', '< 0.16.0'
   spec.add_dependency 'rspec', '~> 3.0'
-  spec.add_dependency 'rugged', '>= 0.26', '< 0.28'
+  spec.add_dependency 'rugged', '>= 0.26', '< 0.29'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '~> 0.20.0'
 
@@ -36,6 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'github_changelog_generator', '~> 1.14'
   spec.add_development_dependency 'pry', '~> 0.10'
   spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'rubocop-coreyja', '0.3.0'
-  spec.add_development_dependency 'webmock', '~> 3.4.0'
+  spec.add_development_dependency 'rubocop-coreyja', '0.4.0'
+  spec.add_development_dependency 'webmock', '~> 3.5.1'
 end

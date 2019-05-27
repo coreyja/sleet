@@ -1,5 +1,19 @@
 # Change Log
 
+## [v0.4.1](https://github.com/coreyja/sleet/tree/v0.4.1) (2018-11-24)
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.0...v0.4.1)
+
+**Merged pull requests:**
+
+- chore: Set up Rubocop-Coreyja gem [\#45](https://github.com/coreyja/sleet/pull/45) ([coreyja](https://github.com/coreyja))
+- Update README.md [\#40](https://github.com/coreyja/sleet/pull/40) ([coreyja](https://github.com/coreyja))
+- Update gem-release requirement to = 2.0.1 [\#33](https://github.com/coreyja/sleet/pull/33) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update webmock requirement to ~\> 3.4.0 [\#28](https://github.com/coreyja/sleet/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update faraday requirement to \>= 0.13.1, \< 0.16.0 [\#27](https://github.com/coreyja/sleet/pull/27) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update rubocop requirement to ~\> 0.55.0 [\#26](https://github.com/coreyja/sleet/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update gem-release requirement to = 2.0.0.rc.3 [\#25](https://github.com/coreyja/sleet/pull/25) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Update rugged requirement to \>= 0.26, \< 0.28 [\#24](https://github.com/coreyja/sleet/pull/24) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v0.4.0](https://github.com/coreyja/sleet/tree/v0.4.0) (2018-03-08)
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.10...v0.4.0)
 
