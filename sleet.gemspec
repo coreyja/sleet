@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'gem-release', '= 2.1.1'
   spec.add_development_dependency 'github_changelog_generator', '~> 1.14'
   spec.add_development_dependency 'pry', '~> 0.10'
-  spec.add_development_dependency 'rake', '~> 12.3'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rubocop-coreyja', '0.4.0'
   spec.add_development_dependency 'webmock', '~> 3.7.0'
 end
