@@ -34,7 +34,7 @@ describe 'sleet fetch', type: :cli do
   let(:happy_path_final_file)  { artifact_response }
   let(:stubbed_branch_request) do
     stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/tree/.+})
-      .with(query: { 'circle-token' => 'FAKE_TOKEN', 'filter' => 'completed' })
+      .with(query: { 'circle-token' => 'FAKE_TOKEN', 'filter' => 'completed', 'limit' => '100' })
       .to_return(body: branch_response.to_json)
   end
   let(:stubbed_build_request) do
@@ -119,7 +119,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifcats found'
+      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
     end
   end
 
@@ -134,7 +134,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifcats found'
+      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
     end
   end
 
