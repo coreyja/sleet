@@ -22,7 +22,8 @@ module Sleet
     attr_reader :github_user, :github_repo, :branch, :circle_ci_token
 
     def url
-      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}?filter=completed"
+      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}" \
+        '?filter=completed&limit=100'
     end
   end
 end
