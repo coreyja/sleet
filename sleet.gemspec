@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'CircleCI RSpec Status Persistance File Aggregator'
   spec.description   = <<~DOC
     Sleet provides an easy way to grab the most recent Rspec persistance files from CircleCI.
-    It also aggregates the artificats from CircleCI, since you will have 1 per build container.
+    It also aggregates the artifacts from CircleCI, since you will have 1 per build container.
   DOC
   spec.homepage      = 'https://github.com/coreyja/sleet'
   spec.license       = 'MIT'

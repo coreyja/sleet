@@ -29,14 +29,14 @@ module Sleet
     end
 
     def chosen_build_json
-      branch.builds_with_artificats.find do |b|
+      branch.builds_with_artifacts.find do |b|
         b.fetch('workflows', nil)&.fetch('job_name', nil) == job_name
       end
     end
 
     def must_find_a_build_with_artifacts!
       !chosen_build_json.nil? ||
-        raise(Error, "No builds with artifcats found#{" for job name [#{job_name}]" if job_name}")
+        raise(Error, "No builds with artifacts found#{" for job name [#{job_name}]" if job_name}")
     end
 
     def chosen_build_must_have_input_file!

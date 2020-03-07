@@ -9,7 +9,7 @@
 
 RSpec has a [feature](https://relishapp.com/rspec/rspec-core/v/3-7/docs/command-line/only-failures) that I find very useful which is the `--only-failures` option. This will re-run only that examples that failed the previous run.
 
-CircleCI has support for [uploading artifcats](https://circleci.com/docs/2.0/artifacts/) with your builds, which allows us to store the persistance file that powers the RSpec only failures option.
+CircleCI has support for [uploading artifacts](https://circleci.com/docs/2.0/artifacts/) with your builds, which allows us to store the persistance file that powers the RSpec only failures option.
 However! CircleCI also supports and encourages parallelizing your build, which means even if you upload your rspec persistance file, you actually have a number of them each containing a subset of your test suite.
 This is where `Sleet` comes in!
 
@@ -128,7 +128,7 @@ Build-Test-Deploy Demo:
 
 For this example you have three jobs in your CircleCI Workflow, `build`, `test` and `deploy`, but only 1 (the `test` build) generate an Rspec persistance file
 
-This command will pick the `test` build and save it's artificats to the `.rspec_example_statuses` file
+This command will pick the `test` build and save its artifacts to the `.rspec_example_statuses` file
 
 ```
 sleet fetch --workflows test:.rspec_example_statuses

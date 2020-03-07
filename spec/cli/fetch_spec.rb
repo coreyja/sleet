@@ -119,7 +119,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifcats found'
+      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
     end
   end
 
@@ -134,7 +134,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifcats found'
+      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
     end
   end
 
