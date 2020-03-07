@@ -1,6 +1,30 @@
-# Change Log
+# Changelog
 
-## [v0.4.2](https://github.com/coreyja/sleet/tree/v0.4.2) (2019-05-26)
+## [v0.4.3](https://github.com/coreyja/sleet/tree/v0.4.3) (2020-03-06)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.2...v0.4.3)
+
+**Closed issues:**
+
+- s/Artifcats/Artifacts/ [\#44](https://github.com/coreyja/sleet/issues/44)
+
+**Merged pull requests:**
+
+- fix: Replace "artifi🐱s" with "artifacts". [\#74](https://github.com/coreyja/sleet/pull/74) ([temochka](https://github.com/temochka))
+- feat: Look at 100 recent builds instead of just 30. [\#73](https://github.com/coreyja/sleet/pull/73) ([temochka](https://github.com/temochka))
+- Update webmock requirement from ~\> 3.7.0 to ~\> 3.8.0 [\#72](https://github.com/coreyja/sleet/pull/72) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update faraday requirement from \>= 0.13.1, \< 0.16.0 to \>= 0.13.1, \< 1.1.0 [\#71](https://github.com/coreyja/sleet/pull/71) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update gem-release requirement from = 2.1.0 to = 2.1.1 [\#69](https://github.com/coreyja/sleet/pull/69) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update gem-release requirement from = 2.0.4 to = 2.1.0 [\#68](https://github.com/coreyja/sleet/pull/68) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update gem-release requirement from = 2.0.3 to = 2.0.4 [\#67](https://github.com/coreyja/sleet/pull/67) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update rake requirement from ~\> 12.3 to ~\> 13.0 [\#64](https://github.com/coreyja/sleet/pull/64) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update webmock requirement from ~\> 3.6.0 to ~\> 3.7.0 [\#63](https://github.com/coreyja/sleet/pull/63) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update gem-release requirement from = 2.0.2 to = 2.0.3 [\#62](https://github.com/coreyja/sleet/pull/62) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update gem-release requirement from = 2.0.1 to = 2.0.2 [\#61](https://github.com/coreyja/sleet/pull/61) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update webmock requirement from ~\> 3.5.1 to ~\> 3.6.0 [\#60](https://github.com/coreyja/sleet/pull/60) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
+## [v0.4.2](https://github.com/coreyja/sleet/tree/v0.4.2) (2019-05-27)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.1...v0.4.2)
 
 **Closed issues:**
@@ -22,6 +46,7 @@
 - Update webmock requirement from ~\> 3.4.0 to ~\> 3.5.1 [\#47](https://github.com/coreyja/sleet/pull/47) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v0.4.1](https://github.com/coreyja/sleet/tree/v0.4.1) (2018-11-24)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.0...v0.4.1)
 
 **Merged pull requests:**
@@ -36,6 +61,7 @@
 - Update rugged requirement to \>= 0.26, \< 0.28 [\#24](https://github.com/coreyja/sleet/pull/24) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v0.4.0](https://github.com/coreyja/sleet/tree/v0.4.0) (2018-03-08)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.10...v0.4.0)
 
 **Closed issues:**
@@ -47,6 +73,7 @@
 - Get Token From Config File [\#21](https://github.com/coreyja/sleet/pull/21) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.10](https://github.com/coreyja/sleet/tree/v0.3.10) (2018-03-08)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.9...v0.3.10)
 
 **Merged pull requests:**
@@ -55,6 +82,7 @@
 - Update rubocop requirement to ~\> 0.53.0 [\#19](https://github.com/coreyja/sleet/pull/19) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v0.3.9](https://github.com/coreyja/sleet/tree/v0.3.9) (2018-03-04)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.8...v0.3.9)
 
 **Closed issues:**
@@ -66,15 +94,14 @@
 - Refactor [\#18](https://github.com/coreyja/sleet/pull/18) ([coreyja](https://github.com/coreyja))
 - Update rake requirement to ~\> 12.3 [\#17](https://github.com/coreyja/sleet/pull/17) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Update faraday requirement to \>= 0.13.1, \< 0.15.0 [\#16](https://github.com/coreyja/sleet/pull/16) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-
-## [v0.3.8](https://github.com/coreyja/sleet/tree/v0.3.8) (2018-02-25)
-[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.7...v0.3.8)
-
-**Merged pull requests:**
-
 - More Specs [\#15](https://github.com/coreyja/sleet/pull/15) ([coreyja](https://github.com/coreyja))
 
+## [v0.3.8](https://github.com/coreyja/sleet/tree/v0.3.8) (2018-02-25)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.7...v0.3.8)
+
 ## [v0.3.7](https://github.com/coreyja/sleet/tree/v0.3.7) (2018-01-19)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.6...v0.3.7)
 
 **Merged pull requests:**
@@ -82,6 +109,7 @@
 - Fix token auth and finally add a spec for it so I don't break it again [\#14](https://github.com/coreyja/sleet/pull/14) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.6](https://github.com/coreyja/sleet/tree/v0.3.6) (2018-01-18)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.5...v0.3.6)
 
 **Merged pull requests:**
@@ -89,9 +117,11 @@
 - Fix Auth By Going Back to Query Params [\#13](https://github.com/coreyja/sleet/pull/13) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.5](https://github.com/coreyja/sleet/tree/v0.3.5) (2018-01-17)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.4...v0.3.5)
 
 ## [v0.3.4](https://github.com/coreyja/sleet/tree/v0.3.4) (2018-01-17)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.3...v0.3.4)
 
 **Merged pull requests:**
@@ -100,6 +130,7 @@
 - Fix Auth [\#11](https://github.com/coreyja/sleet/pull/11) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.3](https://github.com/coreyja/sleet/tree/v0.3.3) (2018-01-16)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.2...v0.3.3)
 
 **Merged pull requests:**
@@ -107,6 +138,7 @@
 - Add `version` cmd [\#10](https://github.com/coreyja/sleet/pull/10) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.2](https://github.com/coreyja/sleet/tree/v0.3.2) (2018-01-16)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.1...v0.3.2)
 
 **Merged pull requests:**
@@ -114,6 +146,7 @@
 - Update Readme and Add Descriptions to Help Menus [\#8](https://github.com/coreyja/sleet/pull/8) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.1](https://github.com/coreyja/sleet/tree/v0.3.1) (2018-01-15)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.3.0...v0.3.1)
 
 **Merged pull requests:**
@@ -121,6 +154,7 @@
 - Add Dependency Versions [\#5](https://github.com/coreyja/sleet/pull/5) ([coreyja](https://github.com/coreyja))
 
 ## [v0.3.0](https://github.com/coreyja/sleet/tree/v0.3.0) (2018-01-15)
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.2.0...v0.3.0)
 
 **Closed issues:**
@@ -133,10 +167,13 @@
 - Error Messages [\#3](https://github.com/coreyja/sleet/pull/3) ([coreyja](https://github.com/coreyja))
 
 ## [v0.2.0](https://github.com/coreyja/sleet/tree/v0.2.0) (2018-01-14)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/aa005fdae00ae843909f3a2d1753db3727a27c2c...v0.2.0)
+
 **Merged pull requests:**
 
 - Gemify [\#2](https://github.com/coreyja/sleet/pull/2) ([coreyja](https://github.com/coreyja))
 
 
 
-\* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
+\* *This Changelog was automatically generated by [github_changelog_generator](https://github.com/github-changelog-generator/github-changelog-generator)*
