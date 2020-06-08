@@ -23,6 +23,10 @@ module Sleet
       options_hash[:output_file]
     end
 
+    def branch
+      options_hash[:branch]
+    end
+
     def workflows
       options_hash[:workflows]
     end
