@@ -10,13 +10,17 @@ module Sleet
       new(
         repo: Rugged::Repository.new(config.source_dir),
         circle_ci_token: config.circle_ci_token,
-        branch: config.branch,
+        username: config.username,
+        project: config.project,
+        branch: config.branch
       )
     end
 
-    def initialize(repo:, circle_ci_token:, branch:)
+    def initialize(repo:, circle_ci_token:, username:, project:, branch:)
       @repo = repo
       @circle_ci_token = circle_ci_token
+      @github_user = username
+      @github_repo = project
       @branch = build_branch(branch) if branch
     end
 
@@ -57,11 +61,11 @@ module Sleet
     end
 
     def github_user
-      github_match[1]
+      @github_user ||= github_match[1]
     end
 
     def github_repo
-      github_match[2]
+      @github_repo ||= github_match[2]
     end
 
     def current_branch_name

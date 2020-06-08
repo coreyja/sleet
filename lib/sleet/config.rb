@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Sleet
-  class Config
+  class Config # rubocop:disable Metrics/ClassLength
     OPTION_FILENAME = '.sleet.yml'
     HIDDEN_UNLESS_IN_CLI_OPTIONS = %w[show_sensitive print_config].freeze
     ConfigOption = Struct.new(:value, :source)
@@ -21,6 +21,14 @@ module Sleet
 
     def output_file
       options_hash[:output_file]
+    end
+
+    def username
+      options_hash[:username]
+    end
+
+    def project
+      options_hash[:project]
     end
 
     def branch
