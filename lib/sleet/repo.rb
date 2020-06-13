@@ -3,24 +3,14 @@
 module Sleet
   class Repo
     def self.from_config(config)
-      if config.username && config.project && config.branch
-        new(
-          circle_ci_token: config.circle_ci_token,
-          username: config.username,
-          project: config.project,
-          branch_name: config.branch
-        )
-      else
-        local_repo = Sleet::LocalRepo.new(source_dir: config.source_dir)
-        local_repo.validate!
+      local_repo = Sleet::LocalRepo.new(source_dir: config.source_dir)
 
-        new(
-          circle_ci_token: config.circle_ci_token,
-          username: config.username || local_repo.username,
-          project: config.project || local_repo.project,
-          branch_name: config.branch || local_repo.branch_name
-        )
-      end
+      new(
+        circle_ci_token: config.circle_ci_token,
+        username: config.username || local_repo.username,
+        project: config.project || local_repo.project,
+        branch_name: config.branch || local_repo.branch_name
+      )
     end
 
     def initialize(circle_ci_token:, username:, project:, branch_name:)

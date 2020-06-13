@@ -8,23 +8,24 @@ module Sleet
 
     def initialize(source_dir:)
       @source_dir = source_dir
-    end
-
-    def validate!
-      must_be_on_branch!
-      must_have_an_upstream_branch!
-      upstream_remote_must_be_github!
+      @validated = false
     end
 
     def username
+      validate!
+
       github_match[1]
     end
 
     def project
+      validate!
+
       github_match[2]
     end
 
     def branch_name
+      validate!
+
       current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
     end
 
@@ -46,6 +47,15 @@ module Sleet
 
     def github_match
       @github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
+    end
+
+    def validate!
+      unless @validated
+        must_be_on_branch!
+        must_have_an_upstream_branch!
+        upstream_remote_must_be_github!
+      end
+      @validated = true
     end
 
     def must_be_on_branch!
