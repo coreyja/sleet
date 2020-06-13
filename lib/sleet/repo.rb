@@ -16,9 +16,9 @@ module Sleet
 
         new(
           circle_ci_token: config.circle_ci_token,
-          username: local_repo.username,
-          project: local_repo.project,
-          branch_name: local_repo.branch_name
+          username: config.username || local_repo.username,
+          project: config.project || local_repo.project,
+          branch_name: config.branch || local_repo.branch_name
         )
       end
     end
