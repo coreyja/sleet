@@ -2,9 +2,6 @@
 
 module Sleet
   class Repo
-    REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}.freeze
-    CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}.freeze
-    GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}.freeze
 
     def self.from_config(config)
       if config.username && config.project && config.branch
@@ -15,27 +12,14 @@ module Sleet
           branch_name: config.branch
         )
       else
-        repo = Rugged::Repository.new(config.source_dir)
-        current_branch_name = repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
-        current_branch = repo.branches[current_branch_name]
+        local_repo = Sleet::LocalRepo.new(source_dir: config.source_dir)
+        local_repo.validate!
 
-        !current_branch.nil? ||
-          raise(Error, 'Not on a branch')
-
-        !current_branch.remote.nil? ||
-          raise(Error, "No upstream branch set for the current branch of #{repo.current_branch_name}")
-
-        github_match = GITHUB_MATCH_REGEX.match(current_branch.remote.url)
-
-        !github_match.nil? ||
-          raise(Error, 'Upstream remote is not GitHub')
-
-        remote_branch = current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
         new(
           circle_ci_token: config.circle_ci_token,
-          username: github_match[1],
-          project: github_match[2],
-          branch_name: remote_branch
+          username: local_repo.username,
+          project: local_repo.project,
+          branch_name: local_repo.branch_name
         )
       end
     end
