@@ -33,12 +33,12 @@ describe 'sleet fetch', type: :cli do
   end
   let(:happy_path_final_file)  { artifact_response }
   let(:stubbed_branch_request) do
-    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/tree/.+})
+    stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master')
       .with(query: { 'circle-token' => 'FAKE_TOKEN', 'filter' => 'completed', 'limit' => '100' })
       .to_return(body: branch_response.to_json)
   end
   let(:stubbed_build_request) do
-    stub_request(:get, %r{https://circleci.com/api/v1.1/project/github/.+/.+/\d+/artifacts})
+    stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/23/artifacts')
       .with(query: { 'circle-token' => 'FAKE_TOKEN' })
       .to_return(body: build_response.to_json)
   end
