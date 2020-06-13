@@ -2,7 +2,6 @@
 
 module Sleet
   class Repo
-
     def self.from_config(config)
       if config.username && config.project && config.branch
         new(
