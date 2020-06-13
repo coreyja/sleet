@@ -31,14 +31,16 @@ describe 'sleet fetch', type: :cli do
       ./spec/model/sleet_spec.rb[1:1]         | passed | 0.00073 seconds |
     ARTIFACT
   end
-  let(:happy_path_final_file)  { artifact_response }
+  let(:happy_path_final_file) { artifact_response }
+  let(:stubbed_branch_request_url) { 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master' }
+  let(:stubbed_build_request_url) { 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/23/artifacts' }
   let(:stubbed_branch_request) do
-    stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master')
+    stub_request(:get, stubbed_branch_request_url)
       .with(query: { 'circle-token' => 'FAKE_TOKEN', 'filter' => 'completed', 'limit' => '100' })
       .to_return(body: branch_response.to_json)
   end
   let(:stubbed_build_request) do
-    stub_request(:get, 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/23/artifacts')
+    stub_request(:get, stubbed_build_request_url)
       .with(query: { 'circle-token' => 'FAKE_TOKEN' })
       .to_return(body: build_response.to_json)
   end
@@ -94,6 +96,12 @@ describe 'sleet fetch', type: :cli do
 
     it 'succeeds when given the source path as an option' do
       expect_command("fetch --source-dir #{repo_directory}")
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
+    end
+
+    it 'succeeds when all the required options are passed as cli options' do
+      expect_command('fetch --username someuser --project somerepo --branch master')
         .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
     end
@@ -382,6 +390,22 @@ describe 'sleet fetch', type: :cli do
           expect(File.read('third_app/rspec.txt')).to eq happy_path_final_file
         end
       end
+    end
+  end
+
+  context 'when different repo values are provided in the CLI' do
+    let(:stubbed_branch_request_url) do
+      'https://circleci.com/api/v1.1/project/github/otheruser/otherrepo/tree/otherbranch'
+    end
+    let(:stubbed_build_request_url) { 'https://circleci.com/api/v1.1/project/github/otheruser/otherrepo/23/artifacts' }
+
+    it 'succeeds' do
+      expect_command('fetch --username otheruser --project otherrepo --branch otherbranch')
+        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
+      expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
+
+      expect(stubbed_branch_request).to have_been_made.once
+      expect(stubbed_build_request).to have_been_made.once
     end
   end
 end
