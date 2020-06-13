@@ -103,7 +103,7 @@ describe 'sleet fetch', type: :cli do
     it 'succeeds when all the required options are passed as cli options' do
       expect_command('fetch --username someuser --project somerepo --branch master')
         .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
-      expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
+      expect(File.read("#{Dir.pwd}/.rspec_example_statuses")).to eq happy_path_final_file
     end
   end
 
