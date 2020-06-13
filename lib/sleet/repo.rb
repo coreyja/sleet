@@ -6,15 +6,13 @@ module Sleet
     CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}.freeze
     GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}.freeze
 
-    attr_reader :branch
-
     def self.from_config(config)
       if config.username && config.project && config.branch
         new(
           circle_ci_token: config.circle_ci_token,
           username: config.username,
           project: config.project,
-          branch: config.branch
+          branch_name: config.branch
         )
       else
         repo = Rugged::Repository.new(config.source_dir)
@@ -37,16 +35,16 @@ module Sleet
           circle_ci_token: config.circle_ci_token,
           username: github_match[1],
           project: github_match[2],
-          branch: remote_branch
+          branch_name: remote_branch
         )
       end
     end
 
-    def initialize(circle_ci_token:, username:, project:, branch:)
+    def initialize(circle_ci_token:, username:, project:, branch_name:)
       @circle_ci_token = circle_ci_token
       @github_user = username
       @github_repo = project
-      @branch = build_branch(branch)
+      @branch_name = branch_name
     end
 
     def build_for(build_num)
@@ -58,17 +56,17 @@ module Sleet
       )
     end
 
-    private
-
-    attr_reader :circle_ci_token, :github_user, :github_repo
-
-    def build_branch(branch)
-      Sleet::Branch.new(
+    def branch
+      @branch ||= Sleet::Branch.new(
         circle_ci_token: circle_ci_token,
         github_user: github_user,
         github_repo: github_repo,
-        branch: branch
+        branch: branch_name
       )
     end
+
+    private
+
+    attr_reader :circle_ci_token, :github_user, :github_repo, :branch_name
   end
 end
