@@ -1,3 +1,4 @@
 output_file: 'spec/.rspec_example_statuses'
+username: coreyja
 workflows:
   test: spec/.rspec_example_statuses
