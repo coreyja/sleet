@@ -10,6 +10,8 @@
 
 ## [v0.5.1](https://github.com/coreyja/sleet/tree/v0.5.1) (2020-06-14)
 
+This was an accidental release that contains no changes from `0.5.0`
+
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.0...v0.5.1)
 
 ## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-14)
