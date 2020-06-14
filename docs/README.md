@@ -95,31 +95,31 @@ To view your current configuration use the `sleet config` command which will giv
 
 These are the options that are currently supported
 
-#### `source_dir`
+#### `--source_dir`
 
-Alias: s
+Alias: `s`
 
 This is the directory of the source git repo. If a `source_dir` is NOT given we look up from the current directory for the nearest git repo.
 
-#### `input_file`
+#### `--input_file`
 
-Alias: i
+Alias: `i`
 
 This is the name of the Rspec Circle Persistance File in CircleCI. The default is `.rspec_example_statuses`
 
 This will match if the full path on CircleCI ends in the given name.
 
-#### `output_file`
+#### `--output_file`
 
-Alias: o
+Alias: `o`
 
 This is the name for the output file, on your local system. It is relative to the `source_dir`.
 
 Will be IGNORED if `workflows` is provided.
 
-#### `workflows`
+#### `--workflows`
 
-Alias: w
+Alias: `w`
 
 If you are using workflows in CircleCI, then this is for you! You need to tell `Sleet` which build(s) to look in, and where each output should be saved.
 The input is a hash, where the key is the build name and the value is the `output_file` for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
@@ -133,7 +133,6 @@ This command will pick the `test` build and save its artifacts to the `.rspec_ex
 ```
 sleet fetch --workflows test:.rspec_example_statuses
 ```
-
 MonoRepo Demo:
 
 If you have a mono-repo that contains 3 sub-dirs. `foo`, `bar` and `baz`. And each one has an accompanying build. We can process all these sub-dirs at once with the following workflow command.
@@ -141,3 +140,21 @@ If you have a mono-repo that contains 3 sub-dirs. `foo`, `bar` and `baz`. And ea
 ```
 sleet fetch --workflows foo-test:foo/.rpsec_example_statuses bar-test:bar/.rspec_example_statuses baz-specs:baz/spec/examples.txt
 ```
+
+#### `--username`
+
+Alias: `u`
+
+This is the GitHub username that is referenced by the CircleCI build. By default, Sleet will base this on your upstream git remote.
+
+#### `--project`
+
+Alias: `p`
+
+This is the GitHub project that is referenced by the CircleCI build. By default, Sleet will base this on your upstream git remote.
+
+#### `--branch`
+
+Alias: `b`
+
+This is the remote branch that is referenced by the CircleCI build. Sleet will attempt to guess this by default, but if you are pushing to a forked repo, you may need to specify a different branch name (e.g. "pull/1234").

@@ -6,7 +6,7 @@ module Sleet
       @circle_ci_token = circle_ci_token
       @github_user = github_user
       @github_repo = github_repo
-      @branch = branch
+      @branch = CGI.escape(branch)
     end
 
     def builds

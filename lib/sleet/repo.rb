@@ -2,35 +2,22 @@
 
 module Sleet
   class Repo
-    REMOTE_BRANCH_REGEX = %r{^([^\/.]+)\/(.+)}.freeze
-    CURRENT_BRANCH_REGEX = %r{^refs\/heads\/}.freeze
-    GITHUB_MATCH_REGEX = %r{github.com[:\/](.+)\/(.+)\.git}.freeze
-
     def self.from_config(config)
+      local_repo = Sleet::LocalRepo.new(source_dir: config.source_dir)
+
       new(
-        repo: Rugged::Repository.new(config.source_dir),
-        circle_ci_token: config.circle_ci_token
+        circle_ci_token: config.circle_ci_token,
+        username: config.username || local_repo.username,
+        project: config.project || local_repo.project,
+        branch_name: config.branch || local_repo.branch_name
       )
     end
 
-    def initialize(repo:, circle_ci_token:)
-      @repo = repo
+    def initialize(circle_ci_token:, username:, project:, branch_name:)
       @circle_ci_token = circle_ci_token
-    end
-
-    def validate!
-      must_be_on_branch!
-      must_have_an_upstream_branch!
-      upstream_remote_must_be_github!
-    end
-
-    def branch
-      @branch ||= Sleet::Branch.new(
-        circle_ci_token: circle_ci_token,
-        github_user: github_user,
-        github_repo: github_repo,
-        branch: remote_branch
-      )
+      @github_user = username
+      @github_repo = project
+      @branch_name = branch_name
     end
 
     def build_for(build_num)
@@ -42,47 +29,17 @@ module Sleet
       )
     end
 
+    def branch
+      @branch ||= Sleet::Branch.new(
+        circle_ci_token: circle_ci_token,
+        github_user: github_user,
+        github_repo: github_repo,
+        branch: branch_name
+      )
+    end
+
     private
 
-    attr_reader :repo, :circle_ci_token
-
-    def remote_branch
-      current_branch.upstream.name.match(REMOTE_BRANCH_REGEX)[2]
-    end
-
-    def github_user
-      github_match[1]
-    end
-
-    def github_repo
-      github_match[2]
-    end
-
-    def current_branch_name
-      repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
-    end
-
-    def current_branch
-      repo.branches[current_branch_name]
-    end
-
-    def github_match
-      @github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
-    end
-
-    def must_be_on_branch!
-      !current_branch.nil? ||
-        raise(Error, 'Not on a branch')
-    end
-
-    def must_have_an_upstream_branch!
-      !current_branch.remote.nil? ||
-        raise(Error, "No upstream branch set for the current branch of #{repo.current_branch_name}")
-    end
-
-    def upstream_remote_must_be_github!
-      !github_match.nil? ||
-        raise(Error, 'Upstream remote is not GitHub')
-    end
+    attr_reader :circle_ci_token, :github_user, :github_repo, :branch_name
   end
 end

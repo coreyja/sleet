@@ -41,10 +41,6 @@ module Sleet
       ).files
     end
 
-    def branch
-      repo.branch
-    end
-
     def build
       build_selector.build
     end

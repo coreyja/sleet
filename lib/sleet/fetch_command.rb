@@ -7,7 +7,6 @@ module Sleet
     end
 
     def do!
-      repo.validate!
       error_messages = []
       fetchers.map do |fetcher|
         begin

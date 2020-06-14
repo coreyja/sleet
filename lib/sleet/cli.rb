@@ -24,6 +24,15 @@ module Sleet
     option :output_file, type: :string, aliases: [:o], desc: <<~DESC
       This is the name for the output file, on your local system. It is relative to the source_dir. Will be IGNORED if workflows is provided.
     DESC
+    option :username, type: :string, aliases: [:u], desc: <<~DESC
+      This is the GitHub username that is referenced by the CircleCI build. By default, Sleet will base this on your upstream git remote.
+    DESC
+    option :project, type: :string, aliases: [:p], desc: <<~DESC
+      This is the GitHub project that is referenced by the CircleCI build. By default, Sleet will base this on your upstream git remote.
+    DESC
+    option :branch, type: :string, aliases: [:b], desc: <<~DESC
+      This is the remote branch that is referenced by the CircleCI build. Sleet will attempt to guess this by default, but if you are pushing to a forked repo, you may need to specify a different branch name (e.g. "pull/1234").
+    DESC
     option :workflows, type: :hash, aliases: [:w], desc: <<~DESC
       To use Sleet with CircleCI Workflows you need to tell Sleet which build(s) to look in, and where each output should be saved. The input is a hash, where the key is the build name and the value is the output_file for that build. Sleet supports saving the artifacts to multiple builds, meaning it can support a mono-repo setup.
     DESC
