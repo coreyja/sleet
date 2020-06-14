@@ -1,6 +1,21 @@
 # Changelog
 
-## [v0.4.3](https://github.com/coreyja/sleet/tree/v0.4.3) (2020-03-06)
+## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-13)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.3...v0.5.0)
+
+**Closed issues:**
+
+- Add Support for Forked Repos in Github [\#41](https://github.com/coreyja/sleet/issues/41)
+
+**Merged pull requests:**
+
+- Support PR builds from forked repos!!! ✨ [\#77](https://github.com/coreyja/sleet/pull/77) ([smudge](https://github.com/smudge))
+- Update rugged requirement from \>= 0.26, \< 0.100 to \>= 0.26, \< 1.1 [\#76](https://github.com/coreyja/sleet/pull/76) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update rugged requirement from \>= 0.26, \< 0.29 to \>= 0.26, \< 0.100 [\#75](https://github.com/coreyja/sleet/pull/75) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+- Update thor requirement from ~\> 0.20.0 to \>= 0.20, \< 1.1 [\#70](https://github.com/coreyja/sleet/pull/70) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
+
+## [v0.4.3](https://github.com/coreyja/sleet/tree/v0.4.3) (2020-03-07)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.2...v0.4.3)
 
