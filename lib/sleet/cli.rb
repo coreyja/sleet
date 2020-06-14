@@ -4,6 +4,10 @@ module Sleet
   class Cli < Thor
     default_task :fetch
 
+    def self.exit_on_failure?
+      true
+    end
+
     desc 'fetch', 'Fetch and Aggregate RSpec Persistance Files from CircleCI'
     long_desc <<~LONGDESC
       `sleet fetch` will find build(s) in CircleCI for the current branch, and

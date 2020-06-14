@@ -12,7 +12,7 @@ module CliHelper
   end
 
   def error_with(message)
-    output(message.red + "\n").to_stderr
+    exit_with_code(1).and(output(message.red + "\n").to_stderr)
   end
 
   def without_error
@@ -20,4 +20,28 @@ module CliHelper
   end
 
   RSpec::Matchers.define_negated_matcher(:output_nothing, :output)
+
+  RSpec::Matchers.define :exit_with_code do |exp_code|
+    supports_block_expectations
+
+    actual = nil
+    match do |block|
+      begin
+        block.call
+      rescue SystemExit => e
+        actual = e.status
+      end
+      actual && (actual == exp_code)
+    end
+    failure_message do |_block|
+      "expected block to call exit(#{exp_code}) but exit" +
+        (actual.nil? ? ' was not called' : "(#{actual}) was called")
+    end
+    failure_message_when_negated do |_block|
+      "expected block not to call exit(#{exp_code})"
+    end
+    description do
+      "expect block to call exit(#{exp_code})"
+    end
+  end
 end
