@@ -21,6 +21,10 @@ module GitHelper
     repo.branches[local_branch].upstream = repo.branches[remote_branch]
   end
 
+  def remove_upstream(repo, local_branch)
+    repo.branches[local_branch].upstream = nil
+  end
+
   private
 
   def add_file_to_index(repo)
