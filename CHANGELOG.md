@@ -1,6 +1,14 @@
 # Changelog
 
-## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-13)
+## [v0.5.1](https://github.com/coreyja/sleet/tree/v0.5.1) (2020-06-14)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.0...v0.5.1)
+
+**Merged pull requests:**
+
+- bug: Fix bug in error message when no upstream exists [\#79](https://github.com/coreyja/sleet/pull/79) ([coreyja](https://github.com/coreyja))
+
+## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-14)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.3...v0.5.0)
 
