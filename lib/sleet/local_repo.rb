@@ -64,7 +64,7 @@ module Sleet
 
     def must_have_an_upstream_branch!
       !current_branch.remote.nil? ||
-        raise(Error, "No upstream branch set for the current branch of #{repo.current_branch_name}")
+        raise(Error, "No upstream branch set for the current branch of #{current_branch_name}")
     end
 
     def upstream_remote_must_be_github!

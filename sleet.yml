@@ -1,0 +1,2 @@
+workflows:
+  test:spec/.rspec_example_statuses
