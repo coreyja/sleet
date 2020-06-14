@@ -121,6 +121,14 @@ describe 'sleet fetch', type: :cli do
     end
   end
 
+  context 'when there is no upstream' do
+    before { remove_upstream repo, 'master' }
+
+    it 'runs and outputs the correct error message' do
+      expect_command('fetch').to error_with 'ERROR: No upstream branch set for the current branch of master'
+    end
+  end
+
   context 'when there are no completed builds found for the branch' do
     let(:branch_response) do
       []
