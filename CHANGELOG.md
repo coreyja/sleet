@@ -1,6 +1,18 @@
 # Changelog
 
-## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-13)
+## [v0.5.1](https://github.com/coreyja/sleet/tree/v0.5.1) (2020-06-14)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.1...v0.5.1)
+
+**Merged pull requests:**
+
+- bug: Fix bug in error message when no upstream exists [\#79](https://github.com/coreyja/sleet/pull/79) ([coreyja](https://github.com/coreyja))
+
+## [v0.5.1](https://github.com/coreyja/sleet/tree/v0.5.1) (2020-06-14)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.0...v0.5.1)
+
+## [v0.5.0](https://github.com/coreyja/sleet/tree/v0.5.0) (2020-06-14)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.4.3...v0.5.0)
 
@@ -35,7 +47,6 @@
 - Update rake requirement from ~\> 12.3 to ~\> 13.0 [\#64](https://github.com/coreyja/sleet/pull/64) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Update webmock requirement from ~\> 3.6.0 to ~\> 3.7.0 [\#63](https://github.com/coreyja/sleet/pull/63) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Update gem-release requirement from = 2.0.2 to = 2.0.3 [\#62](https://github.com/coreyja/sleet/pull/62) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
-- Update gem-release requirement from = 2.0.1 to = 2.0.2 [\#61](https://github.com/coreyja/sleet/pull/61) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Update webmock requirement from ~\> 3.5.1 to ~\> 3.6.0 [\#60](https://github.com/coreyja/sleet/pull/60) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 
 ## [v0.4.2](https://github.com/coreyja/sleet/tree/v0.4.2) (2019-05-27)
@@ -51,6 +62,7 @@
 
 **Merged pull requests:**
 
+- Update gem-release requirement from = 2.0.1 to = 2.0.2 [\#61](https://github.com/coreyja/sleet/pull/61) ([dependabot-preview[bot]](https://github.com/apps/dependabot-preview))
 - Fix CircleCI Builds [\#59](https://github.com/coreyja/sleet/pull/59) ([coreyja](https://github.com/coreyja))
 - Add a Gitter chat badge to README.md [\#58](https://github.com/coreyja/sleet/pull/58) ([gitter-badger](https://github.com/gitter-badger))
 - Symlink to docs README.md from top level [\#57](https://github.com/coreyja/sleet/pull/57) ([coreyja](https://github.com/coreyja))
