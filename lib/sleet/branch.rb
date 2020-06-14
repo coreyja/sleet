@@ -13,7 +13,7 @@ module Sleet
       @builds ||= JSON.parse(Sleet::CircleCi.get(url, circle_ci_token).body)
     end
 
-    def builds_with_artificats
+    def builds_with_artifacts
       builds.select { |b| b['has_artifacts'] }
     end
 
@@ -22,7 +22,8 @@ module Sleet
     attr_reader :github_user, :github_repo, :branch, :circle_ci_token
 
     def url
-      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}?filter=completed"
+      "https://circleci.com/api/v1.1/project/github/#{github_user}/#{github_repo}/tree/#{branch}" \
+        '?filter=completed&limit=100'
     end
   end
 end
