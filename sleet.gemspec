@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'colorize', '~> 0.8.1'
   spec.add_dependency 'faraday', '>= 0.13.1', '< 1.1.0'
   spec.add_dependency 'rspec', '~> 3.0'
-  spec.add_dependency 'rugged', '>= 0.26', '< 0.100'
+  spec.add_dependency 'rugged', '>= 0.26', '< 1.1'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '~> 0.20.0'
 
