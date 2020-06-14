@@ -8,7 +8,6 @@ module Sleet
 
     def initialize(source_dir:)
       @source_dir = source_dir
-      @validated = false
     end
 
     def username
@@ -33,10 +32,6 @@ module Sleet
 
     attr_reader :source_dir
 
-    def repo
-      @repo ||= Rugged::Repository.new(source_dir)
-    end
-
     def current_branch_name
       @current_branch_name ||= repo.head.name.sub(CURRENT_BRANCH_REGEX, '')
     end
@@ -49,12 +44,16 @@ module Sleet
       @github_match ||= GITHUB_MATCH_REGEX.match(current_branch.remote.url)
     end
 
+    def repo
+      @repo ||= Rugged::Repository.new(source_dir)
+    end
+
     def validate!
-      unless @validated
-        must_be_on_branch!
-        must_have_an_upstream_branch!
-        upstream_remote_must_be_github!
-      end
+      return if @validated
+
+      must_be_on_branch!
+      must_have_an_upstream_branch!
+      upstream_remote_must_be_github!
       @validated = true
     end
 

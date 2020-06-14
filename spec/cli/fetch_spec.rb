@@ -393,22 +393,6 @@ describe 'sleet fetch', type: :cli do
     end
   end
 
-  context 'when different repo values are provided in the CLI' do
-    let(:stubbed_branch_request_url) do
-      'https://circleci.com/api/v1.1/project/github/otheruser/otherrepo/tree/otherbranch'
-    end
-    let(:stubbed_build_request_url) { 'https://circleci.com/api/v1.1/project/github/otheruser/otherrepo/23/artifacts' }
-
-    it 'succeeds' do
-      expect_command('fetch --username otheruser --project otherrepo --branch otherbranch')
-        .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
-      expect(File.read("#{repo_directory}/.rspec_example_statuses")).to eq happy_path_final_file
-
-      expect(stubbed_branch_request).to have_been_made.once
-      expect(stubbed_build_request).to have_been_made.once
-    end
-  end
-
   context 'when some repo values are provided in the CLI' do
     let(:stubbed_branch_request_url) do
       'https://circleci.com/api/v1.1/project/github/otheruser/somerepo/tree/otherbranch'
