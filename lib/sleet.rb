@@ -2,6 +2,7 @@
 
 require 'colorize'
 require 'faraday'
+require 'faraday_middleware'
 require 'forwardable'
 require 'json'
 require 'rspec'
