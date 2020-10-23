@@ -11,9 +11,10 @@ describe 'sleet version', type: :cli do
     expect_command('version --bare').to output(/\d+\.\d+\.\d+/).to_stdout.and without_error
   end
 
-  context 'some specs for the demo' do
+  context 'with some specs for the demo' do
     it 'this one fails' do
-      expect(true).to eq false
+      value = true
+      expect(value).to eq false
     end
 
     it 'this one fails too' do
@@ -21,7 +22,8 @@ describe 'sleet version', type: :cli do
     end
 
     it 'this one also fails' do
-      expect('a').to eq 'b'
+      value = 'a'
+      expect(value).to eq 'b'
     end
   end
 end
