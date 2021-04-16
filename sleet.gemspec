@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'colorize', '~> 0.8.1'
-  spec.add_dependency 'faraday', '>= 0.13.1', '< 1.1.0'
+  spec.add_dependency 'faraday', '>= 0.13.1', '< 1.5.0'
   spec.add_dependency 'faraday_middleware'
   spec.add_dependency 'rspec', '~> 3.0'
   spec.add_dependency 'rugged', '>= 0.26', '< 1.1'
