@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '>= 0.20', '< 1.1'
 
-  spec.add_development_dependency 'gem-release', '= 2.1.1'
+  spec.add_development_dependency 'gem-release', '= 2.2.2'
   spec.add_development_dependency 'github_changelog_generator', '~> 1.14'
   spec.add_development_dependency 'pry', '~> 0.10'
   spec.add_development_dependency 'rake', '~> 13.0'
