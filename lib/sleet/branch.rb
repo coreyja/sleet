@@ -13,10 +13,6 @@ module Sleet
       @builds ||= JSON.parse(Sleet::CircleCi.get(url, circle_ci_token).body)
     end
 
-    def builds_with_artifacts
-      builds.select { |b| b['has_artifacts'] }
-    end
-
     private
 
     attr_reader :github_user, :github_repo, :branch, :circle_ci_token

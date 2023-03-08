@@ -29,7 +29,7 @@ module Sleet
     end
 
     def chosen_build_json
-      branch.builds_with_artifacts.find do |b|
+      branch.builds.find do |b|
         b.fetch('workflows', nil)&.fetch('job_name', nil) == job_name
       end
     end
