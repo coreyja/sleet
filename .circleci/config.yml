@@ -1,39 +1,48 @@
-version: 2
+version: 2.1
+
 jobs:
   test:
+    parameters:
+      docker-image:
+        type: string
+      gemfile:
+        type: string
+        default: Gemfile
     parallelism: 1
     docker:
-      - image: circleci/ruby:latest
+      - image: << parameters.docker-image >>
+    environment:
+      BUNDLE_GEMFILE: << parameters.gemfile >>
 
     steps:
       - checkout
 
       # Install
-      - run: bundle check --path vendor/bundle || sudo apt-get install cmake && bundle install --path vendor/bundle
+      - run: bundle check || (sudo apt-get update && sudo apt-get install cmake && bundle install)
 
-      - type: shell
-        command: |
-          bundle exec rubocop \
-            --config .rubocop.yml \
-            -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
-            --format RuboCop::Formatter::JUnitFormatter \
-            --out /tmp/test-results/rubocop.xml \
-            --format progress \
-            --force-exclusion \
-            $(circleci tests glob "**/*.rb" | circleci tests split --split-by=filesize --show-counts)
+      - run:
+          command: |
+            bundle exec rubocop \
+              --config .rubocop.yml \
+              -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
+              --format RuboCop::Formatter::JUnitFormatter \
+              --out /tmp/test-results/rubocop.xml \
+              --format progress \
+              --force-exclusion \
+              $(circleci tests glob "**/*.rb" | circleci tests split --split-by=filesize --show-counts)
 
       # Run rspec in parallel
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --show-counts)
+      - run:
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --show-counts)
 
       # Save artifacts
-      - type: store_test_results
-        path: /tmp/test-results
+      - store_test_results:
+          path: /tmp/test-results
 
       - store_artifacts:
           path: spec/.rspec_example_statuses
@@ -42,4 +51,18 @@ workflows:
   version: 2
   test-workflow:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              docker-image:
+                - cimg/ruby:2.7.6
+                - cimg/ruby:3.0.1
+                - cimg/ruby:3.1.3
+                - cimg/ruby:3.2.1
+              gemfile:
+                - Gemfile
+                - gemfiles/minimums.gemfile
+            exclude:
+              # We don't test the mins on 3.2 since rugged doesn't install
+              - docker-image: cimg/ruby:3.2.1
+                gemfile: gemfiles/minimums.gemfile
