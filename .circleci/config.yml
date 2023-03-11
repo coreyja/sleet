@@ -3,37 +3,37 @@ jobs:
   test:
     parallelism: 1
     docker:
-      - image: circleci/ruby:latest
+      - image: cimg/ruby:2.7.6
 
     steps:
       - checkout
 
       # Install
-      - run: bundle check --path vendor/bundle || sudo apt-get install cmake && bundle install --path vendor/bundle
+      - run: bundle check --path vendor/bundle || (sudo apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
 
-      - type: shell
-        command: |
-          bundle exec rubocop \
-            --config .rubocop.yml \
-            -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
-            --format RuboCop::Formatter::JUnitFormatter \
-            --out /tmp/test-results/rubocop.xml \
-            --format progress \
-            --force-exclusion \
-            $(circleci tests glob "**/*.rb" | circleci tests split --split-by=filesize --show-counts)
+      - run:
+          command: |
+            bundle exec rubocop \
+              --config .rubocop.yml \
+              -r $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
+              --format RuboCop::Formatter::JUnitFormatter \
+              --out /tmp/test-results/rubocop.xml \
+              --format progress \
+              --force-exclusion \
+              $(circleci tests glob "**/*.rb" | circleci tests split --split-by=filesize --show-counts)
 
       # Run rspec in parallel
-      - type: shell
-        command: |
-          bundle exec rspec --profile 10 \
-                            --format RspecJunitFormatter \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --show-counts)
+      - run:
+          command: |
+            bundle exec rspec --profile 10 \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress \
+                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings --show-counts)
 
       # Save artifacts
-      - type: store_test_results
-        path: /tmp/test-results
+      - store_test_results:
+          path: /tmp/test-results
 
       - store_artifacts:
           path: spec/.rspec_example_statuses
