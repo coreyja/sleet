@@ -62,3 +62,7 @@ workflows:
               gemfile:
                 - Gemfile
                 - gemfiles/minimums.gemfile
+            exclude:
+              # We don't test the mins on 3.2 since rugged doesn't install
+              - docker-image: cimg/ruby:3.2.1
+                gemfile: gemfiles/minimums.gemfile
