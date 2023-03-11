@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.5.5](https://github.com/coreyja/sleet/tree/v0.5.5) (2023-03-11)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.4...v0.5.5)
+
+**Merged pull requests:**
+
+- feat: Ruby 3.2 Support [\#113](https://github.com/coreyja/sleet/pull/113) ([coreyja](https://github.com/coreyja))
+
 ## [v0.5.4](https://github.com/coreyja/sleet/tree/v0.5.4) (2023-03-11)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.3...v0.5.4)
