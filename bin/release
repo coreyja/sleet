@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-gem bump -v $1
-github_changelog_generator -u coreyja -p sleet --future-release v$(bundle exec exe/sleet version --bare)
+bundle exec gem bump -v $1
+bundle exec github_changelog_generator -u coreyja -p sleet --future-release v$(bundle exec exe/sleet version --bare)
 git add -A
-git commit --amend --no-edit
-gem release -tp
+bundle exec git commit --amend --no-edit
+bundle exec gem release -tp
