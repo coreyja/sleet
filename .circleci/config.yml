@@ -5,9 +5,9 @@ jobs:
     parameters:
       docker-image:
         type: string
-      rugged-version:
+      gemfile:
         type: string
-        default: latest
+        default: Gemfile
     parallelism: 1
     docker:
       - image: << parameters.docker-image >>
@@ -16,11 +16,8 @@ jobs:
       - checkout
 
       - run:
-          name: Use correct version of Rugged
-          command: |
-            if [ "<< parameters.rugged-version >>" != "latest" ]; then
-              echo 'gem "rugged", "<< parameters.rugged-version>>"' >> Gemfile
-            fi
+          name: Use the correct Gemfile
+          command: cp << parameters.gemfile >> Gemfile
 
       # Install
       - run: bundle check --path vendor/bundle || (sudo apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
@@ -64,10 +61,6 @@ workflows:
                 - cimg/ruby:3.0.1
                 - cimg/ruby:3.1.3
                 - cimg/ruby:3.2.1
-              rugged-version:
-                - latest
-                - "1.5.1" # Latest at time of writing 2023/03/11
-                - "0.27"
-            # exclude:
-            #   - docker-image: cimg/ruby:3.2.1
-            #     rugged-version: "0.26"
+              gemfile:
+                - Gemfile
+                - Gemfile.mins
