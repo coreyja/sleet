@@ -66,4 +66,4 @@ workflows:
                 - cimg/ruby:3.2.1
               gemfile:
                 - Gemfile
-                - Gemfile.mins
+                - gemfiles/minimums.gemfile
