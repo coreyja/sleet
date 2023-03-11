@@ -135,22 +135,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
-    end
-  end
-
-  context 'when there are only builds without artifacts' do
-    let(:branch_response) do
-      [
-        {
-          has_artifacts: false,
-          build_num: 23
-        }
-      ]
-    end
-
-    it 'fails with the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No builds with artifacts found'
+      expect_command('fetch').to error_with 'ERROR: No builds found'
     end
   end
 
