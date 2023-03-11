@@ -17,7 +17,7 @@ module GitHelper
   end
 
   def create_default_branch(repo)
-    return if repo.branches[DEFAULT_BRANCH].present?
+    return if repo.branches[DEFAULT_BRANCH]
 
     repo.branches.create(DEFAULT_BRANCH, repo.head.target_id, force: true)
     repo.checkout(DEFAULT_BRANCH)
