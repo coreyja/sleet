@@ -17,7 +17,10 @@ jobs:
 
       - run:
           name: Use the correct Gemfile
-          command: cp << parameters.gemfile >> Gemfile
+          command: |
+            if [[ << parameters.gemfile >> != "Gemfile" ]];
+              cp << parameters.gemfile >> Gemfile
+            fi
 
       # Install
       - run: bundle check --path vendor/bundle || (sudo apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
