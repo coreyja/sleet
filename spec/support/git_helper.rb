@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module GitHelper
+  DEFAULT_BRANCH = 'main'.freeze
+
   def create_commit(repo)
     index = add_file_to_index(repo)
 
@@ -11,6 +13,11 @@ module GitHelper
                           parents: repo.empty? ? [] : [repo.head.target].compact,
                           tree: index.write_tree(repo),
                           update_ref: 'HEAD')
+
+    if repo.branches[DEFAULT_BRANCH].nil?
+      repo.branches.create(DEFAULT_BRANCH, repo.head.target_id, force: true)
+      repo.checkout(DEFAULT_BRANCH)
+    end
   end
 
   def assign_upstream(repo, local_branch, remote_branch)
