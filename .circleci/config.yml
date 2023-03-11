@@ -18,7 +18,7 @@ jobs:
       - run:
           name: Use the correct Gemfile
           command: |
-            if [[ << parameters.gemfile >> != "Gemfile" ]];
+            if [[ << parameters.gemfile >> != "Gemfile" ]]; then
               cp << parameters.gemfile >> Gemfile
             fi
 
