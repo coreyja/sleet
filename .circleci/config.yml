@@ -67,4 +67,7 @@ workflows:
               rugged-version:
                 - latest
                 - "1.5.1" # Latest at time of writing 2023/03/11
-                - "0.26"
+                - "0.27"
+            # exclude:
+            #   - docker-image: cimg/ruby:3.2.1
+            #     rugged-version: "0.26"
