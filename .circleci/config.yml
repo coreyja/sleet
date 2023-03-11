@@ -3,7 +3,7 @@ jobs:
   test:
     parallelism: 1
     docker:
-      - image: circleci/ruby:latest
+      - image: cimg/ruby:latest
 
     steps:
       - checkout
