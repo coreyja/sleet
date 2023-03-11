@@ -9,7 +9,7 @@ jobs:
       - checkout
 
       # Install
-      - run: bundle check --path vendor/bundle || (apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
+      - run: bundle check --path vendor/bundle || (sudo apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
 
       - run:
           command: |
