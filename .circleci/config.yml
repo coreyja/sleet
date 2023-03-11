@@ -18,7 +18,7 @@ jobs:
       - run:
           command: |
             if [ "<< parameters.rugged-version >>" != "latest" ]; then
-              echo 'gem "rugged", "<< parameters.rugged-version>>"'
+              echo 'gem "rugged", "<< parameters.rugged-version>>"' >> Gemfile
             fi
 
       # Install
