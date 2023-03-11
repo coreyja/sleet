@@ -23,7 +23,6 @@ module GitHelper
     repo.checkout(DEFAULT_BRANCH)
   end
 
-
   def assign_upstream(repo, local_branch, remote_branch)
     path = "#{repo.path}/refs/remotes/#{remote_branch}"
     dirname = File.dirname(path)
