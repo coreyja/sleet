@@ -11,16 +11,11 @@ jobs:
     parallelism: 1
     docker:
       - image: << parameters.docker-image >>
+    environment:
+      BUNDLE_GEMFILE: << parameters.gemfile >>
 
     steps:
       - checkout
-
-      - run:
-          name: Use the correct Gemfile
-          command: |
-            if [[ << parameters.gemfile >> != "Gemfile" ]]; then
-              cp << parameters.gemfile >> Gemfile
-            fi
 
       # Install
       - run: bundle check --path vendor/bundle || (sudo apt-get update && sudo apt-get install cmake && bundle install --path vendor/bundle)
