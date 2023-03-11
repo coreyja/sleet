@@ -25,13 +25,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '< 3.0'
-
   spec.add_dependency 'colorize', '~> 0.8.1'
   spec.add_dependency 'faraday', '>= 0.13.1', '< 1.1.0'
   spec.add_dependency 'faraday_middleware'
-  spec.add_dependency 'rspec', '~> 3.0'
-  spec.add_dependency 'rugged', '>= 0.26', '< 1.1'
+  spec.add_dependency 'rspec', '~> 3.3'
+  spec.add_dependency 'rugged', '>= 1.0', '< 1.6'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '>= 0.20', '< 1.1'
 
@@ -41,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rubocop-coreyja', '0.4.0'
   spec.add_development_dependency 'webmock', '~> 3.8.0'
+  spec.add_development_dependency 'appraisal', '~> 2.4.1'
 end

@@ -32,7 +32,7 @@ describe 'sleet fetch', type: :cli do
     ARTIFACT
   end
   let(:happy_path_final_file) { artifact_response }
-  let(:stubbed_branch_request_url) { 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/master' }
+  let(:stubbed_branch_request_url) { 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/tree/main' }
   let(:stubbed_build_request_url) { 'https://circleci.com/api/v1.1/project/github/someuser/somerepo/23/artifacts' }
   let(:stubbed_branch_request) do
     stub_request(:get, stubbed_branch_request_url)
@@ -50,7 +50,6 @@ describe 'sleet fetch', type: :cli do
       .to_return(body: artifact_response)
   end
 
-  let(:create_repo?) { true }
   let(:repo_directory) { Dir.pwd }
   let(:repo) { Rugged::Repository.init_at(repo_directory) }
   let(:remote) { repo.remotes.create('origin', 'git://github.com/someuser/somerepo.git') }
@@ -67,7 +66,7 @@ describe 'sleet fetch', type: :cli do
     create_commit(repo)
 
     remote
-    assign_upstream repo, 'master', 'origin/master'
+    assign_upstream repo, 'main', 'origin/main'
   end
 
   it 'downloads and saves the persistance file locally' do
@@ -101,7 +100,7 @@ describe 'sleet fetch', type: :cli do
     end
 
     it 'succeeds when all the required options are passed as cli options' do
-      expect_command('fetch --username someuser --project somerepo --branch master')
+      expect_command('fetch --username someuser --project somerepo --branch main')
         .to output('Created file (.rspec_example_statuses) from build (#23)'.green + "\n").to_stdout
       expect(File.read("#{Dir.pwd}/.rspec_example_statuses")).to eq happy_path_final_file
     end
@@ -110,7 +109,7 @@ describe 'sleet fetch', type: :cli do
   context 'when there is a NON github upstream' do
     let(:remote) { repo.remotes.create('origin', 'git://gitlab.com/someuser/somerepo.git') }
 
-    before { assign_upstream repo, 'master', 'origin/master' }
+    before { assign_upstream repo, 'main', 'origin/main' }
 
     it 'runs and outputs the correct error message' do
       expect_command('fetch').to error_with 'ERROR: Upstream remote is not GitHub'
@@ -122,10 +121,10 @@ describe 'sleet fetch', type: :cli do
   end
 
   context 'when there is no upstream' do
-    before { remove_upstream repo, 'master' }
+    before { remove_upstream repo, 'main' }
 
     it 'runs and outputs the correct error message' do
-      expect_command('fetch').to error_with 'ERROR: No upstream branch set for the current branch of master'
+      expect_command('fetch').to error_with 'ERROR: No upstream branch set for the current branch of main'
     end
   end
 
