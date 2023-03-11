@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 module GitHelper
-  DEFAULT_BRANCH = 'main'.freeze
+  DEFAULT_BRANCH = 'main'
 
   def create_commit(repo)
     index = add_file_to_index(repo)
-
     Rugged::Commit.create(repo,
                           author: fake_author,
                           message: 'Hello world',
@@ -14,11 +13,16 @@ module GitHelper
                           tree: index.write_tree(repo),
                           update_ref: 'HEAD')
 
-    if repo.branches[DEFAULT_BRANCH].nil?
-      repo.branches.create(DEFAULT_BRANCH, repo.head.target_id, force: true)
-      repo.checkout(DEFAULT_BRANCH)
-    end
+    create_default_branch repo
   end
+
+  def create_default_branch(repo)
+    return if repo.branches[DEFAULT_BRANCH].present?
+
+    repo.branches.create(DEFAULT_BRANCH, repo.head.target_id, force: true)
+    repo.checkout(DEFAULT_BRANCH)
+  end
+
 
   def assign_upstream(repo, local_branch, remote_branch)
     path = "#{repo.path}/refs/remotes/#{remote_branch}"
