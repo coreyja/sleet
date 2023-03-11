@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.6.0](https://github.com/coreyja/sleet/tree/v0.6.0) (2023-03-11)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.5...v0.6.0)
+
+**Merged pull requests:**
+
+- chore: Bump Minimums [\#114](https://github.com/coreyja/sleet/pull/114) ([coreyja](https://github.com/coreyja))
+
 ## [v0.5.5](https://github.com/coreyja/sleet/tree/v0.5.5) (2023-03-11)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.4...v0.5.5)
