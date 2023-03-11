@@ -12,7 +12,7 @@ module Sleet
     end
 
     def validate!
-      must_find_a_build_with_artifacts!
+      must_find_a_build!
       chosen_build_must_have_input_file!
     end
 
@@ -34,14 +34,14 @@ module Sleet
       end
     end
 
-    def must_find_a_build_with_artifacts!
+    def must_find_a_build!
       !chosen_build_json.nil? ||
-        raise(Error, "No builds with artifacts found#{" for job name [#{job_name}]" if job_name}")
+        raise(Error, "No builds found#{" for job name [#{job_name}]" if job_name}")
     end
 
     def chosen_build_must_have_input_file!
       build.artifacts.any? ||
-        raise(Error, "No Rspec example file found in the latest build (##{chosen_build_num}) with artifacts")
+        raise(Error, "No Rspec example file found in the latest build (##{chosen_build_num})")
     end
   end
 end
