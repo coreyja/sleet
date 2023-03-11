@@ -51,3 +51,4 @@ workflows:
             parameters:
               docker-image:
                 - cimg/ruby:2.7.6
+                - cimg/ruby:3.0.1
