@@ -3,7 +3,7 @@ jobs:
   test:
     parallelism: 1
     docker:
-      - image: cimg/ruby:3.2.1
+      - image: cimg/ruby:2.7.6
 
     steps:
       - checkout
