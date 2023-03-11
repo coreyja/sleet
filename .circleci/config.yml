@@ -1,9 +1,13 @@
-version: 2
+version: 2.1
+
 jobs:
   test:
+    parameters:
+      docker-image:
+        type: string
     parallelism: 1
     docker:
-      - image: cimg/ruby:2.7.6
+      - image: << parameters.docker-image >>
 
     steps:
       - checkout
@@ -42,4 +46,8 @@ workflows:
   version: 2
   test-workflow:
     jobs:
-      - test
+      - test:
+          matrix:
+            parameters:
+              docker-image:
+                - cimg/ruby-2.7.6
