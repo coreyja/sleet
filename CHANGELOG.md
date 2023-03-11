@@ -1,6 +1,15 @@
 # Changelog
 
-## [v0.5.3](https://github.com/coreyja/sleet/tree/v0.5.3) (2020-08-09)
+## [v0.5.4](https://github.com/coreyja/sleet/tree/v0.5.4) (2023-03-11)
+
+[Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.3...v0.5.4)
+
+**Merged pull requests:**
+
+- Bug: Fix CI by making sure we can install `cmake` [\#112](https://github.com/coreyja/sleet/pull/112) ([coreyja](https://github.com/coreyja))
+- bug: CircleCI removed has\_artifacts from v1.1 API response [\#111](https://github.com/coreyja/sleet/pull/111) ([jesseproudman](https://github.com/jesseproudman))
+
+## [v0.5.3](https://github.com/coreyja/sleet/tree/v0.5.3) (2020-08-10)
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.2...v0.5.3)
 
@@ -17,8 +26,6 @@
 - bug: Fix bug in error message when no upstream exists [\#79](https://github.com/coreyja/sleet/pull/79) ([coreyja](https://github.com/coreyja))
 
 ## [v0.5.1](https://github.com/coreyja/sleet/tree/v0.5.1) (2020-06-14)
-
-- This was an accidental release that contains no changes from `0.5.0`
 
 [Full Changelog](https://github.com/coreyja/sleet/compare/v0.5.0...v0.5.1)
 
@@ -196,7 +203,7 @@
 
 **Closed issues:**
 
-- Places `.rspec\_failed\_examples` relative to where the script is called from [\#1](https://github.com/coreyja/sleet/issues/1)
+- Places `.rspec_failed_examples` relative to where the script is called from [\#1](https://github.com/coreyja/sleet/issues/1)
 
 **Merged pull requests:**
 
