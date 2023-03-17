@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', '>= 1.0'
   spec.add_dependency 'faraday_middleware'
   spec.add_dependency 'rspec', '~> 3.3'
-  spec.add_dependency 'rugged', '>= 1.1', '< 1.6'
+  spec.add_dependency 'rugged', '>= 1.1', '< 1.7'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'thor', '>= 0.20', '< 1.3'
 
